@@ -581,7 +581,7 @@ dlznll<-ggplot(filter(ll, Site == "DL"),
   geom_point()+
   geom_smooth(aes(group=Tissue),method = lm, se = FALSE)+
   scale_y_continuous(expand = c(0,0))+
-  labs(y= expression(paste("Zn ("*mu~"g/g dry weight)")),x = "Length (mm)" ) +
+  labs(y= expression(paste("Zn ("*mu~"kg/g dry weight)")),x = "Length (mm)" ) +
   scale_color_viridis_d(labels=c("Gill","Liver","Muscle"))+
   coord_cartesian(clip = "off")+
   theme_classic()
@@ -608,7 +608,7 @@ znllplot<-plot_grid(dlznll+theme(legend.position = "none"),
                     bgznll+theme(legend.position = "none"),
                     ncol = 3,
                     align = "h" )
-znllend<-plot_grid(cullplot,rel_widths = c(10,.4) )
+znllend<-plot_grid(znllplot,rel_widths = c(10,.4) )
 llfin<-plot_grid(asllend,
                  cdllend+theme(legend.position = "none"),
                  cullend+theme(legend.position = "none"),
