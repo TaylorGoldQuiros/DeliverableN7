@@ -20,7 +20,7 @@ is.na(totmet$As)
 As <- na.exclude(totmet$As)
 Cu <- na.exclude(totmet$Cu)
 # -- 
-  ####Summary Stats####
+####Summary Stats####
 #Deerlodge
 dfllg<- filter(totmet, Site == "DL", Tissue == "g", Species == "LL")
 summary(dfllg)
@@ -411,7 +411,7 @@ ll$Site<-as.factor(ll$Site)
 ll$Site <- ordered(ll$Site, levels=c("DL","GC", "BG"))
 str(ll)
 
-###Stats on tissue conc by length for Brown Trout----
+###Stats and figs on tissue conc by length for Brown Trout----
 # For each element, made a glm, diagnostic plots, and Anova. Copper and Zn 
 # showed some evidence of a three way Site*Tissue*Length interaction, however
 # plotting them out separately is a lot and plotting just Tissue*Length is a 
