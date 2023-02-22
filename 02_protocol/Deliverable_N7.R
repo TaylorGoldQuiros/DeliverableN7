@@ -898,6 +898,17 @@ kvalues_glm <- glm(K ~ Site*Species,
 plot(kvalues_glm)
 Anova(kvalues_glm)
 
+# Little evidence of differences
+
+kvalues_fig <- 
+  ggplot(kvalues, aes(x = Site, y = K, fill = Species)) +
+  geom_boxplot() +
+  theme_classic() +
+  scale_fill_viridis_d()
+
+save_plot("./03_incremental/kvalues.png", 
+          kvalues_fig, base_height = 4, base_width = 6)
+
 summary(kvalues)
 kaov<-aov(K~Site*Species,kvalues)
 summary(kaov)
