@@ -885,9 +885,19 @@ save_plot("./03_incremental//LLmetalslength.jpg",
           llfin, base_height = 12, base_width = 8)
 #
 #Kcondition constant comparisons####
-kvalues<-read.csv(file.choose(), header = TRUE)
-kvalues$Site<-as.factor(kvalues$Site)
-kvalues$Site <- ordered(kvalues$Site, levels=c("DL","GC", "BG"))
+kvalues<-read.csv("./01_input/kcalc.csv", header = TRUE)
+colnames(kvalues) <- c("Site", "Species", "K", "Length", "X", "X1", "X2")
+kvalues <- kvalues %>%
+  mutate(Site = ordered(Site, levels=c("DL","GC", "BG")),
+         Species = as.factor(Species)) %>%
+  select(1:4)
+
+kvalues_glm <- glm(K ~ Site*Species, 
+                   family = Gamma(link = "log"),
+                   kvalues)
+plot(kvalues_glm)
+Anova(kvalues_glm)
+
 summary(kvalues)
 kaov<-aov(K~Site*Species,kvalues)
 summary(kaov)
