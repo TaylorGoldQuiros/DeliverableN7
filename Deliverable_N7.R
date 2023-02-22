@@ -5,18 +5,20 @@ library(cowplot)
 library(scales)
 library(stringr)
 library(car)
-totmet<-read.csv(file.choose(), header = TRUE)
-totmet$Site<-as.factor(totmet$Site)
-totmet$Site <- ordered(totmet$Site, levels=c("DL","GC", "BG"))
-Length <-as.numeric(totmet$Length)
-totmet$Weight<-na.exclude(totmet$Weight)
+library(viridisLite)
+
+totmet <- read.csv("Metals Master.csv", header = TRUE)
+totmet$Site <- as.factor(totmet$Site)
+totmet$Site <- ordered(totmet$Site, levels = c("DL", "GC", "BG"))
+Length <- as.numeric(totmet$Length)
+totmet$Weight <- na.exclude(totmet$Weight)
 Weight <- as.numeric(totmet$Weight)
 class(totmet$Tissue)
 str(totmet)
 is.na(totmet$As)
-As<-na.exclude(totmet$As)
-Cu<-na.exclude(totmet$Cu)
---
+As <- na.exclude(totmet$As)
+Cu <- na.exclude(totmet$Cu)
+# -- 
   ####Summary Stats####
 #Deerlodge
 dfllg<- filter(totmet, Site == "DL", Tissue == "g", Species == "LL")
@@ -397,7 +399,7 @@ ll<-read.csv(file.choose(), header = TRUE)
 ll$Site<-as.factor(ll$Site)
 ll$Site <- ordered(ll$Site, levels=c("DL","GC", "BG"))
 str(ll)
-library(viridisLite)
+
 dlasll<-ggplot(filter(ll, Site == "DL"), 
                mapping = aes(Length,As, color = Tissue)) + 
   geom_point()+
