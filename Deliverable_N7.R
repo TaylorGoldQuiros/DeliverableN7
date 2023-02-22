@@ -1,4 +1,5 @@
 #Deliverable#7 Code
+library(Rmisc) # For summarySE function, load before tidyverse
 library(tidyverse)
 library(ggpubr)
 library(cowplot)
@@ -151,6 +152,13 @@ summary(dfrssh)
 stdevrssh<- c(sd(dfrssh$As), sd(dfrssh$Cd), sd(dfrssh$Cu),sd(dfrssh$Pb), sd(dfrssh$Se), sd(dfrssh$Zn))
 stdevrssh
 ####end####
+#####Alternative route to get summary statistics####
+
+totmet_summary <-
+  summarySE((pivot_longer(totmet, 10:15, names_to = "element",
+                          values_to = "concentration")), 
+            measurevar = "concentration",
+            groupvars = c("Site", "Year", "Species", "element"))
 
 #####Two- Way ANOVAS and figs####
 table(totmet$As, totmet$Site)
