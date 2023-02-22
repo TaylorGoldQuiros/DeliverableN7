@@ -411,7 +411,7 @@ ll$Site<-as.factor(ll$Site)
 ll$Site <- ordered(ll$Site, levels=c("DL","GC", "BG"))
 str(ll)
 
-###Stats on tissue conc by length for LL
+###Stats on tissue conc by length for Brown Trout----
 # For each element, made a glm, diagnostic plots, and Anova. Copper and Zn 
 # showed some evidence of a three way Site*Tissue*Length interaction, however
 # plotting them out separately is a lot and plotting just Tissue*Length is a 
@@ -450,6 +450,8 @@ Anova(cd_ll_tissue_glm)
   labs(y = expression(Cd~(mu*g~g^-1~dry~weight)),x = "Length (mm)" )  +
   scale_color_viridis_d(labels=c("Gill","Liver","Muscle")))
 
+
+# Cu:
 cu_ll_tissue_glm <- glm(Cu ~ Tissue*Site*Length,
                         family = Gamma(link = "log"), ll,
                         maxit = 1000) # Wasn't converging, so added iterations
@@ -465,7 +467,7 @@ Anova(cu_ll_tissue_glm)
   labs(y = expression(Cu~(mu*g~g^-1~dry~weight)),x = "Length (mm)" )  +
   scale_color_viridis_d(labels=c("Gill","Liver","Muscle")) )
 
-
+# Pb:
 pb_ll_tissue_glm <- glm(Pb ~ Tissue*Site*Length,
                         family = Gamma(link = "log"), ll)
 plot(pb_ll_tissue_glm)
@@ -480,6 +482,8 @@ Anova(pb_ll_tissue_glm)
   labs(y = expression(Pb~(mu*g~g^-1~dry~weight)),x = "Length (mm)" )  +
   scale_color_viridis_d(labels=c("Gill","Liver","Muscle"))) 
 
+# Se:
+# 
 se_ll_tissue_glm <- glm(Se ~ Tissue*Site*Length,
                         family = Gamma(link = "log"), ll)
 plot(se_ll_tissue_glm)
@@ -493,6 +497,8 @@ Anova(se_ll_tissue_glm)
   coord_cartesian(clip = "off")+
   labs(y = expression(Se~(mu*g~g^-1~dry~weight)),x = "Length (mm)" )  +
   scale_color_viridis_d(labels=c("Gill","Liver","Muscle"))) 
+
+#Zn:
 
 zn_ll_tissue_glm <- glm(Zn ~ Tissue*Site*Length,
                         family = Gamma(link = "log"), ll)
@@ -508,6 +514,7 @@ Anova(zn_ll_tissue_glm)
   labs(y = expression(Zn~(mu*g~g^-1~dry~weight)),x = "Length (mm)" )  +
   scale_color_viridis_d(labels=c("Gill","Liver","Muscle")))
 
+# All together
 (ll_tissue_length_fig <- 
     ggplot(data = pivot_longer(ll, 
                                10:15, 
@@ -526,6 +533,135 @@ Anova(zn_ll_tissue_glm)
 
 save_plot("./03_incremental/ll_tissue_length.png", ll_tissue_length_fig,
           base_height = 5, base_width = 4)
+
+
+###Stats on tissue conc by length for Mountain Whitefish----
+# For each element, made a glm, diagnostic plots, and Anova. Copper and Zn 
+# showed some evidence of a three way Site*Tissue*Length interaction, however
+# plotting them out separately is a lot and plotting just Tissue*Length is a 
+# bit more interesting and useful. Cu, Cd, and Se all have interesitng patterns
+# There are individual plots, but the money plot is a faceted one at the bottom
+
+mwf <- read.csv("./01_input/MWFmetals.csv", header = FALSE)
+colnames(mwf) <- colnames(ll)
+mwf <- mwf %>% 
+  mutate(Site = ordered(Site, levels=c("DL","GC", "BG")))
+
+# As:
+as_mwf_tissue_glm <- glm(As ~ Tissue*Site*Length,
+                        family = Gamma(link = "log"), mwf)
+plot(as_mwf_tissue_glm)
+Anova(as_mwf_tissue_glm)
+
+(as_mwf_fig <- ggplot(data = mwf, aes(Length, As, color = Tissue)) + 
+    geom_point()+
+    theme_classic()+
+    geom_smooth(aes(group=Tissue),method = lm, se = FALSE)+
+    scale_y_continuous(expand = c(0,0))+
+    coord_cartesian(clip = "off")+
+    labs(y = expression(As~(mu*g~g^-1~dry~weight)),x = "Length (mm)" )  +
+    scale_color_viridis_d(labels=c("Gill","Liver","Muscle"))) 
+
+# Cd:
+cd_mwf_tissue_glm <- glm(Cd ~ Tissue*Site*Length,
+                        family = Gamma(link = "log"), mwf)
+plot(cd_mwf_tissue_glm)
+Anova(cd_mwf_tissue_glm)
+
+(cd_mwf_fig <- ggplot(data = mwf, aes(Length, Cd, color = Tissue)) + 
+    geom_point()+
+    theme_classic()+
+    geom_smooth(aes(group=Tissue),method = lm, se = FALSE)+
+    scale_y_continuous(expand = c(0,0))+
+    coord_cartesian(clip = "off")+
+    labs(y = expression(Cd~(mu*g~g^-1~dry~weight)),x = "Length (mm)" )  +
+    scale_color_viridis_d(labels=c("Gill","Liver","Muscle")))
+
+
+# Cu:
+cu_mwf_tissue_glm <- glm(Cu ~ Tissue*Site*Length,
+                        family = Gamma(link = "log"), mwf) 
+plot(cu_mwf_tissue_glm)
+Anova(cu_mwf_tissue_glm)
+
+(cu_mwf_fig <- ggplot(data = mwf, aes(Length, Cu, color = Tissue)) + 
+    geom_point()+
+    theme_classic()+
+    geom_smooth(aes(group=Tissue),method = lm, se = FALSE)+
+    scale_y_continuous(expand = c(0,0))+
+    coord_cartesian(clip = "off")+
+    labs(y = expression(Cu~(mu*g~g^-1~dry~weight)),x = "Length (mm)" )  +
+    scale_color_viridis_d(labels=c("Gill","Liver","Muscle")) )
+
+# Pb:
+pb_mwf_tissue_glm <- glm(Pb ~ Tissue*Site*Length,
+                        family = Gamma(link = "log"), mwf,
+                        maxit = 1000)
+plot(pb_mwf_tissue_glm)
+Anova(pb_mwf_tissue_glm)
+
+(pb_mwf_fig <- ggplot(data = mwf, aes(Length, Pb, color = Tissue)) + 
+    geom_point()+
+    theme_classic()+
+    geom_smooth(aes(group=Tissue),method = lm, se = FALSE)+
+    scale_y_continuous(expand = c(0,0))+
+    coord_cartesian(clip = "off")+
+    labs(y = expression(Pb~(mu*g~g^-1~dry~weight)),x = "Length (mm)" )  +
+    scale_color_viridis_d(labels=c("Gill","Liver","Muscle"))) 
+
+# Se:
+# 
+se_mwf_tissue_glm <- glm(Se ~ Tissue*Site*Length,
+                        family = Gamma(link = "log"), mwf)
+plot(se_mwf_tissue_glm)
+Anova(se_mwf_tissue_glm)
+
+(se_mwf_fig <- ggplot(data = mwf, aes(Length, Se, color = Tissue)) + 
+    geom_point()+
+    theme_classic()+
+    geom_smooth(aes(group=Tissue),method = lm, se = FALSE)+
+    scale_y_continuous(expand = c(0,0))+
+    coord_cartesian(clip = "off")+
+    labs(y = expression(Se~(mu*g~g^-1~dry~weight)),x = "Length (mm)" )  +
+    scale_color_viridis_d(labels=c("Gill","Liver","Muscle"))) 
+
+#Zn:
+
+zn_mwf_tissue_glm <- glm(Zn ~ Tissue*Site*Length,
+                        family = Gamma(link = "log"), mwf)
+plot(zn_mwf_tissue_glm)
+Anova(zn_mwf_tissue_glm)
+
+(zn_mwf_fig <- ggplot(data = mwf, aes(Length, Zn, color = Tissue)) + 
+    geom_point()+
+    theme_classic()+
+    geom_smooth(aes(group=Tissue),method = lm, se = FALSE)+
+    scale_y_continuous(expand = c(0,0))+
+    coord_cartesian(clip = "off")+
+    labs(y = expression(Zn~(mu*g~g^-1~dry~weight)),x = "Length (mm)" )  +
+    scale_color_viridis_d(labels=c("Gill","Liver","Muscle")))
+
+# All together
+(mwf_tissue_length_fig <- 
+    ggplot(data = pivot_longer(mwf, 
+                               10:15, 
+                               names_to = "element",
+                               values_to = "concentration"), 
+           aes(Length, concentration, color = Tissue)) + 
+    geom_point()+
+    theme_classic()+
+    geom_smooth(aes(group=Tissue),method = lm, se = FALSE)+
+    scale_y_continuous(expand = c(0,0))+
+    coord_cartesian(clip = "off")+
+    labs(y = expression(Concentration~(mu*g~g^-1~dry~weight)),
+         x = "Length (mm)" )  +
+    scale_color_viridis_d(labels=c("Gill","Liver","Muscle"))+
+    facet_grid(rows = "element", scales = "free"))
+
+save_plot("./03_incremental/mwf_tissue_length.png", mwf_tissue_length_fig,
+          base_height = 5, base_width = 4)
+
+
 
 dlasll<-ggplot(filter(ll, Site == "DL"), 
                mapping = aes(Length,As, color = Tissue)) + 
