@@ -1,6 +1,4 @@
 #Deliverable#7 Code
-library(ggplot2)
-library(dplyr)
 library(tidyverse)
 library(ggpubr)
 library(cowplot)
