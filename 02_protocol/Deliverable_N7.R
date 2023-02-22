@@ -8,7 +8,7 @@ library(stringr)
 library(car)
 library(viridisLite)
 
-totmet <- read.csv("Metals Master.csv", header = TRUE)
+totmet <- read.csv("./01_input/Metals Master.csv", header = TRUE)
 totmet$Site <- as.factor(totmet$Site)
 totmet$Site <- ordered(totmet$Site, levels = c("DL", "GC", "BG"))
 Length <- as.numeric(totmet$Length)
@@ -163,7 +163,7 @@ totmet_summary <-
 #####Two- Way ANOVAS and figs####
 table(totmet$As, totmet$Site)
 
-succomb<-read.csv("Suckerscombined.csv", header = TRUE)
+succomb<-read.csv("./01_input/Suckerscombined.csv", header = TRUE)
 succomb$Site<-as.factor(succomb$Site)
 succomb$Site <- ordered(succomb$Site, levels=c("DL","GC", "BG"))
 mwfll<-filter(succomb, Species!="Suckers")
@@ -314,7 +314,7 @@ plot_grid(plots,legend, rel_widths = c(3,.4))
 
 ####end####
 #MWF and LL metals plot
-succomb<-read.csv("Suckerscombined.csv", header = TRUE)
+succomb<-read.csv("./01_input/Suckerscombined.csv", header = TRUE)
 succomb$Site<-as.factor(succomb$Site)
 succomb$Site <- ordered(succomb$Site, levels=c("DL","GC", "BG"))
 mwfll<-filter(succomb, Species!="Suckers")
@@ -402,7 +402,7 @@ newplot<-plot_grid(As_mwfll+theme(legend.position = "none"),
 legend2<-get_legend(As_mwfll+theme(legend.box.margin = margin(0,0,0,12)))
 mwfllplot<-plot_grid(newplot,legend2,rel_widths = c(2,.4))
 mwfllplot
-save_plot("C:/Users/trqui/OneDrive/Desktop/MWFLLplot.jpg", mwfllplot
+save_plot("./03_incremental/MWFLLplot.jpg", mwfllplot
           , base_height = 8, base_width =12)
 #Single species tissues graphs
 #Brown trout
@@ -629,7 +629,7 @@ llfin<-plot_grid(asllend,
                  ncol = 1,
                  align = "v")
 llfin
-save_plot("C:/Users/trqui/OneDrive/Desktop/LLmetalslength.jpg", 
+save_plot("./03_incremental//LLmetalslength.jpg", 
           llfin, base_height = 12, base_width = 8)
 #
 #Kcondition constant comparisons####
