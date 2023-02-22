@@ -163,7 +163,7 @@ totmet_summary <-
 #####Two- Way ANOVAS and figs####
 table(totmet$As, totmet$Site)
 
-succomb<-read.csv(file.choose(), header = TRUE)
+succomb<-read.csv("Suckerscombined.csv", header = TRUE)
 succomb$Site<-as.factor(succomb$Site)
 succomb$Site <- ordered(succomb$Site, levels=c("DL","GC", "BG"))
 mwfll<-filter(succomb, Species!="Suckers")
@@ -180,6 +180,7 @@ as2aov<-aov(asglm2)
 summary(as2aov)
 asbm<-glm(As~Site*Species*Tissue, data = mwfll)
 Anova(asbm)
+
 
 ggplot(filter(totmet, Tissue!="wb"), mapping = aes(Species,As,fill=Tissue))+geom_boxplot()+theme_classic()+facet_wrap(~Site)
 As_tissues <- ggplot(filter(succomb, Tissue!="wb", Species!="LNDC"), 
@@ -306,13 +307,14 @@ plots<-plot_grid(As_tissues+theme(legend.position = "none"),
                  Pb_tissues+theme(legend.position = "none"),
                  Se_tissues+theme(legend.position = "none"),
                  Zn_tissues+theme(legend.position = "none"),
-                 labels = c('A','B','C','D','E','F', label_size=12))
+                 labels = c('A','B','C','D','E','F', label_size=12),
+                 align = "hv")
 legend<-get_legend(As_tissues+theme(legend.box.margin = margin(0,0,0,12)))
 plot_grid(plots,legend, rel_widths = c(3,.4))
 
 ####end####
 #MWF and LL metals plot
-succomb<-read.csv(file.choose(), header = TRUE)
+succomb<-read.csv("Suckerscombined.csv", header = TRUE)
 succomb$Site<-as.factor(succomb$Site)
 succomb$Site <- ordered(succomb$Site, levels=c("DL","GC", "BG"))
 mwfll<-filter(succomb, Species!="Suckers")
@@ -395,7 +397,8 @@ newplot<-plot_grid(As_mwfll+theme(legend.position = "none"),
                    nrow = 3,
                    ncol = 2,
                    hjust = -1.8,
-                   labels = c('A','B','C','D','E','F', label_size=7))
+                   labels = c('A','B','C','D','E','F', label_size=7),
+                   align = "hv")
 legend2<-get_legend(As_mwfll+theme(legend.box.margin = margin(0,0,0,12)))
 mwfllplot<-plot_grid(newplot,legend2,rel_widths = c(2,.4))
 mwfllplot
