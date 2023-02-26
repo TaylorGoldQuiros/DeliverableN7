@@ -1,5 +1,6 @@
 #Deliverable#7 Code
 library(Rmisc) # For summarySE function, load before tidyverse
+library(multcomp) # For cld, load before tidyverse
 library(tidyverse)
 library(ggpubr)
 library(cowplot)
@@ -7,6 +8,7 @@ library(scales)
 library(stringr)
 library(car)
 library(viridisLite)
+library(emmeans)
 
 totmet <- read.csv("./01_input/Metals Master.csv", header = TRUE)
 totmet$Site <- as.factor(totmet$Site)
@@ -329,62 +331,168 @@ mwfll<-filter(succomb, Species == c("LL", "MWF")) %>%
   mutate(Species = as.factor(Species), Tissue = as.factor(Tissue))
 str(mwfll)
 
+par(mfrow = c(2,2)) # Makes it so diagnostic plots from base R are 2x2 grid
+
 # Stats using glm, Anova, emmeans, and cld
-# as
-as_mwfll_glm <- glm(As ~ Tissue*Species*Site, 
+# As
+as_mwfll.glm <- glm(As ~ Tissue*Species*Site, 
                     family = Gamma(link = "log"), 
                     data = mwfll)
-plot(as_mwfll_glm)
-Anova(as_mwfll_glm)
+plot(as_mwfll.glm)
+Anova(as_mwfll.glm) # Only main effects. Three emmeans and three clds.
+
+(as_mwfll_species.emm <- emmeans(as_mwfll.glm, ~ Species, 
+                         type = "response"))
+(as_mwfll_site.emm <- emmeans(as_mwfll.glm, ~ Site, 
+                                type = "response"))
+(as_mwfll_tissue.emm <- emmeans(as_mwfll.glm, ~ Tissue, 
+                                type = "response"))
+(as_mwfll_species.cld <- cld(as_mwfll_species.emm, 
+                    alpha = 0.05, Letters = letters))
+(as_mwfll_tissue.cld <- cld(as_mwfll_tissue.emm, 
+                             alpha = 0.05, Letters = letters))
+(as_mwfll_site.cld <- cld(as_mwfll_site.emm, 
+                             alpha = 0.05, Letters = letters))  
+# Site was significant in the model, but not at 0.05 when considering just this
+# individual main effect. Same pattern emerges if model is reduced, and the 
+# p value on the anova for site also changes to > 0.05
 
 # Cd
-cd_mwfll_glm <- glm(Cd ~ Tissue*Species*Site, 
+cd_mwfll.glm <- glm(Cd ~ Tissue*Species*Site, 
                     family = Gamma(link = "log"), 
                     data = mwfll)
-plot(cd_mwfll_glm)
-Anova(cd_mwfll_glm)
+plot(cd_mwfll.glm)
+Anova(cd_mwfll.glm)
+# Only tissue is significant at p<0.05
+(cd_mwfll_tissue.emm <- emmeans(cd_mwfll.glm, ~ Tissue, 
+                                type = "response"))
+(cd_mwfll_tissue.cld <- cld(cd_mwfll_tissue.emm, 
+                             alpha = 0.05, Letters = letters))
+
 
 # Cu
-cu_mwfll_glm <- glm(Cu ~ Tissue*Species*Site, 
+cu_mwfll.glm <- glm(Cu ~ Tissue*Species*Site, 
                     family = Gamma(link = "log"), 
                     data = mwfll)
-plot(cu_mwfll_glm)
-Anova(cu_mwfll_glm)
+plot(cu_mwfll.glm)
+Anova(cu_mwfll.glm)
+
+# Three way interaction, so one emm and three clds
+
+(cu_mwfll_all.emm <- emmeans(cu_mwfll.glm, ~ Tissue*Species*Site, 
+                                type = "response"))
+(cu_mwfll_tissue.cld <- cld(cu_mwfll_all.emm, 
+                            by = c("Species", "Site"),
+                            alpha = 0.05, Letters = letters))
+(cu_mwfll_species.cld <- cld(cu_mwfll_all.emm, 
+                            by = c("Tissue", "Site"),
+                            alpha = 0.05, Letters = letters))
+(cu_mwfll_site.cld <- cld(cu_mwfll_all.emm, 
+                            by = c("Species", "Tissue"),
+                            alpha = 0.05, Letters = letters))
 
 # Pb
-pb_mwfll_glm <- glm(Pb ~ Tissue*Species*Site, 
+pb_mwfll.glm <- glm(Pb ~ Tissue*Species*Site, 
                     family = Gamma(link = "log"), 
                     data = mwfll)
-plot(pb_mwfll_glm)
-Anova(pb_mwfll_glm)
+plot(pb_mwfll.glm)
+Anova(pb_mwfll.glm)
+
+# Species:Site and Tissue, so 2 emm, three clds
+
+(pb_mwfll_tissue.emm <- emmeans(pb_mwfll.glm, ~ Tissue, 
+                             type = "response"))
+(pb_mwfll_species_site.emm <- emmeans(pb_mwfll.glm, ~ Species | Site, 
+                                type = "response"))
+(pb_mwfll_tissue.cld <- cld(pb_mwfll_tissue.emm, 
+                            alpha = 0.05, Letters = letters))
+(pb_mwfll_species.cld <- cld(pb_mwfll_species_site.emm, 
+                             by = "Site",
+                             alpha = 0.05, Letters = letters))
+(pb_mwfll_site.cld <- cld(pb_mwfll_species_site.emm, 
+                             by = "Species",
+                             alpha = 0.05, Letters = letters))
+
 
 # Se
-se_mwfll_glm <- glm(Se ~ Tissue*Species*Site, 
+se_mwfll.glm <- glm(Se ~ Tissue*Species*Site, 
                     family = Gamma(link = "log"), 
                     data = mwfll)
-plot(se_mwfll_glm)
-Anova(se_mwfll_glm)
+plot(se_mwfll.glm)
+Anova(se_mwfll.glm)
+
+# Only Tissue has p <0.05
+
+(se_mwfll.emm <- emmeans(se_mwfll.glm, ~ Tissue, 
+                         type = "response"))
+(se_mwfll_tissue.cld <- cld(se_mwfll.emm,
+                            alpha = 0.05, Letters = letters))
 
 # Zn
 
-zn_mwfll_glm <- glm(Zn ~ Tissue*Species*Site, 
+zn_mwfll.glm <- glm(Zn ~ Tissue*Species*Site, 
                     family = Gamma(link = "log"), 
                     data = mwfll)
-plot(zn_mwfll_glm)
-Anova(zn_mwfll_glm)
+plot(zn_mwfll.glm)
+Anova(zn_mwfll.glm)
+
+# Tissue:Species, so one emm and two clds
+
+(zn_mwfll.emm <- emmeans(zn_mwfll.glm, ~ Tissue | Species,
+                         type = "response"))
+(zn_mwfll_tissue.cld <- cld(zn_mwfll.emm, by = "Species",
+                            alpha = 0.05, Letters = letters))
+(zn_mwfll_species.cld <- cld(zn_mwfll.emm, by = "Tissue",
+                            alpha = 0.05, Letters = letters))
 
 # Write output to a file, comment back in if you want to rewrite:
 # sink("./03_incremental/Anova_SitexSpeciesxTissue_mwf_ll.txt")
-# Anova(as_mwfll_glm)
-# Anova(cd_mwfll_glm)
-# Anova(cu_mwfll_glm)
-# Anova(pb_mwfll_glm)
-# Anova(se_mwfll_glm)
-# Anova(zn_mwfll_glm)
+# Anova(as_mwfll.glm)
+# Anova(cd_mwfll.glm)
+# Anova(cu_mwfll.glm)
+# Anova(pb_mwfll.glm)
+# Anova(se_mwfll.glm)
+# Anova(zn_mwfll.glm)
 # sink()
 
+# Setting up cld objects for use as geom_text labels on the plots
+as_mwfll_tissue.cld$.group <- gsub(" ", "", as_mwfll_tissue.cld$.group)
+as_mwfll_tissue.cld <- subset(as_mwfll_tissue.cld)
+as_mwfll_tissue.cld <- merge(data.frame(Site = c("DL", "DL", "DL",
+                                                 "GC", "GC", "GC", 
+                                                 "BG", "BG", "BG",
+                                                 "DL", "DL", "DL",
+                                                 "GC", "GC", "GC", 
+                                                 "BG", "BG", "BG"),
+                                        Species = c(rep("LL", 9), 
+                                                    rep("MWF", 9)),
+                                        Tissue = c(rep(c("m", "g", "l"), 6))), 
+                             as_mwfll_tissue.cld) %>% 
+                        arrange(Site, Species, Tissue)
 
-(As_mwfll <- ggplot(filter(mwfll, Tissue!="wb", Species!="LNDC"), 
+cd_mwfll_tissue.cld$.group <- gsub(" ", "", cd_mwfll_tissue.cld$.group)
+cd_mwfll_tissue.cld <- subset(cd_mwfll_tissue.cld)
+cd_mwfll_tissue.cld <- 
+  merge(data.frame(Site = c("DL", "DL", "DL",
+                            "GC", "GC", "GC", 
+                            "BG", "BG", "BG",
+                            "DL", "DL", "DL",
+                            "GC", "GC", "GC", 
+                            "BG", "BG", "BG"),
+                   Species = c(rep("LL", 9), 
+                               rep("MWF", 9)),
+                   Tissue = c(rep(c("m", "g", "l"), 6))),
+        cd_mwfll_tissue.cld) %>% 
+  arrange(Site, Species, Tissue)
+
+cu_mwfll_tissue.cld <-
+  
+pb_mwfll_tissue.cld
+se_mwfll_tissue.cld
+zn_mwfll_tissue.cld
+
+
+(As_mwfll <- ggplot(mwfll, 
                    mapping = aes(Species,As, fill=Tissue)) + 
   geom_boxplot()+
   theme_classic()+
@@ -396,7 +504,8 @@ Anova(zn_mwfll_glm)
   labs(y= expression("As (kg/g dry weight)"),x ="") +
   scale_fill_viridis_d( labels=c("Gill","Liver","Muscle"))+
   facet_wrap(~Site))
-(Cd_mwfll <- ggplot(filter(mwfll, Tissue!="wb", Species!="LNDC"), 
+
+(Cd_mwfll <- ggplot(mwfll, 
                    mapping = aes(Species,Cd,fill=Tissue)) + 
   geom_boxplot()+
   theme_classic()+
@@ -407,7 +516,8 @@ Anova(zn_mwfll_glm)
   labs(y= expression(paste("Cd (kg/g dry weight)")),x ="") +
   scale_fill_viridis_d()+
   facet_wrap(~Site))
-(Cu_mwfll <- ggplot(filter(mwfll, Tissue!="wb", Species!="LNDC"), 
+
+(Cu_mwfll <- ggplot(mwfll, 
                    mapping = aes(Species,Cu,fill=Tissue)) + 
   geom_boxplot()+
   theme_classic()+
@@ -418,7 +528,8 @@ Anova(zn_mwfll_glm)
   labs(y= expression(paste("Cu ("*mu~"g/g dry weight)")),x ="") +
   scale_fill_viridis_d()+
   facet_wrap(~Site))
-(Pb_mwfll <- ggplot(filter(mwfll, Tissue!="wb", Species!="LNDC"), 
+
+(Pb_mwfll <- ggplot(mwfll, 
                    mapping = aes(Species,Pb,fill=Tissue)) + 
   geom_boxplot()+
   theme_classic()+
@@ -429,7 +540,8 @@ Anova(zn_mwfll_glm)
   labs(y= expression(paste("Pb ("*mu~"g/g dry weight)")),x ="") +
   scale_fill_viridis_d()+
   facet_wrap(~Site))
-(Se_mwfll <- ggplot(filter(mwfll, Tissue!="wb", Species!="LNDC"), 
+
+(Se_mwfll <- ggplot(mwfll, 
                    mapping = aes(Species,Se,fill=Tissue)) + 
   geom_boxplot()+
   theme_classic()+
@@ -440,7 +552,8 @@ Anova(zn_mwfll_glm)
   labs(y= expression(paste("Se ("*mu~"g/g dry weight)")),) +
   scale_fill_viridis_d()+
   facet_wrap(~Site))
-(Zn_mwfll <- ggplot(filter(mwfll, Tissue!="wb", Species!="LNDC"), 
+
+(Zn_mwfll <- ggplot(mwfll, 
                    mapping = aes(Species,Zn,fill=Tissue))+ 
   geom_boxplot()+
   theme_classic()+
@@ -451,6 +564,7 @@ Anova(zn_mwfll_glm)
   labs(y= expression(paste("Zn ("*mu~"g/g dry weight)")), ) +
   scale_fill_viridis_d()+
   facet_wrap(~Site))
+
 newplot<-plot_grid(As_mwfll+theme(legend.position = "none"),
                    Cd_mwfll+theme(legend.position = "none"),
                    Cu_mwfll+theme(legend.position = "none"),
@@ -481,7 +595,6 @@ str(ll)
 # bit more interesting and useful. Cu, Cd, and Se all have interesitng patterns
 # There are individual plots, but the money plot is a faceted one at the bottom
 
-par(mfrow = c(2,2)) # Makes it so diagnostic plots from base R are 2x2 grid
 
 # As:
 as_ll_tissue_glm <- glm(As ~ Tissue*Site*Length,
