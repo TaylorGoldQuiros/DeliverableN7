@@ -1,0 +1,78 @@
+Analysis of Deviance Table (Type II tests)
+
+Response: As
+                    LR Chisq Df Pr(>Chisq)   
+Tissue                8.4465  2   0.014651 * 
+Species              10.6649  1   0.001092 **
+Site                  6.1927  2   0.045214 * 
+Tissue:Species        3.5728  2   0.167564   
+Tissue:Site           5.4957  4   0.240105   
+Species:Site          2.2941  2   0.317568   
+Tissue:Species:Site   1.6986  4   0.790970   
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Analysis of Deviance Table (Type II tests)
+
+Response: Cd
+                    LR Chisq Df Pr(>Chisq)    
+Tissue                35.126  2  2.357e-08 ***
+Species                0.000  1     0.9985    
+Site                   1.077  2     0.5836    
+Tissue:Species         0.023  2     0.9885    
+Tissue:Site            4.486  4     0.3443    
+Species:Site           0.357  2     0.8366    
+Tissue:Species:Site    0.767  4     0.9429    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Analysis of Deviance Table (Type II tests)
+
+Response: Cu
+                    LR Chisq Df Pr(>Chisq)    
+Tissue               17.3217  2  0.0001732 ***
+Species               6.6893  1  0.0096992 ** 
+Site                  2.0890  2  0.3518713    
+Tissue:Species       13.1208  2  0.0014153 ** 
+Tissue:Site           7.4601  4  0.1134808    
+Species:Site          1.9615  2  0.3750283    
+Tissue:Species:Site   6.7824  4  0.1478438    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Analysis of Deviance Table (Type II tests)
+
+Response: Pb
+                    LR Chisq Df Pr(>Chisq)    
+Tissue                42.082  2  7.278e-10 ***
+Species                3.389  1    0.06564 .  
+Site                   2.348  2    0.30910    
+Tissue:Species         4.816  2    0.08998 .  
+Tissue:Site            4.005  4    0.40538    
+Species:Site           0.466  2    0.79199    
+Tissue:Species:Site    1.085  4    0.89665    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Analysis of Deviance Table (Type II tests)
+
+Response: Se
+                    LR Chisq Df Pr(>Chisq)    
+Tissue                55.200  2  1.031e-12 ***
+Species                0.488  1     0.4849    
+Site                   3.725  2     0.1553    
+Tissue:Species         3.196  2     0.2023    
+Tissue:Site            3.972  4     0.4099    
+Species:Site           0.253  2     0.8811    
+Tissue:Species:Site    1.773  4     0.7774    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Analysis of Deviance Table (Type II tests)
+
+Response: Zn
+                    LR Chisq Df Pr(>Chisq)    
+Tissue               139.632  2  < 2.2e-16 ***
+Species               54.930  1  1.249e-13 ***
+Site                   3.911  2     0.1415    
+Tissue:Species        45.570  2  1.272e-10 ***
+Tissue:Site            6.487  4     0.1656    
+Species:Site           0.922  2     0.6305    
+Tissue:Species:Site    5.879  4     0.2084    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1

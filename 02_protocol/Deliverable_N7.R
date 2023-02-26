@@ -182,9 +182,14 @@ asbm<-glm(As~Site*Species*Tissue, data = mwfll)
 Anova(asbm)
 
 
-ggplot(filter(totmet, Tissue!="wb"), mapping = aes(Species,As,fill=Tissue))+geom_boxplot()+theme_classic()+facet_wrap(~Site)
-As_tissues <- ggplot(filter(succomb, Tissue!="wb", Species!="LNDC"), 
-                     mapping = aes(Species,As,fill=Tissue)) + 
+ggplot(filter(totmet, Tissue!="wb"), 
+       mapping = aes(Species, As, fill=Tissue)) +
+  geom_boxplot() +
+  theme_classic() +
+  facet_wrap(~Site)
+As_tissues <- 
+  ggplot(filter(succomb, Tissue!="wb", Species!="LNDC"), 
+         mapping = aes(Species,As,fill=Tissue)) + 
   geom_boxplot()+
   theme_classic()+
   scale_y_log10() +
@@ -317,10 +322,69 @@ plot_grid(plots,legend, rel_widths = c(3,.4))
 succomb<-read.csv("./01_input/Suckerscombined.csv", header = TRUE)
 succomb$Site<-as.factor(succomb$Site)
 succomb$Site <- ordered(succomb$Site, levels=c("DL","GC", "BG"))
-mwfll<-filter(succomb, Species!="Suckers")
+
+# Create dataframe with just MWF and LL with the proper vector attributes
+mwfll<-filter(succomb, Species == c("LL", "MWF")) %>%
+  droplevels() %>%
+  mutate(Species = as.factor(Species), Tissue = as.factor(Tissue))
 str(mwfll)
 
-As_mwfll <- ggplot(filter(mwfll, Tissue!="wb", Species!="LNDC"), 
+# Stats using glm, Anova, emmeans, and cld
+# as
+as_mwfll_glm <- glm(As ~ Tissue*Species*Site, 
+                    family = Gamma(link = "log"), 
+                    data = mwfll)
+plot(as_mwfll_glm)
+Anova(as_mwfll_glm)
+
+# Cd
+cd_mwfll_glm <- glm(Cd ~ Tissue*Species*Site, 
+                    family = Gamma(link = "log"), 
+                    data = mwfll)
+plot(cd_mwfll_glm)
+Anova(cd_mwfll_glm)
+
+# Cu
+cu_mwfll_glm <- glm(Cu ~ Tissue*Species*Site, 
+                    family = Gamma(link = "log"), 
+                    data = mwfll)
+plot(cu_mwfll_glm)
+Anova(cu_mwfll_glm)
+
+# Pb
+pb_mwfll_glm <- glm(Pb ~ Tissue*Species*Site, 
+                    family = Gamma(link = "log"), 
+                    data = mwfll)
+plot(pb_mwfll_glm)
+Anova(pb_mwfll_glm)
+
+# Se
+se_mwfll_glm <- glm(Se ~ Tissue*Species*Site, 
+                    family = Gamma(link = "log"), 
+                    data = mwfll)
+plot(se_mwfll_glm)
+Anova(se_mwfll_glm)
+
+# Zn
+
+zn_mwfll_glm <- glm(Zn ~ Tissue*Species*Site, 
+                    family = Gamma(link = "log"), 
+                    data = mwfll)
+plot(zn_mwfll_glm)
+Anova(zn_mwfll_glm)
+
+# Write output to a file:
+sink("./03_incremental/Anova_SitexSpeciesxTissue_mwf_ll.txt")
+Anova(as_mwfll_glm)
+Anova(cd_mwfll_glm)
+Anova(cu_mwfll_glm)
+Anova(pb_mwfll_glm)
+Anova(se_mwfll_glm)
+Anova(zn_mwfll_glm)
+sink()
+
+
+(As_mwfll <- ggplot(filter(mwfll, Tissue!="wb", Species!="LNDC"), 
                    mapping = aes(Species,As, fill=Tissue)) + 
   geom_boxplot()+
   theme_classic()+
@@ -331,9 +395,8 @@ As_mwfll <- ggplot(filter(mwfll, Tissue!="wb", Species!="LNDC"),
   theme(axis.text.x = element_text(angle = 25,hjust = 1) )+
   labs(y= expression("As (kg/g dry weight)"),x ="") +
   scale_fill_viridis_d( labels=c("Gill","Liver","Muscle"))+
-  facet_wrap(~Site)
-
-Cd_mwfll <- ggplot(filter(mwfll, Tissue!="wb", Species!="LNDC"), 
+  facet_wrap(~Site))
+(Cd_mwfll <- ggplot(filter(mwfll, Tissue!="wb", Species!="LNDC"), 
                    mapping = aes(Species,Cd,fill=Tissue)) + 
   geom_boxplot()+
   theme_classic()+
@@ -343,8 +406,8 @@ Cd_mwfll <- ggplot(filter(mwfll, Tissue!="wb", Species!="LNDC"),
   theme(axis.text.x = element_text(angle = 25,hjust = 1) )+
   labs(y= expression(paste("Cd (kg/g dry weight)")),x ="") +
   scale_fill_viridis_d()+
-  facet_wrap(~Site)
-Cu_mwfll <- ggplot(filter(mwfll, Tissue!="wb", Species!="LNDC"), 
+  facet_wrap(~Site))
+(Cu_mwfll <- ggplot(filter(mwfll, Tissue!="wb", Species!="LNDC"), 
                    mapping = aes(Species,Cu,fill=Tissue)) + 
   geom_boxplot()+
   theme_classic()+
@@ -354,8 +417,8 @@ Cu_mwfll <- ggplot(filter(mwfll, Tissue!="wb", Species!="LNDC"),
   theme(axis.text.x = element_text(angle = 25,hjust = 1) )+
   labs(y= expression(paste("Cu ("*mu~"g/g dry weight)")),x ="") +
   scale_fill_viridis_d()+
-  facet_wrap(~Site)
-Pb_mwfll <- ggplot(filter(mwfll, Tissue!="wb", Species!="LNDC"), 
+  facet_wrap(~Site))
+(Pb_mwfll <- ggplot(filter(mwfll, Tissue!="wb", Species!="LNDC"), 
                    mapping = aes(Species,Pb,fill=Tissue)) + 
   geom_boxplot()+
   theme_classic()+
@@ -365,8 +428,8 @@ Pb_mwfll <- ggplot(filter(mwfll, Tissue!="wb", Species!="LNDC"),
   theme(axis.text.x = element_text(angle = 25,hjust = 1) )+
   labs(y= expression(paste("Pb ("*mu~"g/g dry weight)")),x ="") +
   scale_fill_viridis_d()+
-  facet_wrap(~Site)
-Se_mwfll <- ggplot(filter(mwfll, Tissue!="wb", Species!="LNDC"), 
+  facet_wrap(~Site))
+(Se_mwfll <- ggplot(filter(mwfll, Tissue!="wb", Species!="LNDC"), 
                    mapping = aes(Species,Se,fill=Tissue)) + 
   geom_boxplot()+
   theme_classic()+
@@ -376,8 +439,8 @@ Se_mwfll <- ggplot(filter(mwfll, Tissue!="wb", Species!="LNDC"),
   theme(axis.text.x = element_text(angle = 25,hjust = 1) )+
   labs(y= expression(paste("Se ("*mu~"g/g dry weight)")),) +
   scale_fill_viridis_d()+
-  facet_wrap(~Site)
-Zn_mwfll <- ggplot(filter(mwfll, Tissue!="wb", Species!="LNDC"), 
+  facet_wrap(~Site))
+(Zn_mwfll <- ggplot(filter(mwfll, Tissue!="wb", Species!="LNDC"), 
                    mapping = aes(Species,Zn,fill=Tissue))+ 
   geom_boxplot()+
   theme_classic()+
@@ -387,7 +450,7 @@ Zn_mwfll <- ggplot(filter(mwfll, Tissue!="wb", Species!="LNDC"),
   theme(axis.text.x = element_text(angle = 25,hjust = 1) )+
   labs(y= expression(paste("Zn ("*mu~"g/g dry weight)")), ) +
   scale_fill_viridis_d()+
-  facet_wrap(~Site)
+  facet_wrap(~Site))
 newplot<-plot_grid(As_mwfll+theme(legend.position = "none"),
                    Cd_mwfll+theme(legend.position = "none"),
                    Cu_mwfll+theme(legend.position = "none"),
