@@ -455,6 +455,29 @@ Anova(zn_mwfll.glm)
 # Anova(zn_mwfll.glm)
 # sink()
 
+# Calling and writing output for pairwise comparison p values:
+sink("./03_incremental/p_values_pairwise_mwf_ll.txt")
+print("Arsenic")
+pairs(as_mwfll_tissue.emm)
+pairs(as_mwfll_site.emm)
+pairs(as_mwfll_species.emm)
+print("------------------------------------")
+print("Cadmium")
+pairs(cd_mwfll_tissue.emm)
+print("------------------------------------")
+print("Copper")
+contrast(cu_mwfll_all.emm, simple = "each")
+print("------------------------------------")
+print("Lead")
+contrast(pb_mwfll_species_site.emm, simple = "each")
+pairs(pb_mwfll_tissue.emm)
+print("------------------------------------")
+print("Selenium")
+pairs(se_mwfll.emm)
+print("------------------------------------")
+print("Zinc")
+contrast(zn_mwfll.emm, simple = "each")
+sink()
 # Setting up cld objects for use as geom_text labels on the plots
 as_mwfll_tissue.cld$.group <- gsub(" ", "", as_mwfll_tissue.cld$.group)
 as_mwfll_tissue.cld <- subset(as_mwfll_tissue.cld)
@@ -597,10 +620,10 @@ str(ll)
 
 
 # As:
-as_ll_tissue_glm <- glm(As ~ Tissue*Site*Length,
+as_ll_tissue.glm <- glm(As ~ Tissue*Site*Length,
                         family = Gamma(link = "log"), ll)
-plot(as_ll_tissue_glm)
-Anova(as_ll_tissue_glm)
+plot(as_ll_tissue.glm)
+Anova(as_ll_tissue.glm)
 
 (as_ll_fig <- ggplot(data = ll, aes(Length, As, color = Tissue)) + 
   geom_point()+
@@ -612,10 +635,10 @@ Anova(as_ll_tissue_glm)
   scale_color_viridis_d(labels=c("Gill","Liver","Muscle"))) 
 
 # Cd:
-cd_ll_tissue_glm <- glm(Cd ~ Tissue*Site*Length,
+cd_ll_tissue.glm <- glm(Cd ~ Tissue*Site*Length,
                         family = Gamma(link = "log"), ll)
-plot(cd_ll_tissue_glm)
-Anova(cd_ll_tissue_glm)
+plot(cd_ll_tissue.glm)
+Anova(cd_ll_tissue.glm)
 
 (cd_ll_fig <- ggplot(data = ll, aes(Length, Cd, color = Tissue)) + 
   geom_point()+
@@ -628,11 +651,11 @@ Anova(cd_ll_tissue_glm)
 
 
 # Cu:
-cu_ll_tissue_glm <- glm(Cu ~ Tissue*Site*Length,
+cu_ll_tissue.glm <- glm(Cu ~ Tissue*Site*Length,
                         family = Gamma(link = "log"), ll,
                         maxit = 1000) # Wasn't converging, so added iterations
-plot(cu_ll_tissue_glm)
-Anova(cu_ll_tissue_glm)
+plot(cu_ll_tissue.glm)
+Anova(cu_ll_tissue.glm)
 
 (cu_ll_fig <- ggplot(data = ll, aes(Length, Cu, color = Tissue)) + 
   geom_point()+
@@ -644,10 +667,10 @@ Anova(cu_ll_tissue_glm)
   scale_color_viridis_d(labels=c("Gill","Liver","Muscle")) )
 
 # Pb:
-pb_ll_tissue_glm <- glm(Pb ~ Tissue*Site*Length,
+pb_ll_tissue.glm <- glm(Pb ~ Tissue*Site*Length,
                         family = Gamma(link = "log"), ll)
-plot(pb_ll_tissue_glm)
-Anova(pb_ll_tissue_glm)
+plot(pb_ll_tissue.glm)
+Anova(pb_ll_tissue.glm)
 
 (pb_ll_fig <- ggplot(data = ll, aes(Length, Pb, color = Tissue)) + 
   geom_point()+
@@ -660,10 +683,10 @@ Anova(pb_ll_tissue_glm)
 
 # Se:
 # 
-se_ll_tissue_glm <- glm(Se ~ Tissue*Site*Length,
+se_ll_tissue.glm <- glm(Se ~ Tissue*Site*Length,
                         family = Gamma(link = "log"), ll)
-plot(se_ll_tissue_glm)
-Anova(se_ll_tissue_glm)
+plot(se_ll_tissue.glm)
+Anova(se_ll_tissue.glm)
 
 (se_ll_fig <- ggplot(data = ll, aes(Length, Se, color = Tissue)) + 
   geom_point()+
@@ -676,10 +699,10 @@ Anova(se_ll_tissue_glm)
 
 #Zn:
 
-zn_ll_tissue_glm <- glm(Zn ~ Tissue*Site*Length,
+zn_ll_tissue.glm <- glm(Zn ~ Tissue*Site*Length,
                         family = Gamma(link = "log"), ll)
-plot(zn_ll_tissue_glm)
-Anova(zn_ll_tissue_glm)
+plot(zn_ll_tissue.glm)
+Anova(zn_ll_tissue.glm)
 
 (zn_ll_fig <- ggplot(data = ll, aes(Length, Zn, color = Tissue)) + 
   geom_point()+
@@ -724,10 +747,10 @@ mwf <- mwf %>%
   mutate(Site = ordered(Site, levels=c("DL","GC", "BG")))
 
 # As:
-as_mwf_tissue_glm <- glm(As ~ Tissue*Site*Length,
+as_mwf_tissue.glm <- glm(As ~ Tissue*Site*Length,
                         family = Gamma(link = "log"), mwf)
-plot(as_mwf_tissue_glm)
-Anova(as_mwf_tissue_glm)
+plot(as_mwf_tissue.glm)
+Anova(as_mwf_tissue.glm)
 
 (as_mwf_fig <- ggplot(data = mwf, aes(Length, As, color = Tissue)) + 
     geom_point()+
@@ -739,10 +762,10 @@ Anova(as_mwf_tissue_glm)
     scale_color_viridis_d(labels=c("Gill","Liver","Muscle"))) 
 
 # Cd:
-cd_mwf_tissue_glm <- glm(Cd ~ Tissue*Site*Length,
+cd_mwf_tissue.glm <- glm(Cd ~ Tissue*Site*Length,
                         family = Gamma(link = "log"), mwf)
-plot(cd_mwf_tissue_glm)
-Anova(cd_mwf_tissue_glm)
+plot(cd_mwf_tissue.glm)
+Anova(cd_mwf_tissue.glm)
 
 (cd_mwf_fig <- ggplot(data = mwf, aes(Length, Cd, color = Tissue)) + 
     geom_point()+
@@ -755,10 +778,10 @@ Anova(cd_mwf_tissue_glm)
 
 
 # Cu:
-cu_mwf_tissue_glm <- glm(Cu ~ Tissue*Site*Length,
+cu_mwf_tissue.glm <- glm(Cu ~ Tissue*Site*Length,
                         family = Gamma(link = "log"), mwf) 
-plot(cu_mwf_tissue_glm)
-Anova(cu_mwf_tissue_glm)
+plot(cu_mwf_tissue.glm)
+Anova(cu_mwf_tissue.glm)
 
 (cu_mwf_fig <- ggplot(data = mwf, aes(Length, Cu, color = Tissue)) + 
     geom_point()+
@@ -770,11 +793,11 @@ Anova(cu_mwf_tissue_glm)
     scale_color_viridis_d(labels=c("Gill","Liver","Muscle")) )
 
 # Pb:
-pb_mwf_tissue_glm <- glm(Pb ~ Tissue*Site*Length,
+pb_mwf_tissue.glm <- glm(Pb ~ Tissue*Site*Length,
                         family = Gamma(link = "log"), mwf,
                         maxit = 1000)
-plot(pb_mwf_tissue_glm)
-Anova(pb_mwf_tissue_glm)
+plot(pb_mwf_tissue.glm)
+Anova(pb_mwf_tissue.glm)
 
 (pb_mwf_fig <- ggplot(data = mwf, aes(Length, Pb, color = Tissue)) + 
     geom_point()+
@@ -787,10 +810,10 @@ Anova(pb_mwf_tissue_glm)
 
 # Se:
 # 
-se_mwf_tissue_glm <- glm(Se ~ Tissue*Site*Length,
+se_mwf_tissue.glm <- glm(Se ~ Tissue*Site*Length,
                         family = Gamma(link = "log"), mwf)
-plot(se_mwf_tissue_glm)
-Anova(se_mwf_tissue_glm)
+plot(se_mwf_tissue.glm)
+Anova(se_mwf_tissue.glm)
 
 (se_mwf_fig <- ggplot(data = mwf, aes(Length, Se, color = Tissue)) + 
     geom_point()+
@@ -803,10 +826,10 @@ Anova(se_mwf_tissue_glm)
 
 #Zn:
 
-zn_mwf_tissue_glm <- glm(Zn ~ Tissue*Site*Length,
+zn_mwf_tissue.glm <- glm(Zn ~ Tissue*Site*Length,
                         family = Gamma(link = "log"), mwf)
-plot(zn_mwf_tissue_glm)
-Anova(zn_mwf_tissue_glm)
+plot(zn_mwf_tissue.glm)
+Anova(zn_mwf_tissue.glm)
 
 (zn_mwf_fig <- ggplot(data = mwf, aes(Length, Zn, color = Tissue)) + 
     geom_point()+
@@ -837,6 +860,34 @@ Anova(zn_mwf_tissue_glm)
 save_plot("./03_incremental/mwf_tissue_length.png", mwf_tissue_length_fig,
           base_height = 5, base_width = 4)
 
+# Saving outputs of all of the length by element by tissue plots:
+
+sink("./03_incremental/length_tissue_Anovas.txt")
+print("Trout")
+Anova(as_ll_tissue.glm)
+print("Whitefish")
+Anova(as_mwf_tissue.glm)
+print("Trout")
+Anova(cd_ll_tissue.glm)
+print("Whitefish")
+Anova(cd_mwf_tissue.glm)
+print("Trout")
+Anova(cu_ll_tissue.glm)
+print("Whitefish")
+Anova(cu_mwf_tissue.glm)
+print("Trout")
+Anova(pb_ll_tissue.glm)
+print("Whitefish")
+Anova(pb_mwf_tissue.glm)
+print("Trout")
+Anova(se_ll_tissue.glm)
+print("Whitefish")
+Anova(se_mwf_tissue.glm)
+print("Trout")
+Anova(zn_ll_tissue.glm)
+print("Whitefish")
+Anova(zn_mwf_tissue.glm)
+sink()
 
 
 dlasll<-ggplot(filter(ll, Site == "DL"), 
@@ -1094,3 +1145,5 @@ summary(dlkll)
 sd(dlkll$K)
 #end####
 #where isthis going in git?#
+
+####Isotope data stats and figures:
