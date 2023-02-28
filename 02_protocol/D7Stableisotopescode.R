@@ -5,13 +5,15 @@ library(car)
 library(multcomp)
 library(tidyverse)
 library(emmeans)
+library(cowplot)
 
 #onboard clean csv file
 #change site to an ordered factor
 sit1<-read.csv("./01_input/SIallforR.csv", header = TRUE) %>%
   filter(is.na(Year) == FALSE) %>%
   mutate(Site = ordered(Site, levels=c("DL","GC", "BG")), 
-                        Species = as.factor(Species)) %>%
+         Species = ordered(Species, levels = c("LL", "MWF", "LNSU", "LSSU",
+                                               "LNDC", "RSSH"))) %>%
   select(1:9)
 
 colnames(sit1) <- c("Sample", "Site", "Year", "Species", "Num", "Length", "Weight", "d13C", "d15N")
@@ -139,7 +141,14 @@ all_d15N.emm <- emmeans(all_d15N.glm, ~Site*Species, type = "response")
                     by = c("Species"), 
                     Letters = letters))
 
+(all_d15N_species.cld <- cld(all_d15N.emm, 
+                          alpha = 0.05, 
+                          by = c("Site"), 
+                          Letters = letters))
+
+all_d15N_site.cld$.group <- gsub(" ", "", all_d15N_site.cld$.group)
 all_d15N_site.cld <- subset(all_d15N_site.cld)
+
 
 all_d13C.glm <- glm(d13C ~ Site*Species,
                     family = gaussian(link = "identity"),
@@ -153,9 +162,48 @@ plot(all_d13C.glm1)
 Anova(all_d13C.glm1)
 
 all_d13C.emm <- emmeans(all_d13C.glm, ~Site*Species, type = "response")
+all_d13C.cld <- cld(all_d13C.emm, 
+                    by = "Species", 
+                    alpha = 0.05, 
+                    Letters = letters)
+
 
 (d15N_graph <- ggplot()+
-   geom_point(data = all_d15N.cld, aes(x = Site, y = emmean), size = 3, shape = 1) +
-   geom_errorbar(data = all_d15N.cld, aes(x = Site, ymin = lower.CL, ymax = upper.CL), width = 0) +
-   facet_grid( ~ all_d15N.cld$Species)
+    geom_point(data = all_d15N_site.cld, 
+               aes(x = Site, y = emmean), 
+               size = 4, 
+               shape = 1) +
+    geom_errorbar(data = all_d15N_site.cld, 
+                  aes(x = Site, ymin = lower.CL, ymax = upper.CL), 
+                  width = 0) +
+    geom_text(data = all_d15N_site.cld, 
+              aes(x = Site, y = emmean, 
+                  label = .group), vjust = -3, hjust = -0.5) +
+    labs(y = expression(delta^15*N~("\u2030"))) +
+    facet_grid( ~ all_d15N_site.cld$Species) +
+    theme_classic() +
+    theme(panel.background = element_rect(fill = NA, color = "black"))
 ) 
+
+save_plot("./03_incremental/d15N_site.png", d15N_graph,
+          base_height = 4, base_width = 8)
+
+(d13C_graph <- ggplot()+
+    geom_point(data = all_d13C.cld, 
+               aes(x = Site, y = emmean), 
+               size = 4, 
+               shape = 1) +
+    geom_errorbar(data = all_d13C.cld, 
+                  aes(x = Site, ymin = lower.CL, ymax = upper.CL), 
+                  width = 0) +
+    # geom_text(data = all_d15N_site.cld, 
+    #           aes(x = Site, y = emmean, 
+    #               label = .group), vjust = -3, hjust = -0.5) +
+    labs(y = expression(delta^13*C~("\u2030"))) +
+    facet_grid( ~ all_d13C.cld$Species) +
+    theme_classic() +
+    theme(panel.background = element_rect(fill = NA, color = "black"))
+) 
+
+save_plot("./03_incremental/d13C_site.png", d13C_graph,
+          base_height = 4, base_width = 8)
