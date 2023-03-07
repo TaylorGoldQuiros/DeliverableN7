@@ -18,11 +18,7 @@ totmet$Site <- ordered(totmet$Site, levels = c("DL", "GC", "BG"))
 Length <- as.numeric(totmet$Length)
 totmet$Weight <- na.exclude(totmet$Weight)
 Weight <- as.numeric(totmet$Weight)
-class(totmet$Tissue)
-str(totmet)
-is.na(totmet$As)
-As <- na.exclude(totmet$As)
-Cu <- na.exclude(totmet$Cu)
+
 
 #####Alternative route to get summary statistics####
 
