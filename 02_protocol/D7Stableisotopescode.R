@@ -188,6 +188,13 @@ all_d13C.cld <- cld(all_d13C.emm,
 save_plot("./03_incremental/d15N_site.png", d15N_graph,
           base_height = 4, base_width = 8)
 
+fish_label <- c("Brown Trout", "Mountain\n Whitefish",
+                "Long Nose \n Sucker", 
+                "Large Scale \n Sucker",
+                "Long Nose \n Dace", 
+                "Redside Shiner")
+names(fish_label) <- c("LL", "MWF", "LNSU", "LSSU", "LNDC", "RSSH")
+
 (d13C_graph <- ggplot()+
     geom_point(data = all_d13C.cld, 
                aes(x = Site, y = emmean), 
@@ -200,7 +207,9 @@ save_plot("./03_incremental/d15N_site.png", d15N_graph,
     #           aes(x = Site, y = emmean, 
     #               label = .group), vjust = -3, hjust = -0.5) +
     labs(y = expression(delta^13*C~("\u2030"))) +
-    facet_grid( ~ all_d13C.cld$Species) +
+    facet_grid( ~ all_d13C.cld$Species, 
+                labeller = 
+                  labeller(Species = fish_label)) +
     theme_classic() +
     theme(panel.background = element_rect(fill = NA, color = "black"))
 ) 
