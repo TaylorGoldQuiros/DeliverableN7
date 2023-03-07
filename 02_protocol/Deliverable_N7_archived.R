@@ -10,8 +10,6 @@ library(car)
 library(viridisLite)
 library(emmeans)
 
-options(scipen = 8) # Get rid of scientific notation
-
 totmet <- read.csv("./01_input/Metals Master.csv", header = TRUE)
 totmet$Site <- as.factor(totmet$Site)
 totmet$Site <- ordered(totmet$Site, levels = c("DL", "GC", "BG"))
@@ -23,14 +21,146 @@ str(totmet)
 is.na(totmet$As)
 As <- na.exclude(totmet$As)
 Cu <- na.exclude(totmet$Cu)
+# -- 
+####Summary Stats####
+#Deerlodge
+dfllg<- filter(totmet, Site == "DL", Tissue == "g", Species == "LL")
+summary(dfllg)
+stdev<- c(sd(dfllg$As), sd(dfllg$Cd), sd(dfllg$Cu),sd(dfllg$Pb), sd(dfllg$Se), sd(dfllg$Zn))
+stdev
+dflll<- filter(totmet, Site == "DL", Tissue == "l", Species == "LL")
+summary(dflll)
+stdevlll<- c(sd(dflll$As), sd(dflll$Cd), sd(dflll$Cu),sd(dflll$Pb), sd(dflll$Se), sd(dflll$Zn))
+stdevlll
+dfllm<- filter(totmet, Site == "DL", Tissue == "m", Species == "LL")
+summary(dfllm)
+stdevllm<- c(sd(dfllm$As), sd(dfllm$Cd), sd(dfllm$Cu),sd(dfllm$Pb), sd(dfllm$Se), sd(dfllm$Zn))
+stdevllm
 
+dflssug<- filter(totmet, Site == "DL", Tissue == "g", Species == "LSSU")
+summary(dflssug)
+stdevlssug<- c(sd(dflssug$As), sd(dflssug$Cd), sd(dflssug$Cu),sd(dflssug$Pb), sd(dflssug$Se), sd(dflssug$Zn))
+stdevlssug
+dflssul<- filter(totmet, Site == "DL", Tissue == "l", Species == "LSSU")
+summary(dflssul)
+stdevlssul<- c(sd(dflssul$As), sd(dflssul$Cd), sd(dflssul$Cu),sd(dflssul$Pb), sd(dflssul$Se), sd(dflssul$Zn))
+stdevlssul
+dflssum<- filter(totmet, Site == "DL", Tissue == "m", Species == "LSSU")
+summary(dflssum)
+stdevlssum<- c(sd(dflssum$As), sd(dflssum$Cd), sd(dflssum$Cu),sd(dflssum$Pb), sd(dflssum$Se), sd(dflssum$Zn))
+stdevlssum
+
+dfmwfg<- filter(totmet, Site == "DL", Tissue == "g", Species == "MWF")
+summary(dfmwfg)
+sd(dfmwfg$Zn)
+dfmwfl<- filter(totmet, Site == "DL", Tissue == "l", Species == "MWF")
+summary(dfmwfl)
+sd(dfmwfl$Zn)
+dfmwfm<- filter(totmet, Site == "DL", Tissue == "m", Species == "MWF")
+summary(dfmwfm)
+
+dfrssh<- filter(totmet, Site == "DL", Tissue == "wb", Species == "RSSH")
+summary(dfrssh)
+stdevrssh<- c(sd(dfrssh$As), sd(dfrssh$Cd), sd(dfrssh$Cu),sd(dfrssh$Pb), sd(dfrssh$Se), sd(dfrssh$Zn))
+stdevrssh
+
+dflnsum<- filter(totmet, Site == "DL", Tissue == "m", Species == "LNSU")
+summary(dflnsum)
+
+#Gold Creek
+dfllg<- filter(totmet, Site == "GC", Tissue == "g", Species == "LL")
+summary(dfllg)
+stdev<- c(sd(dfllg$As), sd(dfllg$Cd), sd(dfllg$Cu),sd(dfllg$Pb), sd(dfllg$Se), sd(dfllg$Zn))
+stdev
+dflll<- filter(totmet, Site == "GC", Tissue == "l", Species == "LL")
+summary(dflll)
+stdevlll<- c(sd(dflll$As), sd(dflll$Cd), sd(dflll$Cu),sd(dflll$Pb), sd(dflll$Se), sd(dflll$Zn))
+stdevlll
+dfllm<- filter(totmet, Site == "GC", Tissue == "m", Species == "LL")
+summary(dfllm)
+stdevllm<- c(sd(dfllm$As), sd(dfllm$Cd), sd(dfllm$Cu),sd(dfllm$Pb), sd(dfllm$Se), sd(dfllm$Zn))
+stdevllm
+
+dflssuwb<- filter(totmet, Site == "GC", Tissue == "WB", Species == "LSSU")
+summary(dflssuwb)
+stdevlssuwb<- c(sd(dflssuwb$As), sd(dflssuwb$Cd), sd(dflssuwb$Cu),sd(dflssuwb$Pb), sd(dflssuwb$Se), sd(dflssuwb$Zn))
+stdevlssuwb
+
+
+dfmwfg<- filter(totmet, Site == "GC", Tissue == "g", Species == "MWF")
+summary(dfmwfg)
+stdevmwfg<- c(sd(dfmwfg$As), sd(dfmwfg$Cd), sd(dfmwfg$Cu),sd(dfmwfg$Pb), sd(dfmwfg$Se), sd(dfmwfg$Zn))
+stdevmwfg
+dfmwfl<- filter(totmet, Site == "GC", Tissue == "l", Species == "MWF")
+summary(dfmwfl)
+stdevmwfl<- c(sd(dfmwfl$As), sd(dfmwfl$Cd), sd(dfmwfl$Cu),sd(dfmwfl$Pb), sd(dfmwfl$Se), sd(dfmwfl$Zn))
+stdevmwfl
+dfmwfm<- filter(totmet, Site == "GC", Tissue == "m", Species == "MWF")
+summary(dfmwfm)
+stdevmwfm<- c(sd(dfmwfm$As), sd(dfmwfm$Cd), sd(dfmwfm$Cu),sd(dfmwfm$Pb), sd(dfmwfm$Se), sd(dfmwfm$Zn))
+stdevmwfm
+
+#Bear Gulch
+dfllg<- filter(totmet, Site == "BG", Tissue == "g", Species == "LL")
+summary(dfllg)
+stdev<- c(sd(dfllg$As), sd(dfllg$Cd), sd(dfllg$Cu),sd(dfllg$Pb), sd(dfllg$Se), sd(dfllg$Zn))
+stdev
+dflll<- filter(totmet, Site == "BG", Tissue == "l", Species == "LL")
+summary(dflll)
+stdevlll<- c(sd(dflll$As), sd(dflll$Cd), sd(dflll$Cu),sd(dflll$Pb), sd(dflll$Se), sd(dflll$Zn))
+stdevlll
+dfllm<- filter(totmet, Site == "BG", Tissue == "m", Species == "LL")
+summary(dfllm)
+stdevllm<- c(sd(dfllm$As), sd(dfllm$Cd), sd(dfllm$Cu),sd(dfllm$Pb), sd(dfllm$Se), sd(dfllm$Zn))
+stdevllm
+
+dflssug<- filter(totmet, Site == "BG", Tissue == "g", Species == "LSSU")
+summary(dflssug)
+stdevlssug<- c(sd(dflssug$As), sd(dflssug$Cd), sd(dflssug$Cu),sd(dflssug$Pb), sd(dflssug$Se), sd(dflssug$Zn))
+stdevlssug
+dflssum<- filter(totmet, Site == "BG", Tissue == "m", Species == "LSSU")
+summary(dflssum)
+stdevlssum<- c(sd(dflssum$As), sd(dflssum$Cd), sd(dflssum$Cu),sd(dflssum$Pb), sd(dflssum$Se), sd(dflssum$Zn))
+stdevlssum
+
+dflnsug<- filter(totmet, Site == "BG", Tissue == "g", Species == "LNSU")
+summary(dflnsug)
+stdevlnsug<- c(sd(dflnsug$As), sd(dflnsug$Cd), sd(dflnsug$Cu),sd(dflnsug$Pb), sd(dflnsug$Se), sd(dflnsug$Zn))
+stdevlnsug
+dflnsul<- filter(totmet, Site == "BG", Tissue == "L", Species == "LNSU")
+summary(dflnsul)
+stdevlnsul<- c(sd(dflnsul$As), sd(dflnsul$Cd), sd(dflnsul$Cu),sd(dflnsul$Pb), sd(dflnsul$Se), sd(dflnsul$Zn))
+stdevlnsul
+dflnsum<- filter(totmet, Site == "BG", Tissue == "m", Species == "LNSU")
+summary(dflnsum)
+stdevlnsum<- c(sd(dflnsum$As), sd(dflnsum$Cd), sd(dflnsum$Cu),sd(dflnsum$Pb), sd(dflnsum$Se), sd(dflnsum$Zn))
+stdevlnsum
+
+dfmwfg<- filter(totmet, Site == "BG", Tissue == "g", Species == "MWF")
+summary(dfmwfg)
+stdevmwfg<- c(sd(dfmwfg$As), sd(dfmwfg$Cd), sd(dfmwfg$Cu),sd(dfmwfg$Pb), sd(dfmwfg$Se), sd(dfmwfg$Zn))
+stdevmwfg
+dfmwfl<- filter(totmet, Site == "BG", Tissue == "l", Species == "MWF")
+summary(dfmwfl)
+stdevmwfl<- c(sd(dfmwfl$As), sd(dfmwfl$Cd), sd(dfmwfl$Cu),sd(dfmwfl$Pb), sd(dfmwfl$Se), sd(dfmwfl$Zn))
+stdevmwfl
+dfmwfm<- filter(totmet, Site == "BG", Tissue == "m", Species == "MWF")
+summary(dfmwfm)
+stdevmwfm<- c(sd(dfmwfm$As), sd(dfmwfm$Cd), sd(dfmwfm$Cu),sd(dfmwfm$Pb), sd(dfmwfm$Se), sd(dfmwfm$Zn))
+stdevmwfm
+
+dfrssh<- filter(totmet, Site == "BG", Tissue == "wb", Species == "RSSH")
+summary(dfrssh)
+stdevrssh<- c(sd(dfrssh$As), sd(dfrssh$Cd), sd(dfrssh$Cu),sd(dfrssh$Pb), sd(dfrssh$Se), sd(dfrssh$Zn))
+stdevrssh
+####end####
 #####Alternative route to get summary statistics####
 
 totmet_summary <-
   summarySE((pivot_longer(totmet, 10:15, names_to = "element",
                           values_to = "concentration")), 
             measurevar = "concentration",
-            groupvars = c("Site", "Species", "Tissue", "element"))
+            groupvars = c("Site", "Year", "Species", "element"))
 
 #####Two- Way ANOVAS and figs####
 table(totmet$As, totmet$Site)
@@ -39,19 +169,167 @@ succomb<-read.csv("./01_input/Suckerscombined.csv", header = TRUE)
 succomb$Site<-as.factor(succomb$Site)
 succomb$Site <- ordered(succomb$Site, levels=c("DL","GC", "BG"))
 mwfll<-filter(succomb, Species!="Suckers")
+str(mwfll)
+ggplot(totmet, mapping=aes(Site, As, fill=Tissue))+geom_boxplot()+theme_classic()
+Asaov2<-aov(As~Site * Species, data=totmet)
+summary(Asaov2)
+asglm<-glm(As~Site*Species,data=succomb)
+summary(asglm)
+asaovg<-aov(asglm)
+summary(asaovg)
+asglm2<-glm(As~Site*Species*Tissue, data=succomb)
+as2aov<-aov(asglm2)
+summary(as2aov)
+asbm<-glm(As~Site*Species*Tissue, data = mwfll)
+Anova(asbm)
 
+
+ggplot(filter(totmet, Tissue!="wb"), 
+       mapping = aes(Species, As, fill=Tissue)) +
+  geom_boxplot() +
+  theme_classic() +
+  facet_wrap(~Site)
+As_tissues <- 
+  ggplot(filter(succomb, Tissue!="wb", Species!="LNDC"), 
+         mapping = aes(Species,As,fill=Tissue)) + 
+  geom_boxplot()+
+  theme_classic()+
+  scale_y_log10() +
+  scale_x_discrete(labels=c("LL"="Brown trout", "MWF"="Mountain whitefish","Suckers"="Sucker spp."))+
+  theme(axis.text.x = element_text(angle = 45,hjust = 1) )+
+  labs(y= expression(paste("As ("*mu~"g/g dry weight)")),) +
+  facet_wrap(~Site)
+ggplot(totmet, mapping=aes(Site, Cd, fill=Tissue))+geom_boxplot()+theme_classic()
+Cdaov2<-aov(Cd~Site * Species, data=totmet)
+summary(Cdaov2)
+Cdaov3<-aov(Cd~Site + Species, data=totmet)
+summary(Cdaov3)
+Cdglm<-glm(Cd~Site*Species,data=succomb)
+Cdaovg<-aov(Cdglm)
+summary(Cdaovg)
+cdglm2<-glm(Cd~Site*Species*Tissue, data=succomb)
+cd2aov<-aov(cdglm2)
+summary(cd2aov)
+Anova(cdglm2)
+Cd_tissues <- ggplot(filter(succomb, Tissue!="wb", Species!="LNDC"), 
+                     mapping = aes(Species,Cd,fill=Tissue)) + 
+  geom_boxplot()+
+  theme_classic()+
+  scale_y_log10() +
+  scale_x_discrete(labels=c("LL"="Brown trout", "MWF"="Mountain whitefish","Suckers"="Sucker spp."))+
+  theme(axis.text.x = element_text(angle = 45,hjust = 1) )+
+  labs(y= expression(paste("Cd ("*mu~"g/g dry weight)")),) +
+  facet_wrap(~Site)
+
+ggplot(totmet, mapping=aes(Site, Cu, fill=Tissue))+geom_boxplot()+theme_classic()
+Cuaov2<-aov(Cu~Site * Species, data=totmet)
+summary(Cuaov2)
+Cuaov3<-aov(Cu~Site + Species, data=totmet)
+summary(Cuaov3)
+Cuglm<-glm(Cu~Site*Species,data=succomb)
+Cuaovg<-aov(Cuglm)
+summary(Cuaovg)
+cuglm2<-glm(Cu~Site*Species*Tissue, data=succomb)
+Anova(cuglm2)
+cu2aov<-aov(cuglm2)
+summary(cu2aov)
+cu_tissues <- ggplot(filter(succomb, Tissue!="wb", Species!="LNDC"), 
+                     mapping = aes(Species,Cu,fill=Tissue)) + 
+  geom_boxplot()+
+  theme_classic()+
+  scale_y_log10() +
+  scale_x_discrete(labels=c("LL"="Brown trout", "MWF"="Mountain whitefish","Suckers"="Sucker spp."))+
+  theme(axis.text.x = element_text(angle = 45,hjust = 1) )+
+  labs(y= expression(paste("Cu ("*mu~"g/g dry weight)")),) +
+  facet_wrap(~Site)
+
+ggplot(totmet, mapping=aes(Site, Pb, fill=Tissue))+geom_boxplot()+theme_classic()
+Pbaov2<-aov(Pb~Site * Species, data=totmet)
+summary(Pbaov2)
+Pbglm<-glm(Pb~Site*Species,data=succomb)
+Pbaovg<-aov(Pbglm)
+summary(Pbaovg)
+pbglm2<-glm(Pb~Site*Species*Tissue, data=succomb)
+pb2aov<-aov(pbglm2)
+summary(pb2aov)
+Anova(pbglm2)
+Pb_tissues <- ggplot(filter(succomb, Tissue!="wb", Species!="LNDC"), 
+                     mapping = aes(Species,Pb,fill=Tissue)) + 
+  geom_boxplot()+
+  theme_classic()+
+  scale_y_log10() +
+  scale_x_discrete(labels=c("LL"="Brown trout", "MWF"="Mountain whitefish","Suckers"="Sucker spp."))+
+  theme(axis.text.x = element_text(angle = 45,hjust = 1) )+
+  labs(y= expression(paste("Pb ("*mu~"g/g dry weight)")),) +
+  facet_wrap(~Site)
+
+ggplot(totmet, mapping=aes(Site, Se, fill=Tissue))+geom_boxplot()+theme_classic()
+Seaov2<-aov(Se~Site * Species, data=totmet)
+summary(Seaov2)
+Seaov3<-aov(Se~Site + Species, data=totmet)
+summary(Seaov3)
+Seglm<-glm(Se~Site*Species,data=succomb)
+Seaovg<-aov(Seglm)
+summary(Seaovg)
+seglm2<-glm(Se~Site*Species*Tissue, data=succomb)
+Anova(seglm2)
+se2aov<-aov(seglm2)
+summary(se2aov)
+Se_tissues <- ggplot(filter(succomb, Tissue!="wb", Species!="LNDC"), 
+                     mapping = aes(Species, Se,fill=Tissue)) + 
+  geom_boxplot()+
+  theme_classic()+
+  scale_y_log10() +
+  scale_x_discrete(labels=c("LL"="Brown trout", "MWF"="Mountain whitefish","Suckers"="Sucker spp."))+
+  theme(axis.text.x = element_text(angle = 45,hjust = 1) )+
+  labs(y= expression(paste("Se ("*mu~"g/g dry weight)")),) +
+  facet_wrap(~Site)
+
+ggplot(totmet, mapping=aes(Site, Zn, fill=Tissue))+geom_boxplot()+theme_classic()
+Znaov2<-aov(Zn~Site * Species, data=totmet)
+summary(Znaov2)
+Znaov3<-aov(Zn~Site + Species, data=totmet)
+summary(Znaov3)
+Znglm<-glm(Zn~Site*Species,data=succomb)
+Znaovg<-aov(Znglm)
+summary(Znaovg)
+znglm2<-glm(Zn~Site*Species*Tissue, data=succomb)
+Anova(znglm2)
+zn2aov<-aov(znglm2)
+summary(zn2aov)
+Zn_tissues <- ggplot(filter(succomb, Tissue!="wb", Species!="LNDC"), 
+                     mapping = aes(Species,Zn,fill=Tissue)) + 
+  geom_boxplot()+
+  theme_classic()+
+  scale_y_log10() +
+  scale_x_discrete(labels=c("LL"="Brown trout", "MWF"="Mountain whitefish","Suckers"="Sucker spp."))+
+  theme(axis.text.x = element_text(angle = 45,hjust = 1) )+
+  labs(y= expression(paste("Zn ("*mu~"g/g dry weight)")),) +
+  facet_wrap(~Site)
+
+#combine plots
+plots<-plot_grid(As_tissues+theme(legend.position = "none"),
+                 Cd_tissues+theme(legend.position = "none"),
+                 cu_tissues+theme(legend.position = "none"),
+                 Pb_tissues+theme(legend.position = "none"),
+                 Se_tissues+theme(legend.position = "none"),
+                 Zn_tissues+theme(legend.position = "none"),
+                 labels = c('A','B','C','D','E','F', label_size=12),
+                 align = "hv")
+legend<-get_legend(As_tissues+theme(legend.box.margin = margin(0,0,0,12)))
+plot_grid(plots,legend, rel_widths = c(3,.4))
+
+####end####
 #MWF and LL metals plot
 succomb<-read.csv("./01_input/Suckerscombined.csv", header = TRUE)
 succomb$Site<-as.factor(succomb$Site)
 succomb$Site <- ordered(succomb$Site, levels=c("DL","GC", "BG"))
 
 # Create dataframe with just MWF and LL with the proper vector attributes
-mwfll<-filter(succomb, Species %in% c("LL", "MWF")) %>%
+mwfll<-filter(succomb, Species == c("LL", "MWF")) %>%
   droplevels() %>%
-  mutate(Species = as.factor(Species), 
-         Tissue = as.factor(Tissue),
-         Length = as.numeric(Length),
-         Weight = as.numeric(Weight))
+  mutate(Species = as.factor(Species), Tissue = as.factor(Tissue))
+str(mwfll)
 
 par(mfrow = c(2,2)) # Makes it so diagnostic plots from base R are 2x2 grid
 
@@ -75,8 +353,6 @@ Anova(as_mwfll.glm) # Only main effects. Three emmeans and three clds.
                              alpha = 0.05, Letters = letters))
 (as_mwfll_site.cld <- cld(as_mwfll_site.emm, 
                              alpha = 0.05, Letters = letters))  
-
-
 # Site was significant in the model, but not at 0.05 when considering just this
 # individual main effect. Same pattern emerges if model is reduced, and the 
 # p value on the anova for site also changes to > 0.05
@@ -87,16 +363,12 @@ cd_mwfll.glm <- glm(Cd ~ Tissue*Species*Site,
                     data = mwfll)
 plot(cd_mwfll.glm)
 Anova(cd_mwfll.glm)
-# Three way interaction
-(cd_mwfll_all.emm <- emmeans(cd_mwfll.glm, ~ Tissue | Species | Site, 
+# Only tissue is significant at p<0.05
+(cd_mwfll_tissue.emm <- emmeans(cd_mwfll.glm, ~ Tissue, 
                                 type = "response"))
-
-(cd_mwfll_tissue.cld <- cld(cd_mwfll_all.emm, by = c("Species", "Site"),
+(cd_mwfll_tissue.cld <- cld(cd_mwfll_tissue.emm, 
                              alpha = 0.05, Letters = letters))
-(cd_mwfll_site.cld <- cld(cd_mwfll_all.emm, by = c("Species", "Tissue"),
-                            alpha = 0.05, Letters = letters))
-(cd_mwfll_species.cld <- cld(cd_mwfll_all.emm, by = c("Site", "Tissue"),
-                            alpha = 0.05, Letters = letters))
+
 
 # Cu
 cu_mwfll.glm <- glm(Cu ~ Tissue*Species*Site, 
@@ -105,55 +377,19 @@ cu_mwfll.glm <- glm(Cu ~ Tissue*Species*Site,
 plot(cu_mwfll.glm)
 Anova(cu_mwfll.glm)
 
-# Three two-way interactions. Lame. Could do three emm and six clds, but instead
-# let's leave in the non-significant three-way interaction.
-# emmeans for three way interaction
-(cu_mwfll_all.emm <- emmeans(cu_mwfll.glm, ~ Site*Tissue*Species, 
-                                        type = "response"))
+# Three way interaction, so one emm and three clds
 
-# Three emmeans, one for each two-way interaction
-(cu_mwfll_tissue_species.emm <- emmeans(cu_mwfll.glm, ~ Tissue*Species, 
+(cu_mwfll_all.emm <- emmeans(cu_mwfll.glm, ~ Tissue*Species*Site, 
                                 type = "response"))
-(cu_mwfll_tissue_site.emm <- emmeans(cu_mwfll.glm, ~ Tissue*Site, 
-                                        type = "response"))
-(cu_mwfll_site_species.emm <- emmeans(cu_mwfll.glm, ~ Species*Site, 
-                                        type = "response"))
-
-# Sea of clds for two-way interacitons, order in the cld name indicates the 
-# variable being examined (first) and the one being examined within. Yuck:
-(cu_mwfll_tissue_site.cld <- cld(cu_mwfll_tissue_site.emm, 
-                            by = c("Site"),
-                            alpha = 0.05, Letters = letters))
-(cu_mwfll_site_tissue.cld <- cld(cu_mwfll_tissue_site.emm, 
-                                 by = c("Tissue"),
-                                 alpha = 0.05, Letters = letters))
-
-
-(cu_mwfll_tissue_species.cld <- cld(cu_mwfll_tissue_species.emm, 
-                                    by = c("Species"),
-                                    alpha = 0.05, Letters = letters))
-(cu_mwfll_species_tissue.cld <- cld(cu_mwfll_tissue_species.emm, 
-                                    by = c("Tissue"),
-                                    alpha = 0.05, Letters = letters))
-
-(cu_mwfll_site_species.cld <- cld(cu_mwfll_site_species.emm, 
-                                  by = c("Species"),
-                                  alpha = 0.05, Letters = letters))
-(cu_mwfll_species_site.cld <- cld(cu_mwfll_site_species.emm, 
-                                  by = c("Site"),
-                                  alpha = 0.05, Letters = letters))
-
-# With three-way interaction, we can do just three clds for the one emmeans.
-(cu_mwfll_species.cld <- cld(cu_mwfll_all.emm, 
-                                  by = c("Tissue", "Site"),
-                                  alpha = 0.05, Letters = letters))
 (cu_mwfll_tissue.cld <- cld(cu_mwfll_all.emm, 
-                                         by = c("Species", "Site"),
-                                         alpha = 0.05, Letters = letters))
+                            by = c("Species", "Site"),
+                            alpha = 0.05, Letters = letters))
+(cu_mwfll_species.cld <- cld(cu_mwfll_all.emm, 
+                            by = c("Tissue", "Site"),
+                            alpha = 0.05, Letters = letters))
 (cu_mwfll_site.cld <- cld(cu_mwfll_all.emm, 
-                                         by = c("Tissue", "Species"),
-                                         alpha = 0.05, Letters = letters))
-
+                            by = c("Species", "Tissue"),
+                            alpha = 0.05, Letters = letters))
 
 # Pb
 pb_mwfll.glm <- glm(Pb ~ Tissue*Species*Site, 
@@ -162,18 +398,19 @@ pb_mwfll.glm <- glm(Pb ~ Tissue*Species*Site,
 plot(pb_mwfll.glm)
 Anova(pb_mwfll.glm)
 
-# Three way interaction
+# Species:Site and Tissue, so 2 emm, three clds
 
-(pb_mwfll_all.emm <- emmeans(pb_mwfll.glm, ~ Tissue | Site | Species, 
+(pb_mwfll_tissue.emm <- emmeans(pb_mwfll.glm, ~ Tissue, 
                              type = "response"))
-
-(pb_mwfll_tissue.cld <- cld(pb_mwfll_all.emm, by = c("Site", "Species"),
+(pb_mwfll_species_site.emm <- emmeans(pb_mwfll.glm, ~ Species | Site, 
+                                type = "response"))
+(pb_mwfll_tissue.cld <- cld(pb_mwfll_tissue.emm, 
                             alpha = 0.05, Letters = letters))
-(pb_mwfll_species.cld <- cld(pb_mwfll_all.emm, 
-                             by = c("Site", "Tissue"),
+(pb_mwfll_species.cld <- cld(pb_mwfll_species_site.emm, 
+                             by = "Site",
                              alpha = 0.05, Letters = letters))
-(pb_mwfll_site.cld <- cld(pb_mwfll_all.emm, 
-                             by = c("Species", "Tissue"),
+(pb_mwfll_site.cld <- cld(pb_mwfll_species_site.emm, 
+                             by = "Species",
                              alpha = 0.05, Letters = letters))
 
 
@@ -184,15 +421,11 @@ se_mwfll.glm <- glm(Se ~ Tissue*Species*Site,
 plot(se_mwfll.glm)
 Anova(se_mwfll.glm)
 
-# Two two-way interactions
+# Only Tissue has p <0.05
 
-(se_mwfll_all.emm <- emmeans(se_mwfll.glm, ~ Tissue | Site | Species,
+(se_mwfll.emm <- emmeans(se_mwfll.glm, ~ Tissue, 
                          type = "response"))
-(se_mwfll_tissue.cld <- cld(se_mwfll_all.emm, by = c("Site", "Species"),
-                            alpha = 0.05, Letters = letters))
-(se_mwfll_species.cld <- cld(se_mwfll_all.emm, by = c("Site", "Tissue"),
-                            alpha = 0.05, Letters = letters))
-(se_mwfll_site.cld <- cld(se_mwfll_all.emm, by = c("Tissue", "Species"),
+(se_mwfll_tissue.cld <- cld(se_mwfll.emm,
                             alpha = 0.05, Letters = letters))
 
 # Zn
@@ -203,27 +436,27 @@ zn_mwfll.glm <- glm(Zn ~ Tissue*Species*Site,
 plot(zn_mwfll.glm)
 Anova(zn_mwfll.glm)
 
-# Three way interaction
+# Tissue:Species, so one emm and two clds
 
-(zn_mwfll.emm <- emmeans(zn_mwfll.glm, ~ Site | Tissue | Species,
+(zn_mwfll.emm <- emmeans(zn_mwfll.glm, ~ Tissue | Species,
                          type = "response"))
-(zn_mwfll_tissue.cld <- cld(zn_mwfll.emm, by = c("Site", "Species"),
+(zn_mwfll_tissue.cld <- cld(zn_mwfll.emm, by = "Species",
                             alpha = 0.05, Letters = letters))
-(zn_mwfll_species.cld <- cld(zn_mwfll.emm, by = c("Tissue", "Site"),
+(zn_mwfll_species.cld <- cld(zn_mwfll.emm, by = "Tissue",
                             alpha = 0.05, Letters = letters))
-(zn_mwfll_site.cld <- cld(zn_mwfll.emm, by = c("Tissue", "Species"),
-                             alpha = 0.05, Letters = letters))
 
-
+ggplot(mwfll, aes(x = Site, y = Cu))+
+  geom_point(aes(color = Tissue))+
+  facet_grid(Tissue~Species)
 # Write output to a file, comment back in if you want to rewrite:
-sink("./03_incremental/Anova_SitexSpeciesxTissue_mwf_ll.txt")
-Anova(as_mwfll.glm)
-Anova(cd_mwfll.glm)
-Anova(cu_mwfll.glm)
-Anova(pb_mwfll.glm)
-Anova(se_mwfll.glm)
-Anova(zn_mwfll.glm)
-sink()
+# sink("./03_incremental/Anova_SitexSpeciesxTissue_mwf_ll.txt")
+# Anova(as_mwfll.glm)
+# Anova(cd_mwfll.glm)
+# Anova(cu_mwfll.glm)
+# Anova(pb_mwfll.glm)
+# Anova(se_mwfll.glm)
+# Anova(zn_mwfll.glm)
+# sink()
 
 # Calling and writing output for pairwise comparison p values:
 sink("./03_incremental/p_values_pairwise_mwf_ll.txt")
@@ -248,7 +481,6 @@ print("------------------------------------")
 print("Zinc")
 contrast(zn_mwfll.emm, simple = "each")
 sink()
-
 # Setting up cld objects for use as geom_text labels on the plots
 as_mwfll_tissue.cld$.group <- gsub(" ", "", as_mwfll_tissue.cld$.group)
 as_mwfll_tissue.cld <- subset(as_mwfll_tissue.cld)
@@ -279,7 +511,8 @@ cd_mwfll_tissue.cld <-
         cd_mwfll_tissue.cld) %>% 
   arrange(Site, Species, Tissue)
 
-cu_mwfll_tissue.cld
+cu_mwfll_tissue.cld <-
+  
 pb_mwfll_tissue.cld
 se_mwfll_tissue.cld
 zn_mwfll_tissue.cld
@@ -374,7 +607,12 @@ mwfllplot<-plot_grid(newplot,legend2,rel_widths = c(2,.4))
 mwfllplot
 save_plot("./03_incremental/MWFLLplot.jpg", mwfllplot
           , base_height = 8, base_width =12)
-
+#Single species tissues graphs
+#Brown trout
+ll<-read.csv("./01_input/LLmetals.csv", header = TRUE)
+ll$Site<-as.factor(ll$Site)
+ll$Site <- ordered(ll$Site, levels=c("DL","GC", "BG"))
+str(ll)
 
 ###Stats and figs on tissue conc by length for Brown Trout----
 # For each element, made a glm, diagnostic plots, and Anova. Copper and Zn 
@@ -383,12 +621,6 @@ save_plot("./03_incremental/MWFLLplot.jpg", mwfllplot
 # bit more interesting and useful. Cu, Cd, and Se all have interesitng patterns
 # There are individual plots, but the money plot is a faceted one at the bottom
 
-#Single species tissues graphs
-#Brown trout
-ll<-read.csv("./01_input/LLmetals.csv", header = TRUE)
-ll$Site<-as.factor(ll$Site)
-ll$Site <- ordered(ll$Site, levels=c("DL","GC", "BG"))
-str(ll)
 
 # As:
 as_ll_tissue.glm <- glm(As ~ Tissue*Site*Length,
@@ -665,7 +897,7 @@ dlasll<-ggplot(filter(ll, Site == "DL"),
                mapping = aes(Length,As, color = Tissue)) + 
   geom_point()+
   theme_classic()+
-  geom_smooth(aes(group=Tissue),method = lm, se = FALSE )+
+  geom_smooth(aes(group=Tissue),method = lm, se = FALSE)+
   scale_y_continuous(expand = c(0,0))+
   coord_cartesian(clip = "off")+
   labs(y= "As (kg/g dry weight)",x = "Length (mm)" )  +
