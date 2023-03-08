@@ -1,4 +1,5 @@
-#Deliverable#7 Code
+#Deliverable#7 Code####
+## Preliminaries #####
 library(Rmisc) # For summarySE function, load before tidyverse
 library(multcomp) # For cld, load before tidyverse
 library(tidyverse)
@@ -11,16 +12,36 @@ library(viridisLite)
 library(emmeans)
 
 options(scipen = 8) # Get rid of scientific notation
+par(mfrow = c(2,2)) # Makes it so diagnostic plots from base R are 2x2 grid
 
+## To do:
+## Remove all of the "theme_classic" calls and add a set_theme call up here
+
+## Loading in data####
+### Metals: Data for summary table####
 totmet <- read.csv("./01_input/Metals Master.csv", header = TRUE)
 totmet$Site <- as.factor(totmet$Site)
 totmet$Site <- ordered(totmet$Site, levels = c("DL", "GC", "BG"))
-Length <- as.numeric(totmet$Length)
 totmet$Weight <- na.exclude(totmet$Weight)
-Weight <- as.numeric(totmet$Weight)
+# Length <- as.numeric(totmet$Length) Can likely delete
+# Weight <- as.numeric(totmet$Weight) Can likely delete
 
+### Metals: All species with suckers combined into "Suckers"####
+succomb <- read.csv("./01_input/Suckerscombined.csv", header = TRUE)
+succomb$Site <- as.factor(succomb$Site)
+succomb$Site <- ordered(succomb$Site, levels=c("DL","GC", "BG"))
 
-#####Alternative route to get summary statistics####
+### Metals: Just MWF and LL with the proper vector attributes####
+mwfll <- filter(succomb, Species %in% c("LL", "MWF")) %>%
+  droplevels() %>%
+  mutate(Species = as.factor(Species), 
+         Tissue = as.factor(Tissue),
+         Length = as.numeric(Length),
+         Weight = as.numeric(Weight))
+
+### Isotopes
+
+## Metals: Summary statistics for all taxa####
 
 totmet_summary <-
   summarySE((pivot_longer(totmet, 10:15, names_to = "element",
@@ -28,28 +49,8 @@ totmet_summary <-
             measurevar = "concentration",
             groupvars = c("Site", "Species", "Tissue", "element"))
 
-#####Two- Way ANOVAS and figs####
-table(totmet$As, totmet$Site)
+## Statistical analyses####
 
-succomb<-read.csv("./01_input/Suckerscombined.csv", header = TRUE)
-succomb$Site<-as.factor(succomb$Site)
-succomb$Site <- ordered(succomb$Site, levels=c("DL","GC", "BG"))
-mwfll<-filter(succomb, Species!="Suckers")
-
-#MWF and LL metals plot
-succomb<-read.csv("./01_input/Suckerscombined.csv", header = TRUE)
-succomb$Site<-as.factor(succomb$Site)
-succomb$Site <- ordered(succomb$Site, levels=c("DL","GC", "BG"))
-
-# Create dataframe with just MWF and LL with the proper vector attributes
-mwfll<-filter(succomb, Species %in% c("LL", "MWF")) %>%
-  droplevels() %>%
-  mutate(Species = as.factor(Species), 
-         Tissue = as.factor(Tissue),
-         Length = as.numeric(Length),
-         Weight = as.numeric(Weight))
-
-par(mfrow = c(2,2)) # Makes it so diagnostic plots from base R are 2x2 grid
 
 # Stats using glm, Anova, emmeans, and cld
 # As
@@ -65,12 +66,13 @@ Anova(as_mwfll.glm) # Only main effects. Three emmeans and three clds.
                                 type = "response"))
 (as_mwfll_tissue.emm <- emmeans(as_mwfll.glm, ~ Tissue, 
                                 type = "response"))
+
 (as_mwfll_species.cld <- cld(as_mwfll_species.emm, 
-                    alpha = 0.05, Letters = letters))
-(as_mwfll_tissue.cld <- cld(as_mwfll_tissue.emm, 
                              alpha = 0.05, Letters = letters))
+(as_mwfll_tissue.cld <- cld(as_mwfll_tissue.emm, 
+                            alpha = 0.05, Letters = letters))
 (as_mwfll_site.cld <- cld(as_mwfll_site.emm, 
-                             alpha = 0.05, Letters = letters))  
+                          alpha = 0.05, Letters = letters))  
 
 
 # Site was significant in the model, but not at 0.05 when considering just this
@@ -101,9 +103,12 @@ cu_mwfll.glm <- glm(Cu ~ Tissue*Species*Site,
 plot(cu_mwfll.glm)
 Anova(cu_mwfll.glm)
 
-# Three two-way interactions. Lame. Could do three emm and six clds, but instead
-# let's leave in the non-significant three-way interaction.
-# emmeans for three way interaction
+# Three two-way interactions. Lame. Below, we have the emmeans and cld two 
+# different wasy. In one, it is three emm and six clds. Yuck. In the other
+# we can leave in the non-significant three-way interaction and use the
+# emmeans for the three way interaction. This simpler second approach is what I 
+# recommend we use.
+ 
 (cu_mwfll_all.emm <- emmeans(cu_mwfll.glm, ~ Site*Tissue*Species, 
                                         type = "response"))
 
@@ -139,7 +144,7 @@ Anova(cu_mwfll.glm)
                                   by = c("Site"),
                                   alpha = 0.05, Letters = letters))
 
-# With three-way interaction, we can do just three clds for the one emmeans.
+# Method including three-way interaction and three clds for the one emmeans.
 (cu_mwfll_species.cld <- cld(cu_mwfll_all.emm, 
                                   by = c("Tissue", "Site"),
                                   alpha = 0.05, Letters = letters))
@@ -180,7 +185,8 @@ se_mwfll.glm <- glm(Se ~ Tissue*Species*Site,
 plot(se_mwfll.glm)
 Anova(se_mwfll.glm)
 
-# Two two-way interactions
+# Two two-way interactions, but simpler if we go ahead and just leave it all in
+# there.
 
 (se_mwfll_all.emm <- emmeans(se_mwfll.glm, ~ Tissue | Site | Species,
                          type = "response"))
@@ -209,8 +215,6 @@ Anova(zn_mwfll.glm)
                             alpha = 0.05, Letters = letters))
 (zn_mwfll_site.cld <- cld(zn_mwfll.emm, by = c("Tissue", "Species"),
                              alpha = 0.05, Letters = letters))
-
-
 # Write output to a file, comment back in if you want to rewrite:
 sink("./03_incremental/Anova_SitexSpeciesxTissue_mwf_ll.txt")
 Anova(as_mwfll.glm)
@@ -227,22 +231,62 @@ print("Arsenic")
 pairs(as_mwfll_tissue.emm)
 pairs(as_mwfll_site.emm)
 pairs(as_mwfll_species.emm)
-print("------------------------------------")
+print("----------------------------------------------------------")
 print("Cadmium")
-pairs(cd_mwfll_tissue.emm)
-print("------------------------------------")
+print("----------------------------------------------------------")
+pairs(cd_mwfll_all.emm, simple = "each")
+print("----------------------------------------------------------")
 print("Copper")
+print("----------------------------------------------------------")
 contrast(cu_mwfll_all.emm, simple = "each")
-print("------------------------------------")
+print("----------------------------------------------------------")
 print("Lead")
-contrast(pb_mwfll_species_site.emm, simple = "each")
-pairs(pb_mwfll_tissue.emm)
-print("------------------------------------")
+print("----------------------------------------------------------")
+contrast(pb_mwfll_all.emm, simple = "each")
+print("----------------------------------------------------------")
 print("Selenium")
-pairs(se_mwfll.emm)
-print("------------------------------------")
+pairs(pb_mwfll_all.emm, simple = "each")
+print("----------------------------------------------------------")
 print("Zinc")
-contrast(zn_mwfll.emm, simple = "each")
+print("----------------------------------------------------------")
+pairs(zn_mwfll.emm, simple = "each")
+sink()
+
+# Calling and writing output for cld:
+sink("./03_incremental/cld_post_hoc_mwf_ll.txt")
+print("Arsenic")
+as_mwfll_species.cld
+as_mwfll_site.cld
+as_mwfll_tissue.cld
+print("----------------------------------------------------------")
+print("Cadmium")
+print("----------------------------------------------------------")
+cd_mwfll_species.cld
+cd_mwfll_site.cld
+cd_mwfll_tissue.cld
+print("----------------------------------------------------------")
+print("Copper")
+print("----------------------------------------------------------")
+cu_mwfll_species.cld
+cu_mwfll_site.cld
+cu_mwfll_tissue.cld
+print("----------------------------------------------------------")
+print("Lead")
+pb_mwfll_species.cld
+pb_mwfll_site.cld
+pb_mwfll_tissue.cld
+print("----------------------------------------------------------")
+print("Selenium")
+print("----------------------------------------------------------")
+se_mwfll_species.cld
+se_mwfll_site.cld
+se_mwfll_tissue.cld
+print("----------------------------------------------------------")
+print("Zinc")
+print("----------------------------------------------------------")
+zn_mwfll_species.cld
+zn_mwfll_site.cld
+zn_mwfll_tissue.cld
 sink()
 
 # Setting up cld objects for use as geom_text labels on the plots
