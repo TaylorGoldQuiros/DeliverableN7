@@ -125,7 +125,15 @@ Site <- as.character(sit1$Site)
 out1<-glm(sit1$d15N~Site+sit1$Length)                                            
 summary(out1)
 ###
-###
+length_d15N.glm <- glm(d15N~Site*Length*Species,
+                       family = Gamma(link = "log"),
+                       data = sit1)
+plot(length_d15N.glm)
+Anova(length_d15N.glm)
+ggplot(data = sit1, aes(Length, d15N, color=Site)) +
+  geom_point() +
+  geom_smooth(aes(fill = Site), alpha = 0.2, method = "lm")+theme_classic()
+
 ###
 ###
 par(mfrow = c(2,2)) # Makes it so diagnostic plots from base R are 2x2 grid
