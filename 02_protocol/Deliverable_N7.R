@@ -19,20 +19,46 @@ par(mfrow = c(2,2)) # Makes it so diagnostic plots from base R are 2x2 grid
 theme_set(theme_bw())
 ## Loading in data####
 ### Metals: Data for summary table####
-totmet <- read.csv("./01_input/Metals Master.csv", header = TRUE)
-totmet$Site <- as.factor(totmet$Site)
-totmet$Site <- ordered(totmet$Site, levels = c("DL", "GC", "BG"))
-totmet$Weight <- na.exclude(totmet$Weight)
-# Length <- as.numeric(totmet$Length) Can likely delete
-# Weight <- as.numeric(totmet$Weight) Can likely delete
+totmet <- read.csv("./01_input/Metals_Master_03272023.csv", header = TRUE) %>%
+  mutate(Site = ordered(Site, levels = c("DL", "GC", "BG")), 
+         Species = as.factor(Species),
+         Tissue = as.factor(Tissue),
+         Length = as.numeric(Length),
+         Weight = as.numeric(Weight)) %>%
+  droplevels()
 
+# Combine two suckers into one "Suckers" factor level
+levels(totmet$Species) <- c("LL", "LNDC", "LNSU", "LSSU", "LSSU", 
+                            "MWF", "MWF", "RSSH")
+
+colnames(totmet)<-c("Cap", "Site", "Year", "Species", "Tissue", "Num", 
+                    "Sample.weight", "Length", "Weight", "As", "Cd", "Cu", "Pb", 
+                    "Se", "Zn")
+
+levels(totmet$Species) <- c("LL", "LNDC", "LNSU", "LSSU", "LSSU", 
+                            "MWF", "MWF", "RSSH")
+
+levels(totmet$Tissue) <- c("g", "l", "l", "m", "m", NA, "wb")
+totmet <- filter(totmet, !is.na(Tissue))
+
+totmet <- totmet %>%
+  mutate(CharNum = ifelse(Num < 10, as.character(paste0(0, Num)),
+                        as.character(Num))) %>%
+  mutate(Sample = paste0(Site, Year - 2000, Species, CharNum))
 # Code for old metals data, for comparison to newly censored data
+
 totmet_old <- read.csv("./01_input/Metals Master_old.csv", header = TRUE)
 totmet_old$Site <- as.factor(totmet_old$Site)
 totmet_old$Site <- ordered(totmet_old$Site, levels = c("DL", "GC", "BG"))
 totmet_old$Weight <- na.exclude(totmet_old$Weight)
+colnames(totmet_old)<-c("Cap", "Site", "Year", "Species", "Tissue", "Num", 
+                    "Length", "Weight", "Sample.weight", "As", "Cd", "Cu", "Pb",
+                    "Se", "Zn")
+
+  
 # Length <- as.numeric(totmet$Length) Can likely delete
 # Weight <- as.numeric(totmet$Weight) Can likely delete
+
 
 ### Metals: All species with suckers combined into "Suckers"####
 succomb <- read.csv("./01_input/Suckerscombined.csv", header = TRUE)
@@ -41,17 +67,14 @@ succomb$Site <- ordered(succomb$Site, levels=c("DL","GC", "BG"))
 
 ### Metals: Just MWF and LL with the proper vector attributes####
 mwfll <- filter(totmet, Species %in% c("LL", "MWF")) %>%
-  droplevels() %>%
-  mutate(Species = as.factor(Species), 
-         Tissue = as.factor(Tissue),
-         Length = as.numeric(Length),
-         Weight = as.numeric(Weight))
+  droplevels()
+mwfll <- filter(totmet, Tissue %in% c("g", "m", "l"))
 
 ### Isotopes####
 
 #onboard clean csv file
 #change site to an ordered factor
-sit1<-read.csv("./01_input/SIallforR.csv", header = TRUE) %>%
+sit1<-read.csv("./01_input/SIallforR_03272023.csv", header = TRUE) %>%
   filter(is.na(Year) == FALSE) %>%
   mutate(Site = ordered(Site, levels=c("DL","GC", "BG")), 
          Species = ordered(Species, levels = c("LL", "MWF", "LNSU", "LSSU",
@@ -59,6 +82,13 @@ sit1<-read.csv("./01_input/SIallforR.csv", header = TRUE) %>%
   select(1:9)
 
 colnames(sit1) <- c("Sample", "Site", "Year", "Species", "Num", "Length", "Weight", "d13C", "d15N")
+
+# levels(sit1$Species) <- c("LL", "MWF", "Suckers", "Suckers", "LNDC", "RSSH")
+# 
+# levels(totmet$Species) <- c("LL", "LNDC", "LNSU", "LSSU", "LSSU", 
+#                             "MWF", "MWF", "RSSH")
+# levels(sit1$Species) <- c("LL", "MWF", "Suckers", "Suckers", "LNDC", "RSSH")
+
 str(sit1)
 
 ## Metals: Summary statistics for all taxa####
@@ -67,7 +97,8 @@ totmet_summary <-
   summarySE((pivot_longer(totmet, 10:15, names_to = "element",
                           values_to = "concentration")), 
             measurevar = "concentration",
-            groupvars = c("Site", "Species", "Tissue", "element"))
+            groupvars = c("Site", "Species", "Tissue", "element"), 
+            .drop = FALSE)
 
 succomb_summary <-
   summarySE((pivot_longer(succomb, 10:15, names_to = "element",
@@ -75,6 +106,11 @@ succomb_summary <-
             measurevar = "concentration",
             groupvars = c("Site", "Species", "Tissue", "element"))
 
+totmet_old_summary <-
+  summarySE((pivot_longer(totmet_old, 10:15, names_to = "element",
+                          values_to = "concentration")), 
+            measurevar = "concentration",
+            groupvars = c("Site", "Species", "Tissue", "element"))
 ## Statistical analyses####
 
 
@@ -84,13 +120,13 @@ as_mwfll.glm <- glm(As ~ Tissue*Species*Site,
                     family = Gamma(link = "log"), 
                     data = mwfll)
 plot(as_mwfll.glm)
-Anova(as_mwfll.glm) # Only main effects. Could do three emmeans and three clds
-                    # (commented out)ut better to stick with the full model
+Anova(as_mwfll.glm) 
+# Only main effects for tissue and species. Could do two emmeans and two 
+# clds (commented out) but better to stick with the full model
 
 # (as_mwfll_species.emm <- emmeans(as_mwfll.glm, ~ Species, 
 #                          type = "response"))
-# (as_mwfll_site.emm <- emmeans(as_mwfll.glm, ~ Site, 
-#                                 type = "response"))
+# 
 # (as_mwfll_tissue.emm <- emmeans(as_mwfll.glm, ~ Tissue, 
 #                                 type = "response"))
 # 
@@ -98,8 +134,6 @@ Anova(as_mwfll.glm) # Only main effects. Could do three emmeans and three clds
 #                              alpha = 0.05, Letters = letters))
 # (as_mwfll_tissue.cld <- cld(as_mwfll_tissue.emm, 
 #                             alpha = 0.05, Letters = letters))
-# (as_mwfll_site.cld <- cld(as_mwfll_site.emm, 
-#                          alpha = 0.05, Letters = letters))  
 
 (as_mwfll_all.emm <- emmeans(as_mwfll.glm, ~ Species | Site | Tissue,
                             type = "response"))
@@ -110,6 +144,7 @@ Anova(as_mwfll.glm) # Only main effects. Could do three emmeans and three clds
                             alpha = 0.05, Letters = letters))
 (as_mwfll_site.cld <- cld(as_mwfll_all.emm, by = c("Species", "Tissue"),
                           alpha = 0.05, Letters = letters))  
+
 # Site was significant in the model, but not at 0.05 when considering just this
 # individual main effect. Same pattern emerges if model is reduced, and the 
 # p value on the anova for site also changes to > 0.05
@@ -120,7 +155,8 @@ cd_mwfll.glm <- glm(Cd ~ Tissue*Species*Site,
                     data = mwfll)
 plot(cd_mwfll.glm)
 Anova(cd_mwfll.glm)
-# Three way interaction
+# Three way interaction with p < 0.05.
+
 (cd_mwfll_all.emm <- emmeans(cd_mwfll.glm, ~ Tissue | Species | Site, 
                                 type = "response"))
 
@@ -134,7 +170,8 @@ Anova(cd_mwfll.glm)
 # Cu
 cu_mwfll.glm <- glm(Cu ~ Tissue*Species*Site, 
                     family = Gamma(link = "log"), 
-                    data = mwfll)
+                    data = filter(mwfll, Cu < 8000),
+                    maxit = 1000)
 plot(cu_mwfll.glm)
 Anova(cu_mwfll.glm)
 
@@ -146,7 +183,7 @@ Anova(cu_mwfll.glm)
 # use the emmeans for the three way interaction. 
  
 (cu_mwfll_all.emm <- emmeans(cu_mwfll.glm, ~ Site*Tissue*Species, 
-                                        type = "response"))
+                             type = "response"))
 
 # # Three emmeans, one for each two-way interaction. Pain in the butt, and 
 # (cu_mwfll_tissue_species.emm <- emmeans(cu_mwfll.glm, ~ Tissue*Species, 
@@ -182,8 +219,9 @@ Anova(cu_mwfll.glm)
 
 # Method including three-way interaction and three clds for the one emmeans.
 (cu_mwfll_species.cld <- cld(cu_mwfll_all.emm, 
-                                  by = c("Tissue", "Site"),
-                                  alpha = 0.05, Letters = letters))
+                             by = c("Tissue", "Site"),
+                             alpha = 0.05, 
+                             Letters = letters))
 (cu_mwfll_tissue.cld <- cld(cu_mwfll_all.emm, 
                                          by = c("Species", "Site"),
                                          alpha = 0.05, Letters = letters))
@@ -199,7 +237,8 @@ pb_mwfll.glm <- glm(Pb ~ Tissue*Species*Site,
 plot(pb_mwfll.glm)
 Anova(pb_mwfll.glm)
 
-# Three way interaction
+# Weak evidence of a two-way interaction, strong evidence of two ways for 
+# tisue:species and tissue:site
 
 (pb_mwfll_all.emm <- emmeans(pb_mwfll.glm, ~ Tissue | Site | Species, 
                              type = "response"))
@@ -221,7 +260,7 @@ se_mwfll.glm <- glm(Se ~ Tissue*Species*Site,
 plot(se_mwfll.glm)
 Anova(se_mwfll.glm)
 
-# Two two-way interactions, but we will leave it all in there.
+# Three-way interaction
 
 (se_mwfll_all.emm <- emmeans(se_mwfll.glm, ~ Tissue | Site | Species,
                          type = "response"))
@@ -477,8 +516,8 @@ newplot<-plot_grid(As_mwfll+theme(legend.position = "none"),
 legend2<-get_legend(As_mwfll+theme(legend.box.margin = margin(0,0,0,12)))
 mwfllplot<-plot_grid(newplot,legend2,rel_widths = c(2,.4))
 mwfllplot
-save_plot("./03_incremental/MWFLLplot.jpg", mwfllplot
-          , base_height = 8, base_width =12)
+save_plot("./03_incremental/MWFLLplot.jpg", mwfllplot, 
+          base_height = 8, base_width =12)
 
 
 ###Stats and figs on tissue conc by length for Brown Trout----
@@ -490,7 +529,10 @@ save_plot("./03_incremental/MWFLLplot.jpg", mwfllplot
 
 #Single species tissues graphs
 #Brown trout
-ll<-read.csv("./01_input/LLmetals.csv", header = TRUE)
+
+# ll<-read.csv("./01_input/LLmetals.csv", header = TRUE)
+
+ll <- filter(mwfll, Species == "LL") %>% droplevels()
 ll$Site<-as.factor(ll$Site)
 ll$Site <- ordered(ll$Site, levels=c("DL","GC", "BG"))
 ll <- mutate(ll, kvalue = 10^5*(Weight/(Length^3)))
@@ -513,7 +555,8 @@ Anova(as_ll_tissue.glm)
 
 # Cd:
 cd_ll_tissue.glm <- glm(Cd ~ Tissue*Site*Length,
-                        family = Gamma(link = "log"), ll)
+                        family = Gamma(link = "log"), ll,
+                        maxit = 1000)
 plot(cd_ll_tissue.glm)
 Anova(cd_ll_tissue.glm)
 
@@ -528,8 +571,8 @@ Anova(cd_ll_tissue.glm)
 
 
 # Cu:
-cu_ll_tissue.glm <- glm(Cu ~ Tissue*Site*Length,
-                        family = Gamma(link = "log"), ll,
+cu_ll_tissue.glm <- glm(log10(Cu) ~ Tissue*Site*Length,
+                        family = gaussian(link = "identity"), ll,
                         maxit = 1000) # Wasn't converging, so added iterations
 plot(cu_ll_tissue.glm)
 Anova(cu_ll_tissue.glm)
@@ -607,7 +650,7 @@ Anova(zn_ll_tissue.glm)
     scale_color_viridis_d(labels=c("Gill","Liver","Muscle"))+
   facet_grid(rows = "element", scales = "free"))
 
-save_plot("./03_incremental/ll_tissue_length.png", ll_tissue_length_fig,
+save_plot("./03_incremental/ll_tissue_length_new.png", ll_tissue_length_fig,
           base_height = 5, base_width = 4)
 
 
@@ -618,7 +661,7 @@ save_plot("./03_incremental/ll_tissue_length.png", ll_tissue_length_fig,
 # bit more interesting and useful. Cu, Cd, and Se all have interesitng patterns
 # There are individual plots, but the money plot is a faceted one at the bottom
 
-mwf <- read.csv("./01_input/MWFmetals.csv", header = FALSE)
+mwf <- filter(mwfll, Species == "MWF")
 colnames(mwf) <- colnames(ll[ ,1:15])
 mwf <- mwf %>% 
   mutate(Site = ordered(Site, levels=c("DL","GC", "BG")))
@@ -832,11 +875,11 @@ Anova(kvalues_glm)
 
 # Little evidence of differences
 
-kvalues_fig <- 
+(kvalues_fig <- 
   ggplot(kvalues, aes(x = Site, y = K, fill = Species)) +
   geom_boxplot() +
   theme_classic() +
-  scale_fill_viridis_d()
+  scale_fill_viridis_d())
 
 save_plot("./03_incremental/kvalues.png", 
           kvalues_fig, base_height = 4, base_width = 6)
@@ -890,12 +933,12 @@ colnames(fish_d15N_sum) <- c("Site", "Species", "N", "d15N", "sd_15N", "se_15N",
 
 fish_summary <- merge(fish_d13C_sum, fish_d15N_sum)
 
-fish_label <- c("Brown\n Trout", "Mountain\n Whitefish",
-                "Long Nose\n Sucker", 
-                "Large Scale\n Sucker",
+fish_label <- c("Brown\n Trout", 
+                "Mountain\n Whitefish",
+                "Suckers",
                 "Long Nose\n Dace", 
                 "Redside\n Shiner")
-names(fish_label) <- c("LL", "MWF", "LNSU", "LSSU", "LNDC", "RSSH")
+names(fish_label) <- c("LL", "MWF", "Suckers", "LNDC", "RSSH")
 
 site_label <- c("Deer Lodge", "Gold Creek", "Bear Gulch")
 names(site_label) <- c("DL", "GC", "BG")
@@ -919,8 +962,7 @@ names(site_label) <- c("DL", "GC", "BG")
     scale_color_viridis_d(labels = gsub("\n", "", fish_label)) +
     facet_wrap(~Site, labeller = labeller(Site = site_label)) +
     scale_x_continuous(limits = c(-32, -26)) +
-    scale_y_continuous(limits = c(8, 16))
-)
+    scale_y_continuous(limits = c(8, 16)))
 
 save_plot("./03_incremental/fish_biplot.png", fish_biplot,
           base_width = 7, base_height = 4)
@@ -1036,18 +1078,23 @@ totmet_wide <- totmet %>%
                values_to = "concentration") %>%
   pivot_wider(names_from = c("Tissue", "element"), 
               values_from = "concentration", 
-              id_cols = 2:8,
-              values_fn = {mean})%>%
-  mutate(CharNum = ifelse(Num < 10, as.character(paste0(0, Num)), 
-                          as.character(Num))) %>% 
-  mutate(Sample = paste0(Site, Year - 2000, Species, CharNum),
-         Weight = as.numeric(Weight),
-         Length = as.numeric(Length),
-         K = 10^5 * Weight/(Length^3)) %>%
-  select(32, 1:6, 33, 7:30)
+              id_cols = c(2:6, 8:11),
+              values_fn = {mean}) %>%
+  select(8, 1:6, 9:32)
 
-totmet_isotopes <- merge(totmet_wide, sit1, all = TRUE) %>% mutate()
 
+totmet_isotopes <- merge(totmet_wide, sit1, all = TRUE) %>%
+  mutate(Species = as.factor(Species))
+
+totmet_isotopes <-  totmet_isotopes %>%
+  mutate(K = ifelse(Species %in% 
+                      c("LNSU", "LSSU", "RSSH", "LNDC"), 
+                    NA, 
+                    10^5 * Weight/(Length^3)),
+         .before = "m_As")
+
+
+  
 write.csv(totmet_isotopes, "./03_incremental/metals_isotopes_K.csv")
 
 totmet_summary
@@ -1062,12 +1109,44 @@ totmet_long <- pivot_longer(totmet, 10:15, names_to = "element",
 
 totmet_old_long <- pivot_longer(totmet_old, 10:15, names_to = "element", 
                             values_to = "totmet_old_conc")
+totmet_new_long <- pivot_longer(totmet, 10:15, names_to = "element", 
+                                values_to = "totmet_new_conc")
 
-totmet_merged_long <- merge(totmet_long, totmet_old_long, all = TRUE)
+totmet_merged_long <- merge(totmet_old_long, totmet_long, all = TRUE)
+totmet_merged_longer <- pivot_longer(totmet_merged_long, cols = c(11, 12),
+                                     names_to = "dataset", 
+                                     values_to = "concentration")
 
-comparison <- ggplot(totmet_merged_long) +
+totmet_merged_summary <- summarySE(totmet_merged_longer, 
+                                   groupvars = c("Site", "Species", "Tissue", 
+                                                 "dataset", "element"), 
+                                   measurevar = "concentration")
+
+totmet_merged_sum_wide <- pivot_wider(totmet_merged_summary, 
+                                      id_cols = c("Site", "Species", "Tissue", 
+                                                  "element"),
+                                      names_from = "dataset",
+                                      values_from = "concentration")
+
+(comparison <- ggplot(totmet_merged_long) +
   geom_point(aes(x = totmet_conc, y = totmet_old_conc)) +
   facet_wrap(~ element, scales = "free") +
-  labs(x = "Concentration new Master Metals", y = "Concentration old Master Metals")
+  labs(x = "Concentration new Master Metals", y = "Concentration old Master Metals"))
+
+(comparison_histo <- ggplot(totmet_merged_longer) +
+    geom_histogram(aes(x = concentration)) +
+    facet_grid(dataset ~ element, scales = "free") +
+    labs(x = "Concentration new Master Metals", y = "Concentration old Master Metals") +
+    scale_x_log10())
+
+(comparison_summary <- ggplot(totmet_merged_sum_wide) +
+    geom_point(aes(x = totmet_conc, y = totmet_old_conc, color = element)) +
+    scale_y_log10() +
+    scale_x_log10() +
+    labs(x = "Concentration Current", y = "Concentration Draft v3.1") +
+    scale_color_viridis_d(name = "Elements"))
 
 save_plot("./03_incremental/comparison.png", comparison, base_height = 7, base_width = 10)
+save_plot("./03_incremental/comparison_summary.png", comparison_summary, 
+          base_height = 7, base_width = 10)
+
