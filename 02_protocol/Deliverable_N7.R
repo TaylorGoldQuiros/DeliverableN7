@@ -19,24 +19,30 @@ par(mfrow = c(2,2)) # Makes it so diagnostic plots from base R are 2x2 grid
 theme_set(theme_bw())
 ## Loading in data####
 ### Metals: Data for summary table####
-totmet <- read.csv("./01_input/Metals_Master_03272023.csv", header = TRUE) %>%
+totmet <- read.csv("./01_input/Metals_Master_03282023.csv", header = TRUE) %>%
   mutate(Site = ordered(Site, levels = c("DL", "GC", "BG")), 
          Species = as.factor(Species),
          Tissue = as.factor(Tissue),
          Length = as.numeric(Length),
          Weight = as.numeric(Weight)) %>%
+  filter(!Year == "") %>%
   droplevels()
 
 # Combine two suckers into one "Suckers" factor level
 levels(totmet$Species) <- c("LL", "LNDC", "LNSU", "LSSU", "LSSU", 
                             "MWF", "MWF", "RSSH")
 
+totmet <- mutate(totmet, Species_all = Species)
+
+levels(totmet$Species) <- c("LL", "LNDC", "Suckers", "Suckers",
+                            "MWF", "RSSH")
+
+
+
 colnames(totmet)<-c("Cap", "Site", "Year", "Species", "Tissue", "Num", 
                     "Sample.weight", "Length", "Weight", "As", "Cd", "Cu", "Pb", 
-                    "Se", "Zn")
+                    "Se", "Zn", "Species_all")
 
-levels(totmet$Species) <- c("LL", "LNDC", "LNSU", "LSSU", "LSSU", 
-                            "MWF", "MWF", "RSSH")
 
 levels(totmet$Tissue) <- c("g", "l", "l", "m", "m", NA, "wb")
 totmet <- filter(totmet, !is.na(Tissue))
@@ -44,7 +50,9 @@ totmet <- filter(totmet, !is.na(Tissue))
 totmet <- totmet %>%
   mutate(CharNum = ifelse(Num < 10, as.character(paste0(0, Num)),
                         as.character(Num))) %>%
-  mutate(Sample = paste0(Site, Year - 2000, Species, CharNum))
+  mutate(Sample = paste0(Site, Year - 2000, Species_all, CharNum))
+
+totmet <- select(totmet, 18, 1:3, 16, 4:15)
 # Code for old metals data, for comparison to newly censored data
 
 totmet_old <- read.csv("./01_input/Metals Master_old.csv", header = TRUE)
@@ -54,16 +62,6 @@ totmet_old$Weight <- na.exclude(totmet_old$Weight)
 colnames(totmet_old)<-c("Cap", "Site", "Year", "Species", "Tissue", "Num", 
                     "Length", "Weight", "Sample.weight", "As", "Cd", "Cu", "Pb",
                     "Se", "Zn")
-
-  
-# Length <- as.numeric(totmet$Length) Can likely delete
-# Weight <- as.numeric(totmet$Weight) Can likely delete
-
-
-### Metals: All species with suckers combined into "Suckers"####
-succomb <- read.csv("./01_input/Suckerscombined.csv", header = TRUE)
-succomb$Site <- as.factor(succomb$Site)
-succomb$Site <- ordered(succomb$Site, levels=c("DL","GC", "BG"))
 
 ### Metals: Just MWF and LL with the proper vector attributes####
 mwfll <- filter(totmet, Species %in% c("LL", "MWF")) %>%
@@ -99,12 +97,6 @@ totmet_summary <-
             measurevar = "concentration",
             groupvars = c("Site", "Species", "Tissue", "element"), 
             .drop = FALSE)
-
-succomb_summary <-
-  summarySE((pivot_longer(succomb, 10:15, names_to = "element",
-                          values_to = "concentration")), 
-            measurevar = "concentration",
-            groupvars = c("Site", "Species", "Tissue", "element"))
 
 totmet_old_summary <-
   summarySE((pivot_longer(totmet_old, 10:15, names_to = "element",
@@ -1072,14 +1064,14 @@ print("----------------------------------------------------------")
 pairs(all_d15N.emm, simple = "each")
 sink()
 
-# Merging SI data, metals data, and calculating k values
+# Merging SI data, metals data, and calculating k values####
 totmet_wide <- totmet %>% 
   pivot_longer(cols = 10:15, names_to = "element", 
                values_to = "concentration") %>%
   pivot_wider(names_from = c("Tissue", "element"), 
               values_from = "concentration", 
               id_cols = c(2:6, 8:11),
-              values_fn = {mean}) %>%
+              values_fn = {mean}) %>% # Averages duplicates
   select(8, 1:6, 9:32)
 
 
@@ -1093,12 +1085,18 @@ totmet_isotopes <-  totmet_isotopes %>%
                     10^5 * Weight/(Length^3)),
          .before = "m_As")
 
-
-  
 write.csv(totmet_isotopes, "./03_incremental/metals_isotopes_K.csv")
 
 totmet_summary
 
+
+# For double checking for duplicates and triplicates:
+n_occur <- data.frame(table(totmet_isotopes$Sample))
+(n_occur_samples <- n_occur[n_occur$Freq > 1,])
+(dupes <- totmet_isotopes[totmet_isotopes$Sample %in%
+                            n_occur$Var1[n_occur$Freq > 1],])
+write.csv(dupes, "./03_incremental/duplicates.csv")
+  
 # comparing old and new data
 
 totmet <- arrange(totmet, 1)
