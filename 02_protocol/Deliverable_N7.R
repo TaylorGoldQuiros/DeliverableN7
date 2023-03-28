@@ -19,7 +19,7 @@ par(mfrow = c(2,2)) # Makes it so diagnostic plots from base R are 2x2 grid
 theme_set(theme_bw())
 ## Loading in data####
 ### Metals: Data for summary table####
-totmet <- read.csv("./01_input/Metals_Master_03282023.csv", header = TRUE) %>%
+totmet <- read.csv("./01_input/Metals_Master_03282023_V2.csv", header = TRUE) %>%
   mutate(Site = ordered(Site, levels = c("DL", "GC", "BG")), 
          Species = as.factor(Species),
          Tissue = as.factor(Tissue),
@@ -32,10 +32,13 @@ totmet <- read.csv("./01_input/Metals_Master_03282023.csv", header = TRUE) %>%
 levels(totmet$Species) <- c("LL", "LNDC", "LNSU", "LSSU", "LSSU", 
                             "MWF", "MWF", "RSSH")
 
+totmet <- totmet %>%
+  mutate(Species = ordered(Species, levels = c("LL", "MWF", "LNSU", "LSSU",
+                                      "LNDC", "RSSH")))
 totmet <- mutate(totmet, Species_all = Species)
 
-levels(totmet$Species) <- c("LL", "LNDC", "Suckers", "Suckers",
-                            "MWF", "RSSH")
+levels(totmet$Species) <- c("LL", "MWF", "Suckers", "Suckers",
+                            "LNDC", "RSSH")
 
 
 
@@ -66,13 +69,13 @@ colnames(totmet_old)<-c("Cap", "Site", "Year", "Species", "Tissue", "Num",
 ### Metals: Just MWF and LL with the proper vector attributes####
 mwfll <- filter(totmet, Species %in% c("LL", "MWF")) %>%
   droplevels()
-mwfll <- filter(totmet, Tissue %in% c("g", "m", "l"))
+mwfll <- filter(mwfll, Tissue %in% c("g", "m", "l"))
 
 ### Isotopes####
 
 #onboard clean csv file
 #change site to an ordered factor
-sit1<-read.csv("./01_input/SIallforR_03272023.csv", header = TRUE) %>%
+sit1 <- read.csv("./01_input/SIallforR_20232803.csv", header = TRUE) %>%
   filter(is.na(Year) == FALSE) %>%
   mutate(Site = ordered(Site, levels=c("DL","GC", "BG")), 
          Species = ordered(Species, levels = c("LL", "MWF", "LNSU", "LSSU",
@@ -80,6 +83,11 @@ sit1<-read.csv("./01_input/SIallforR_03272023.csv", header = TRUE) %>%
   select(1:9)
 
 colnames(sit1) <- c("Sample", "Site", "Year", "Species", "Num", "Length", "Weight", "d13C", "d15N")
+
+sit1 <- sit1 %>%
+  mutate(Species_all = Species, .before = Species)
+
+levels(sit1$Species) <- c("LL", "MWF", "Suckers", "Suckers", "LNDC", "RSSH")
 
 # levels(sit1$Species) <- c("LL", "MWF", "Suckers", "Suckers", "LNDC", "RSSH")
 # 
@@ -524,14 +532,14 @@ save_plot("./03_incremental/MWFLLplot.jpg", mwfllplot,
 
 # ll<-read.csv("./01_input/LLmetals.csv", header = TRUE)
 
-ll <- filter(mwfll, Species == "LL") %>% droplevels()
-ll$Site<-as.factor(ll$Site)
-ll$Site <- ordered(ll$Site, levels=c("DL","GC", "BG"))
-ll <- mutate(ll, kvalue = 10^5*(Weight/(Length^3)))
+ll <- filter(mwfll, Species == "LL") %>% 
+  mutate(kvalue = 10^5*(Weight/(Length^3))) %>%
+  droplevels()
+
 str(ll)
 
 # As:
-as_ll_tissue.glm <- glm(As ~ Tissue*Site*Length,
+as_ll_tissue.glm <- glm(As ~ Tissue*Length,
                         family = Gamma(link = "log"), ll)
 plot(as_ll_tissue.glm)
 Anova(as_ll_tissue.glm)
@@ -546,7 +554,7 @@ Anova(as_ll_tissue.glm)
   scale_color_viridis_d(labels=c("Gill","Liver","Muscle"))) 
 
 # Cd:
-cd_ll_tissue.glm <- glm(Cd ~ Tissue*Site*Length,
+cd_ll_tissue.glm <- glm(Cd ~ Tissue*Length,
                         family = Gamma(link = "log"), ll,
                         maxit = 1000)
 plot(cd_ll_tissue.glm)
@@ -563,7 +571,7 @@ Anova(cd_ll_tissue.glm)
 
 
 # Cu:
-cu_ll_tissue.glm <- glm(log10(Cu) ~ Tissue*Site*Length,
+cu_ll_tissue.glm <- glm(log10(Cu) ~ Tissue*Length,
                         family = gaussian(link = "identity"), ll,
                         maxit = 1000) # Wasn't converging, so added iterations
 plot(cu_ll_tissue.glm)
@@ -579,7 +587,7 @@ Anova(cu_ll_tissue.glm)
   scale_color_viridis_d(labels=c("Gill","Liver","Muscle")) )
 
 # Pb:
-pb_ll_tissue.glm <- glm(Pb ~ Tissue*Site*Length,
+pb_ll_tissue.glm <- glm(Pb ~ Tissue*Length,
                         family = Gamma(link = "log"), ll)
 plot(pb_ll_tissue.glm)
 Anova(pb_ll_tissue.glm)
@@ -595,7 +603,7 @@ Anova(pb_ll_tissue.glm)
 
 # Se:
 # 
-se_ll_tissue.glm <- glm(Se ~ Tissue*Site*Length,
+se_ll_tissue.glm <- glm(Se ~ Tissue*Length,
                         family = Gamma(link = "log"), ll)
 plot(se_ll_tissue.glm)
 Anova(se_ll_tissue.glm)
@@ -611,7 +619,7 @@ Anova(se_ll_tissue.glm)
 
 #Zn:
 
-zn_ll_tissue.glm <- glm(Zn ~ Tissue*Site*Length,
+zn_ll_tissue.glm <- glm(Zn ~ Tissue*Length,
                         family = Gamma(link = "log"), ll)
 plot(zn_ll_tissue.glm)
 Anova(zn_ll_tissue.glm)
@@ -628,7 +636,7 @@ Anova(zn_ll_tissue.glm)
 # All together
 (ll_tissue_length_fig <- 
     ggplot(data = pivot_longer(ll, 
-                               10:15, 
+                               12:17, 
                                names_to = "element",
                                values_to = "concentration"), 
                    aes(Length, concentration, color = Tissue)) + 
@@ -653,17 +661,20 @@ save_plot("./03_incremental/ll_tissue_length_new.png", ll_tissue_length_fig,
 # bit more interesting and useful. Cu, Cd, and Se all have interesitng patterns
 # There are individual plots, but the money plot is a faceted one at the bottom
 
-mwf <- filter(mwfll, Species == "MWF")
-colnames(mwf) <- colnames(ll[ ,1:15])
-mwf <- mwf %>% 
-  mutate(Site = ordered(Site, levels=c("DL","GC", "BG")))
-mwf <- mutate(mwf, kvalue = 10^5*(Weight/(Length^3)))
+mwf <- filter(mwfll, Species == "MWF") %>% 
+  mutate(mwf, kvalue = 10^5*(Weight/(Length^3))) %>%
+  droplevels()
+
+ggplot()+
+  geom_histogram(data = mwf, aes(x = Length)) +
+  facet_grid(~Site)
+
 str(mwf)
 
 
 
 # As:
-as_mwf_tissue.glm <- glm(As ~ Tissue*Site*Length,
+as_mwf_tissue.glm <- glm(As ~ Tissue*Length,
                         family = Gamma(link = "log"), mwf)
 plot(as_mwf_tissue.glm)
 Anova(as_mwf_tissue.glm)
@@ -671,14 +682,17 @@ Anova(as_mwf_tissue.glm)
 (as_mwf_fig <- ggplot(data = mwf, aes(Length, As, color = Tissue)) + 
     geom_point()+
     theme_classic()+
-    geom_smooth(aes(group=Tissue),method = lm, se = FALSE)+
+    geom_smooth(aes(group=Tissue), 
+                method = glm, 
+                method.args = list(family = Gamma(link = "log")),
+                se = FALSE)+
     scale_y_continuous(expand = c(0,0))+
     coord_cartesian(clip = "off")+
     labs(y = expression(As~(mu*g~g^-1~dry~weight)),x = "Length (mm)" )  +
     scale_color_viridis_d(labels=c("Gill","Liver","Muscle"))) 
 
 # Cd:
-cd_mwf_tissue.glm <- glm(Cd ~ Tissue*Site*Length,
+cd_mwf_tissue.glm <- glm(Cd ~ Tissue*Length,
                         family = Gamma(link = "log"), mwf)
 plot(cd_mwf_tissue.glm)
 Anova(cd_mwf_tissue.glm)
@@ -686,7 +700,10 @@ Anova(cd_mwf_tissue.glm)
 (cd_mwf_fig <- ggplot(data = mwf, aes(Length, Cd, color = Tissue)) + 
     geom_point()+
     theme_classic()+
-    geom_smooth(aes(group=Tissue),method = lm, se = FALSE)+
+    geom_smooth(aes(group=Tissue), 
+                method = glm, 
+                method.args = list(family = Gamma(link = "log")),
+                se = FALSE)+
     scale_y_continuous(expand = c(0,0))+
     coord_cartesian(clip = "off")+
     labs(y = expression(Cd~(mu*g~g^-1~dry~weight)),x = "Length (mm)" )  +
@@ -694,22 +711,25 @@ Anova(cd_mwf_tissue.glm)
 
 
 # Cu:
-cu_mwf_tissue.glm <- glm(Cu ~ Tissue*Site*Length,
+cu_mwf_tissue.glm <- glm(Cu ~ Tissue*Length,
                         family = Gamma(link = "log"), mwf) 
 plot(cu_mwf_tissue.glm)
 Anova(cu_mwf_tissue.glm)
 
-(cu_mwf_fig <- ggplot(data = mwf, aes(Length, Cu, color = Tissue)) + 
+(cu_mwf_fig <- ggplot(data = filter(mwf, Cu < 300), aes(Length, Cu, color = Tissue)) + 
     geom_point()+
     theme_classic()+
-    geom_smooth(aes(group=Tissue),method = lm, se = FALSE)+
+    geom_smooth(aes(group=Tissue), 
+                method = glm, 
+                method.args = list(family = Gamma(link = "log")),
+                se = FALSE)+
     scale_y_continuous(expand = c(0,0))+
     coord_cartesian(clip = "off")+
     labs(y = expression(Cu~(mu*g~g^-1~dry~weight)),x = "Length (mm)" )  +
-    scale_color_viridis_d(labels=c("Gill","Liver","Muscle")) )
+    scale_color_viridis_d(labels=c("Gill","Liver","Muscle")))
 
 # Pb:
-pb_mwf_tissue.glm <- glm(Pb ~ Tissue*Site*Length,
+pb_mwf_tissue.glm <- glm(Pb ~ Tissue*Length,
                         family = Gamma(link = "log"), mwf,
                         maxit = 1000)
 plot(pb_mwf_tissue.glm)
@@ -718,7 +738,10 @@ Anova(pb_mwf_tissue.glm)
 (pb_mwf_fig <- ggplot(data = mwf, aes(Length, Pb, color = Tissue)) + 
     geom_point()+
     theme_classic()+
-    geom_smooth(aes(group=Tissue),method = lm, se = FALSE)+
+    geom_smooth(aes(group=Tissue), 
+                method = glm, 
+                method.args = list(family = Gamma(link = "log")),
+                se = FALSE)+
     scale_y_continuous(expand = c(0,0))+
     coord_cartesian(clip = "off")+
     labs(y = expression(Pb~(mu*g~g^-1~dry~weight)),x = "Length (mm)" )  +
@@ -726,7 +749,7 @@ Anova(pb_mwf_tissue.glm)
 
 # Se:
 # 
-se_mwf_tissue.glm <- glm(Se ~ Tissue*Site*Length,
+se_mwf_tissue.glm <- glm(Se ~ Tissue*Length,
                         family = Gamma(link = "log"), mwf)
 plot(se_mwf_tissue.glm)
 Anova(se_mwf_tissue.glm)
@@ -734,7 +757,10 @@ Anova(se_mwf_tissue.glm)
 (se_mwf_fig <- ggplot(data = mwf, aes(Length, Se, color = Tissue)) + 
     geom_point()+
     theme_classic()+
-    geom_smooth(aes(group=Tissue),method = lm, se = FALSE)+
+    geom_smooth(aes(group=Tissue), 
+                method = glm, 
+                method.args = list(family = Gamma(link = "log")),
+                se = FALSE)+
     scale_y_continuous(expand = c(0,0))+
     coord_cartesian(clip = "off")+
     labs(y = expression(Se~(mu*g~g^-1~dry~weight)),x = "Length (mm)" )  +
@@ -742,7 +768,7 @@ Anova(se_mwf_tissue.glm)
 
 #Zn:
 
-zn_mwf_tissue.glm <- glm(Zn ~ Tissue*Site*Length,
+zn_mwf_tissue.glm <- glm(Zn ~ Tissue*Length,
                         family = Gamma(link = "log"), mwf)
 plot(zn_mwf_tissue.glm)
 Anova(zn_mwf_tissue.glm)
@@ -750,7 +776,10 @@ Anova(zn_mwf_tissue.glm)
 (zn_mwf_fig <- ggplot(data = mwf, aes(Length, Zn, color = Tissue)) + 
     geom_point()+
     theme_classic()+
-    geom_smooth(aes(group=Tissue),method = lm, se = FALSE)+
+    geom_smooth(aes(group=Tissue), 
+                method = glm, 
+                method.args = list(family = Gamma(link = "log")),
+                se = FALSE)+    
     scale_y_continuous(expand = c(0,0))+
     coord_cartesian(clip = "off")+
     labs(y = expression(Zn~(mu*g~g^-1~dry~weight)),x = "Length (mm)" )  +
@@ -759,13 +788,16 @@ Anova(zn_mwf_tissue.glm)
 # All together
 (mwf_tissue_length_fig <- 
     ggplot(data = pivot_longer(mwf, 
-                               10:15, 
+                               12:17, 
                                names_to = "element",
                                values_to = "concentration"), 
            aes(Length, concentration, color = Tissue)) + 
     geom_point()+
     theme_classic()+
-    geom_smooth(aes(group=Tissue),method = lm, se = FALSE)+
+    geom_smooth(aes(group=Tissue), 
+                method = glm, 
+                method.args = list(family = Gamma(link = "log")),
+                se = FALSE)+
     scale_y_continuous(expand = c(0,0))+
     coord_cartesian(clip = "off")+
     labs(y = expression(Concentration~(mu*g~g^-1~dry~weight)),
@@ -1066,13 +1098,12 @@ sink()
 
 # Merging SI data, metals data, and calculating k values####
 totmet_wide <- totmet %>% 
-  pivot_longer(cols = 10:15, names_to = "element", 
+  pivot_longer(cols = 12:17, names_to = "element", 
                values_to = "concentration") %>%
   pivot_wider(names_from = c("Tissue", "element"), 
               values_from = "concentration", 
-              id_cols = c(2:6, 8:11),
-              values_fn = {mean}) %>% # Averages duplicates
-  select(8, 1:6, 9:32)
+              id_cols = c(1,3:8, 10, 11),
+              values_fn = {mean}) 
 
 
 totmet_isotopes <- merge(totmet_wide, sit1, all = TRUE) %>%
