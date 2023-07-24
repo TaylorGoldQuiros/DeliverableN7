@@ -1,259 +1,735 @@
+[1] "=========================================================="
+[1] "Summary of p-values for pairwise comparisons for Figure 2"
+[1] "=========================================================="
+[1] "----------------------------------------------------------"
 [1] "Arsenic"
- contrast ratio    SE df null t.ratio p.value
- g / l     1.10 0.180 67    1   0.566  0.8386
- g / m     1.56 0.232 67    1   3.016  0.0100
- l / m     1.42 0.227 67    1   2.222  0.0748
+[1] "----------------------------------------------------------"
+$`simple contrasts for Species`
+Site = DL, Tissue = g:
+ contrast ratio    SE  df null t.ratio p.value
+ LL / MWF 1.856 0.839 148    1   1.368  0.1733
 
-Results are averaged over the levels of: Species, Site 
+Site = GC, Tissue = g:
+ contrast ratio    SE  df null t.ratio p.value
+ LL / MWF 4.357 2.468 148    1   2.598  0.0103
+
+Site = BG, Tissue = g:
+ contrast ratio    SE  df null t.ratio p.value
+ LL / MWF 4.005 2.042 148    1   2.722  0.0073
+
+Site = DL, Tissue = l:
+ contrast ratio    SE  df null t.ratio p.value
+ LL / MWF 0.907 0.410 148    1  -0.215  0.8300
+
+Site = GC, Tissue = l:
+ contrast ratio    SE  df null t.ratio p.value
+ LL / MWF 3.541 2.386 148    1   1.877  0.0625
+
+Site = BG, Tissue = l:
+ contrast ratio    SE  df null t.ratio p.value
+ LL / MWF 4.698 3.058 148    1   2.377  0.0187
+
+Site = DL, Tissue = m:
+ contrast ratio    SE  df null t.ratio p.value
+ LL / MWF 1.989 0.876 148    1   1.562  0.1204
+
+Site = GC, Tissue = m:
+ contrast ratio    SE  df null t.ratio p.value
+ LL / MWF 1.737 0.907 148    1   1.057  0.2923
+
+Site = BG, Tissue = m:
+ contrast ratio    SE  df null t.ratio p.value
+ LL / MWF 2.769 1.232 148    1   2.288  0.0235
+
+Tests are performed on the log scale 
+
+$`simple contrasts for Site`
+Species = LL, Tissue = g:
+ contrast ratio    SE  df null t.ratio p.value
+ DL / GC  0.675 0.315 148    1  -0.843  0.6769
+ DL / BG  0.582 0.263 148    1  -1.197  0.4566
+ GC / BG  0.862 0.426 148    1  -0.301  0.9515
+
+Species = MWF, Tissue = g:
+ contrast ratio    SE  df null t.ratio p.value
+ DL / GC  1.584 0.880 148    1   0.829  0.6855
+ DL / BG  1.256 0.640 148    1   0.447  0.8960
+ GC / BG  0.793 0.460 148    1  -0.401  0.9154
+
+Species = LL, Tissue = l:
+ contrast ratio    SE  df null t.ratio p.value
+ DL / GC  0.536 0.329 148    1  -1.015  0.5689
+ DL / BG  0.759 0.403 148    1  -0.520  0.8615
+ GC / BG  1.415 0.982 148    1   0.501  0.8711
+
+Species = MWF, Tissue = l:
+ contrast ratio    SE  df null t.ratio p.value
+ DL / GC  2.092 1.108 148    1   1.394  0.3469
+ DL / BG  3.929 2.313 148    1   2.324  0.0556
+ GC / BG  1.878 1.182 148    1   1.001  0.5773
+
+Species = LL, Tissue = m:
+ contrast ratio    SE  df null t.ratio p.value
+ DL / GC  1.467 0.708 148    1   0.793  0.7080
+ DL / BG  0.861 0.356 148    1  -0.362  0.9304
+ GC / BG  0.587 0.280 148    1  -1.118  0.5043
+
+Species = MWF, Tissue = m:
+ contrast ratio    SE  df null t.ratio p.value
+ DL / GC  1.280 0.619 148    1   0.511  0.8659
+ DL / BG  1.198 0.563 148    1   0.385  0.9217
+ GC / BG  0.936 0.462 148    1  -0.134  0.9901
+
 P value adjustment: tukey method for comparing a family of 3 estimates 
 Tests are performed on the log scale 
- contrast ratio    SE df null t.ratio p.value
- DL / GC  1.447 0.229 67    1   2.335  0.0578
- DL / BG  1.036 0.152 67    1   0.238  0.9692
- GC / BG  0.716 0.119 67    1  -2.011  0.1173
 
-Results are averaged over the levels of: Tissue, Species 
-P value adjustment: tukey method for comparing a family of 3 estimates 
-Tests are performed on the log scale 
- contrast ratio    SE df null t.ratio p.value
- LL / MWF  1.55 0.199 67    1   3.418  0.0011
-
-Results are averaged over the levels of: Tissue, Site 
-Tests are performed on the log scale 
-[1] "------------------------------------"
-[1] "Cadmium"
- contrast  ratio      SE df null t.ratio p.value
- g / l     0.349  0.0855 67    1  -4.296  0.0002
- g / m    29.429  6.5056 67    1  15.298  <.0001
- l / m    84.354 20.0500 67    1  18.659  <.0001
-
-Results are averaged over the levels of: Species, Site 
-P value adjustment: tukey method for comparing a family of 3 estimates 
-Tests are performed on the log scale 
-[1] "------------------------------------"
-[1] "Copper"
 $`simple contrasts for Tissue`
 Species = LL, Site = DL:
- contrast   ratio      SE df null t.ratio p.value
- g effect  0.4091  0.1134 67    1  -3.224  0.0020
- l effect 49.6238 14.2898 67    1  13.559  <.0001
- m effect  0.0493  0.0142 67    1 -10.455  <.0001
+ contrast ratio    SE  df null t.ratio p.value
+ g / l    0.638 0.269 148    1  -1.066  0.5364
+ g / m    2.127 0.897 148    1   1.790  0.1764
+ l / m    3.335 1.406 148    1   2.857  0.0135
 
 Species = MWF, Site = DL:
- contrast   ratio      SE df null t.ratio p.value
- g effect  1.1795  0.3766 67    1   0.517  0.6067
- l effect  2.7829  0.8885 67    1   3.206  0.0031
- m effect  0.3046  0.0973 67    1  -3.723  0.0012
+ contrast ratio    SE  df null t.ratio p.value
+ g / l    0.312 0.150 148    1  -2.424  0.0434
+ g / m    2.280 1.071 148    1   1.755  0.1886
+ l / m    7.312 3.434 148    1   4.236  0.0001
 
 Species = LL, Site = GC:
- contrast   ratio      SE df null t.ratio p.value
- g effect  5.2914  1.8356 67    1   4.803  <.0001
- l effect  3.1791  1.4404 67    1   2.553  0.0130
- m effect  0.0595  0.0224 67    1  -7.502  <.0001
+ contrast ratio    SE  df null t.ratio p.value
+ g / l    0.507 0.327 148    1  -1.053  0.5447
+ g / m    4.621 2.414 148    1   2.931  0.0109
+ l / m    9.124 6.005 148    1   3.359  0.0028
 
 Species = MWF, Site = GC:
- contrast   ratio      SE df null t.ratio p.value
- g effect  0.9222  0.3672 67    1  -0.204  0.8393
- l effect  2.9774  1.1856 67    1   2.740  0.0118
- m effect  0.3642  0.1286 67    1  -2.861  0.0118
+ contrast ratio    SE  df null t.ratio p.value
+ g / l    0.412 0.246 148    1  -1.484  0.3015
+ g / m    1.842 1.044 148    1   1.078  0.5290
+ l / m    4.474 2.424 148    1   2.766  0.0175
 
 Species = LL, Site = BG:
- contrast   ratio      SE df null t.ratio p.value
- g effect  0.5730  0.1935 67    1  -1.649  0.1039
- l effect 24.4016  7.7675 67    1  10.036  <.0001
- m effect  0.0715  0.0211 67    1  -8.955  <.0001
+ contrast ratio    SE  df null t.ratio p.value
+ g / l    0.832 0.462 148    1  -0.332  0.9410
+ g / m    3.146 1.400 148    1   2.576  0.0294
+ l / m    3.783 1.984 148    1   2.537  0.0325
 
 Species = MWF, Site = BG:
- contrast   ratio      SE df null t.ratio p.value
- g effect  0.8796  0.3175 67    1  -0.355  0.7234
- l effect  2.3982  0.9334 67    1   2.247  0.0495
- m effect  0.4741  0.1625 67    1  -2.178  0.0495
+ contrast ratio    SE  df null t.ratio p.value
+ g / l    0.976 0.598 148    1  -0.040  0.9991
+ g / m    2.175 1.109 148    1   1.524  0.2826
+ l / m    2.230 1.313 148    1   1.362  0.3636
 
-P value adjustment: fdr method for 3 tests 
+P value adjustment: tukey method for comparing a family of 3 estimates 
+Tests are performed on the log scale 
+
+[1] "----------------------------------------------------------"
+[1] "Cadmium"
+[1] "----------------------------------------------------------"
+$`simple contrasts for Tissue`
+Species = LL, Site = DL:
+ contrast    ratio       SE  df null t.ratio p.value
+ g / l       0.223   0.0899 148    1  -3.723  0.0008
+ g / m      26.742  10.7761 148    1   8.155  <.0001
+ l / m     119.896  48.3140 148    1  11.878  <.0001
+
+Species = MWF, Site = DL:
+ contrast    ratio       SE  df null t.ratio p.value
+ g / l       0.204   0.0938 148    1  -3.458  0.0020
+ g / m      25.895  11.6242 148    1   7.249  <.0001
+ l / m     126.804  56.9208 148    1  10.788  <.0001
+
+Species = LL, Site = GC:
+ contrast    ratio       SE  df null t.ratio p.value
+ g / l       0.065   0.0401 148    1  -4.428  0.0001
+ g / m      25.309  12.6344 148    1   6.473  <.0001
+ l / m     389.558 245.0830 148    1   9.481  <.0001
+
+Species = MWF, Site = GC:
+ contrast    ratio       SE  df null t.ratio p.value
+ g / l       0.195   0.1117 148    1  -2.856  0.0135
+ g / m      27.990  15.1556 148    1   6.153  <.0001
+ l / m     143.237  74.1603 148    1   9.589  <.0001
+
+Species = LL, Site = BG:
+ contrast    ratio       SE  df null t.ratio p.value
+ g / l       0.123   0.0653 148    1  -3.949  0.0004
+ g / m     157.465  66.9808 148    1  11.894  <.0001
+ l / m    1279.437 641.3868 148    1  14.271  <.0001
+
+Species = MWF, Site = BG:
+ contrast    ratio       SE  df null t.ratio p.value
+ g / l       0.357   0.2089 148    1  -1.760  0.1868
+ g / m      34.679  16.8999 148    1   7.277  <.0001
+ l / m      97.214  54.7034 148    1   8.134  <.0001
+
+P value adjustment: tukey method for comparing a family of 3 estimates 
 Tests are performed on the log scale 
 
 $`simple contrasts for Species`
 Tissue = g, Site = DL:
- contrast     ratio     SE df null t.ratio p.value
- LL effect   1.4797 0.3788 67    1   1.531  0.1306
- MWF effect  0.6758 0.1730 67    1  -1.531  0.1306
+ contrast ratio    SE  df null t.ratio p.value
+ LL / MWF 0.938 0.405 148    1  -0.148  0.8823
 
 Tissue = l, Site = DL:
- contrast     ratio     SE df null t.ratio p.value
- LL effect  10.6097 2.8087 67    1   8.922  <.0001
- MWF effect  0.0943 0.0250 67    1  -8.922  <.0001
+ contrast ratio    SE  df null t.ratio p.value
+ LL / MWF 0.859 0.371 148    1  -0.352  0.7251
 
 Tissue = m, Site = DL:
- contrast     ratio     SE df null t.ratio p.value
- LL effect   1.0103 0.2675 67    1   0.039  0.9692
- MWF effect  0.9898 0.2620 67    1  -0.039  0.9692
+ contrast ratio    SE  df null t.ratio p.value
+ LL / MWF 0.908 0.382 148    1  -0.229  0.8195
 
 Tissue = g, Site = GC:
- contrast     ratio     SE df null t.ratio p.value
- LL effect   7.2563 2.2432 67    1   6.411  <.0001
- MWF effect  0.1378 0.0426 67    1  -6.411  <.0001
+ contrast ratio    SE  df null t.ratio p.value
+ LL / MWF 2.939 1.591 148    1   1.991  0.0484
 
 Tissue = l, Site = GC:
- contrast     ratio     SE df null t.ratio p.value
- LL effect   3.1302 1.2492 67    1   2.859  0.0057
- MWF effect  0.3195 0.1275 67    1  -2.859  0.0057
+ contrast ratio    SE  df null t.ratio p.value
+ LL / MWF 8.838 5.691 148    1   3.384  0.0009
 
 Tissue = m, Site = GC:
- contrast     ratio     SE df null t.ratio p.value
- LL effect   1.2238 0.3589 67    1   0.689  0.4934
- MWF effect  0.8171 0.2396 67    1  -0.689  0.4934
+ contrast ratio    SE  df null t.ratio p.value
+ LL / MWF 3.250 1.622 148    1   2.361  0.0195
 
 Tissue = g, Site = BG:
- contrast     ratio     SE df null t.ratio p.value
- LL effect   1.8222 0.5633 67    1   1.941  0.0565
- MWF effect  0.5488 0.1696 67    1  -1.941  0.0565
+ contrast ratio    SE  df null t.ratio p.value
+ LL / MWF 1.767 0.861 148    1   1.168  0.2445
 
 Tissue = l, Site = BG:
- contrast     ratio     SE df null t.ratio p.value
- LL effect   7.2015 2.2992 67    1   6.184  <.0001
- MWF effect  0.1389 0.0443 67    1  -6.184  <.0001
+ contrast ratio    SE  df null t.ratio p.value
+ LL / MWF 5.122 3.187 148    1   2.626  0.0096
 
 Tissue = m, Site = BG:
- contrast     ratio     SE df null t.ratio p.value
- LL effect   0.8769 0.2245 67    1  -0.513  0.6095
- MWF effect  1.1404 0.2919 67    1   0.513  0.6095
+ contrast ratio    SE  df null t.ratio p.value
+ LL / MWF 0.389 0.166 148    1  -2.218  0.0280
 
-P value adjustment: fdr method for 2 tests 
 Tests are performed on the log scale 
 
 $`simple contrasts for Site`
 Tissue = g, Species = LL:
- contrast  ratio    SE df null t.ratio p.value
- DL effect 0.410 0.119 67    1  -3.078  0.0045
- GC effect 5.464 1.639 67    1   5.661  <.0001
- BG effect 0.446 0.149 67    1  -2.418  0.0183
+ contrast  ratio     SE  df null t.ratio p.value
+ DL / GC  0.3143 0.1400 148    1  -2.598  0.0277
+ DL / BG  0.3226 0.1394 148    1  -2.618  0.0263
+ GC / BG  1.0266 0.4846 148    1   0.056  0.9983
 
 Tissue = l, Species = LL:
- contrast  ratio    SE df null t.ratio p.value
- DL effect 3.409 1.162 67    1   3.600  0.0018
- GC effect 0.225 0.101 67    1  -3.326  0.0021
- BG effect 1.303 0.460 67    1   0.751  0.4555
+ contrast  ratio     SE  df null t.ratio p.value
+ DL / GC  0.0915 0.0538 148    1  -4.070  0.0002
+ DL / BG  0.1780 0.0903 148    1  -3.404  0.0025
+ GC / BG  1.9447 1.2897 148    1   1.003  0.5762
 
 Tissue = m, Species = LL:
- contrast  ratio    SE df null t.ratio p.value
- DL effect 0.893 0.268 67    1  -0.377  0.9778
- GC effect 1.111 0.370 67    1   0.315  0.9778
- BG effect 1.008 0.292 67    1   0.028  0.9778
+ contrast  ratio     SE  df null t.ratio p.value
+ DL / GC  0.2975 0.1373 148    1  -2.626  0.0257
+ DL / BG  1.8999 0.7518 148    1   1.622  0.2396
+ GC / BG  6.3871 2.9083 148    1   4.072  0.0002
 
 Tissue = g, Species = MWF:
- contrast  ratio    SE df null t.ratio p.value
- DL effect 1.359 0.466 67    1   0.896  0.7044
- GC effect 0.753 0.293 67    1  -0.727  0.7044
- BG effect 0.976 0.352 67    1  -0.067  0.9471
+ contrast  ratio     SE  df null t.ratio p.value
+ DL / GC  0.9847 0.5224 148    1  -0.029  0.9995
+ DL / BG  0.6079 0.2962 148    1  -1.021  0.5646
+ GC / BG  0.6174 0.3425 148    1  -0.869  0.6605
 
 Tissue = l, Species = MWF:
- contrast  ratio    SE df null t.ratio p.value
- DL effect 1.167 0.412 67    1   0.437  0.9358
- GC effect 0.885 0.352 67    1  -0.307  0.9358
- BG effect 0.968 0.386 67    1  -0.081  0.9358
+ contrast  ratio     SE  df null t.ratio p.value
+ DL / GC  0.9422 0.4770 148    1  -0.118  0.9924
+ DL / BG  1.0619 0.5975 148    1   0.107  0.9937
+ GC / BG  1.1271 0.6780 148    1   0.199  0.9784
 
 Tissue = m, Species = MWF:
- contrast  ratio    SE df null t.ratio p.value
- DL effect 0.923 0.295 67    1  -0.250  0.8036
- GC effect 0.783 0.250 67    1  -0.768  0.6682
- BG effect 1.384 0.442 67    1   1.017  0.6682
+ contrast  ratio     SE  df null t.ratio p.value
+ DL / GC  1.0643 0.4915 148    1   0.135  0.9900
+ DL / BG  0.8141 0.3654 148    1  -0.458  0.8908
+ GC / BG  0.7649 0.3611 148    1  -0.568  0.8375
 
-P value adjustment: fdr method for 3 tests 
+P value adjustment: tukey method for comparing a family of 3 estimates 
 Tests are performed on the log scale 
 
-[1] "------------------------------------"
-[1] "Lead"
+[1] "----------------------------------------------------------"
+[1] "Copper"
+[1] "----------------------------------------------------------"
+$`simple contrasts for Site`
+Tissue = g, Species = LL:
+ contrast ratio    SE  df null t.ratio p.value
+ DL / GC  0.351 0.145 144    1  -2.527  0.0335
+ DL / BG  0.301 0.121 144    1  -2.988  0.0092
+ GC / BG  0.857 0.377 144    1  -0.350  0.9346
+
+Tissue = l, Species = LL:
+ contrast ratio    SE  df null t.ratio p.value
+ DL / GC  5.335 3.875 144    1   2.305  0.0583
+ DL / BG  0.725 0.396 144    1  -0.589  0.8265
+ GC / BG  0.136 0.113 144    1  -2.410  0.0451
+
+Tissue = m, Species = LL:
+ contrast ratio    SE  df null t.ratio p.value
+ DL / GC  0.655 0.281 144    1  -0.985  0.5872
+ DL / BG  0.866 0.319 144    1  -0.389  0.9200
+ GC / BG  1.323 0.561 144    1   0.661  0.7865
+
+Tissue = g, Species = MWF:
+ contrast ratio    SE  df null t.ratio p.value
+ DL / GC  1.443 0.712 144    1   0.742  0.7388
+ DL / BG  0.832 0.377 144    1  -0.405  0.9135
+ GC / BG  0.577 0.298 144    1  -1.066  0.5368
+
+Tissue = l, Species = MWF:
+ contrast ratio    SE  df null t.ratio p.value
+ DL / GC  5.247 2.473 144    1   3.518  0.0017
+ DL / BG  5.800 3.038 144    1   3.356  0.0029
+ GC / BG  1.105 0.619 144    1   0.179  0.9825
+
+Tissue = m, Species = MWF:
+ contrast ratio    SE  df null t.ratio p.value
+ DL / GC  0.981 0.421 144    1  -0.046  0.9988
+ DL / BG  0.939 0.392 144    1  -0.150  0.9877
+ GC / BG  0.958 0.421 144    1  -0.098  0.9948
+
+P value adjustment: tukey method for comparing a family of 3 estimates 
+Tests are performed on the log scale 
+
+$`simple contrasts for Tissue`
+Site = DL, Species = LL:
+ contrast    ratio       SE  df null t.ratio p.value
+ g / l      0.0112   0.0042 144    1 -11.971  <.0001
+ g / m      7.5776   2.8422 144    1   5.399  <.0001
+ l / m    675.3356 253.3071 144    1  17.370  <.0001
+
+Site = GC, Species = LL:
+ contrast    ratio       SE  df null t.ratio p.value
+ g / l      0.1707   0.1276 144    1  -2.365  0.0504
+ g / m     14.1496   6.5749 144    1   5.702  <.0001
+ l / m     82.8816  62.6588 144    1   5.843  <.0001
+
+Site = BG, Species = LL:
+ contrast    ratio       SE  df null t.ratio p.value
+ g / l      0.0271   0.0153 144    1  -6.381  <.0001
+ g / m     21.8406   8.6475 144    1   7.789  <.0001
+ l / m    807.2665 437.6667 144    1  12.346  <.0001
+
+Site = DL, Species = MWF:
+ contrast    ratio       SE  df null t.ratio p.value
+ g / l      0.0792   0.0339 144    1  -5.930  <.0001
+ g / m      3.7775   1.5784 144    1   3.181  0.0051
+ l / m     47.7132  19.9359 144    1   9.251  <.0001
+
+Site = GC, Species = MWF:
+ contrast    ratio       SE  df null t.ratio p.value
+ g / l      0.2879   0.1532 144    1  -2.340  0.0535
+ g / m      2.5673   1.2939 144    1   1.871  0.1509
+ l / m      8.9161   4.2968 144    1   4.540  <.0001
+
+Site = BG, Species = MWF:
+ contrast    ratio       SE  df null t.ratio p.value
+ g / l      0.5519   0.3009 144    1  -1.090  0.5217
+ g / m      4.2646   1.9344 144    1   3.197  0.0048
+ l / m      7.7266   4.0470 144    1   3.904  0.0004
+
+P value adjustment: tukey method for comparing a family of 3 estimates 
+Tests are performed on the log scale 
+
 $`simple contrasts for Species`
-Site = DL:
- contrast   ratio    SE df null t.ratio p.value
- LL effect  1.213 0.170 67    1   1.378  0.1729
- MWF effect 0.825 0.115 67    1  -1.378  0.1729
+Site = DL, Tissue = g:
+ contrast  ratio     SE  df null t.ratio p.value
+ LL / MWF   2.30  0.924 144    1   2.069  0.0404
 
-Site = GC:
- contrast   ratio    SE df null t.ratio p.value
- LL effect  1.544 0.278 67    1   2.412  0.0186
- MWF effect 0.648 0.117 67    1  -2.412  0.0186
+Site = GC, Tissue = g:
+ contrast  ratio     SE  df null t.ratio p.value
+ LL / MWF   9.45  4.765 144    1   4.457  <.0001
 
-Site = BG:
- contrast   ratio    SE df null t.ratio p.value
- LL effect  0.900 0.142 67    1  -0.664  0.5093
- MWF effect 1.111 0.176 67    1   0.664  0.5093
+Site = BG, Tissue = g:
+ contrast  ratio     SE  df null t.ratio p.value
+ LL / MWF   6.36  2.885 144    1   4.079  0.0001
 
-Results are averaged over the levels of: Tissue 
-P value adjustment: fdr method for 2 tests 
+Site = DL, Tissue = l:
+ contrast  ratio     SE  df null t.ratio p.value
+ LL / MWF  16.21  6.522 144    1   6.926  <.0001
+
+Site = GC, Tissue = l:
+ contrast  ratio     SE  df null t.ratio p.value
+ LL / MWF  15.95 12.227 144    1   3.612  0.0004
+
+Site = BG, Tissue = l:
+ contrast  ratio     SE  df null t.ratio p.value
+ LL / MWF 129.75 83.235 144    1   7.585  <.0001
+
+Site = DL, Tissue = m:
+ contrast  ratio     SE  df null t.ratio p.value
+ LL / MWF   1.15  0.449 144    1   0.347  0.7292
+
+Site = GC, Tissue = m:
+ contrast  ratio     SE  df null t.ratio p.value
+ LL / MWF   1.72  0.797 144    1   1.161  0.2474
+
+Site = BG, Tissue = m:
+ contrast  ratio     SE  df null t.ratio p.value
+ LL / MWF   1.24  0.492 144    1   0.547  0.5851
+
+Tests are performed on the log scale 
+
+[1] "----------------------------------------------------------"
+[1] "Lead"
+[1] "----------------------------------------------------------"
+$`simple contrasts for Tissue`
+Site = DL, Species = LL:
+ contrast   ratio      SE  df null t.ratio p.value
+ g / l      5.515   2.125 148    1   4.432  0.0001
+ g / m    106.795  41.147 148    1  12.123  <.0001
+ l / m     19.364   7.461 148    1   7.691  <.0001
+
+Site = GC, Species = LL:
+ contrast   ratio      SE  df null t.ratio p.value
+ g / l      1.290   0.762 148    1   0.432  0.9023
+ g / m    112.401  53.651 148    1   9.893  <.0001
+ l / m     87.103  52.396 148    1   7.426  <.0001
+
+Site = BG, Species = LL:
+ contrast   ratio      SE  df null t.ratio p.value
+ g / l      3.405   1.727 148    1   2.415  0.0444
+ g / m    323.311 131.494 148    1  14.208  <.0001
+ l / m     94.963  45.517 148    1   9.500  <.0001
+
+Site = DL, Species = MWF:
+ contrast   ratio      SE  df null t.ratio p.value
+ g / l      5.609   2.464 148    1   3.925  0.0004
+ g / m     68.781  29.521 148    1   9.858  <.0001
+ l / m     12.262   5.263 148    1   5.840  <.0001
+
+Site = GC, Species = MWF:
+ contrast   ratio      SE  df null t.ratio p.value
+ g / l      0.957   0.523 148    1  -0.081  0.9964
+ g / m     75.168  38.916 148    1   8.344  <.0001
+ l / m     78.552  38.886 148    1   8.815  <.0001
+
+Site = BG, Species = MWF:
+ contrast   ratio      SE  df null t.ratio p.value
+ g / l      4.454   2.494 148    1   2.667  0.0230
+ g / m     37.444  17.447 148    1   7.775  <.0001
+ l / m      8.407   4.523 148    1   3.957  0.0003
+
+P value adjustment: tukey method for comparing a family of 3 estimates 
 Tests are performed on the log scale 
 
 $`simple contrasts for Site`
-Species = LL:
- contrast  ratio    SE df null t.ratio p.value
- DL effect 1.091 0.181 67    1   0.525  0.8417
- GC effect 1.040 0.204 67    1   0.201  0.8417
- BG effect 0.881 0.154 67    1  -0.725  0.8417
+Tissue = g, Species = LL:
+ contrast ratio     SE  df null t.ratio p.value
+ DL / GC  0.716 0.3051 148    1  -0.783  0.7138
+ DL / BG  0.466 0.1926 148    1  -1.847  0.1580
+ GC / BG  0.651 0.2937 148    1  -0.952  0.6085
 
-Species = MWF:
- contrast  ratio    SE df null t.ratio p.value
- DL effect 1.051 0.190 67    1   0.276  0.7835
- GC effect 0.618 0.122 67    1  -2.432  0.0428
- BG effect 1.540 0.297 67    1   2.238  0.0428
+Tissue = l, Species = LL:
+ contrast ratio     SE  df null t.ratio p.value
+ DL / GC  0.168 0.0941 148    1  -3.180  0.0051
+ DL / BG  0.288 0.1395 148    1  -2.569  0.0299
+ GC / BG  1.717 1.0887 148    1   0.853  0.6709
 
-Results are averaged over the levels of: Tissue 
-P value adjustment: fdr method for 3 tests 
-Tests are performed on the log scale 
+Tissue = m, Species = LL:
+ contrast ratio     SE  df null t.ratio p.value
+ DL / GC  0.754 0.3328 148    1  -0.640  0.7983
+ DL / BG  1.411 0.5340 148    1   0.911  0.6345
+ GC / BG  1.872 0.8150 148    1   1.440  0.3230
 
- contrast ratio     SE df null t.ratio p.value
- g / l     4.08  0.966 67    1   5.944  <.0001
- g / m    53.96 11.515 67    1  18.688  <.0001
- l / m    13.22  3.034 67    1  11.252  <.0001
+Tissue = g, Species = MWF:
+ contrast ratio     SE  df null t.ratio p.value
+ DL / GC  1.176 0.5964 148    1   0.319  0.9454
+ DL / BG  0.852 0.3969 148    1  -0.344  0.9369
+ GC / BG  0.725 0.3844 148    1  -0.607  0.8164
 
-Results are averaged over the levels of: Species, Site 
+Tissue = l, Species = MWF:
+ contrast ratio     SE  df null t.ratio p.value
+ DL / GC  0.201 0.0971 148    1  -3.319  0.0032
+ DL / BG  0.676 0.3639 148    1  -0.727  0.7481
+ GC / BG  3.372 1.9397 148    1   2.113  0.0906
+
+Tissue = m, Species = MWF:
+ contrast ratio     SE  df null t.ratio p.value
+ DL / GC  1.285 0.5673 148    1   0.568  0.8374
+ DL / BG  0.464 0.1990 148    1  -1.790  0.1764
+ GC / BG  0.361 0.1629 148    1  -2.258  0.0651
+
 P value adjustment: tukey method for comparing a family of 3 estimates 
-Tests are performed on the log scale 
-[1] "------------------------------------"
-[1] "Selenium"
- contrast ratio    SE df null t.ratio p.value
- g / l    0.692 0.114 67    1  -2.232  0.0731
- g / m    4.885 0.727 67    1  10.663  <.0001
- l / m    7.059 1.129 67    1  12.219  <.0001
-
-Results are averaged over the levels of: Species, Site 
-P value adjustment: tukey method for comparing a family of 3 estimates 
-Tests are performed on the log scale 
-[1] "------------------------------------"
-[1] "Zinc"
-$`simple contrasts for Tissue`
-Species = LL:
- contrast ratio     SE df null t.ratio p.value
- g effect 2.403 0.2300 67    1   9.164  <.0001
- l effect 1.637 0.1752 67    1   4.604  <.0001
- m effect 0.254 0.0243 67    1 -14.314  <.0001
-
-Species = MWF:
- contrast ratio     SE df null t.ratio p.value
- g effect 1.406 0.1507 67    1   3.179  0.0022
- l effect 1.889 0.2080 67    1   5.778  <.0001
- m effect 0.376 0.0379 67    1  -9.711  <.0001
-
-Results are averaged over the levels of: Site 
-P value adjustment: fdr method for 3 tests 
 Tests are performed on the log scale 
 
 $`simple contrasts for Species`
-Tissue = g:
- contrast   ratio     SE df null t.ratio p.value
- LL effect  1.872 0.1627 67    1   7.217  <.0001
- MWF effect 0.534 0.0464 67    1  -7.217  <.0001
+Tissue = g, Site = DL:
+ contrast ratio    SE  df null t.ratio p.value
+ LL / MWF  1.75 0.723 148    1   1.354  0.1778
 
-Tissue = l:
- contrast   ratio     SE df null t.ratio p.value
- LL effect  1.333 0.1316 67    1   2.912  0.0049
- MWF effect 0.750 0.0741 67    1  -2.912  0.0049
+Tissue = l, Site = DL:
+ contrast ratio    SE  df null t.ratio p.value
+ LL / MWF  1.78 0.735 148    1   1.395  0.1651
 
-Tissue = m:
- contrast   ratio     SE df null t.ratio p.value
- LL effect  1.177 0.0950 67    1   2.014  0.0480
- MWF effect 0.850 0.0686 67    1  -2.014  0.0480
+Tissue = m, Site = DL:
+ contrast ratio    SE  df null t.ratio p.value
+ LL / MWF  1.13 0.453 148    1   0.297  0.7671
 
-Results are averaged over the levels of: Site 
-P value adjustment: fdr method for 2 tests 
+Tissue = g, Site = GC:
+ contrast ratio    SE  df null t.ratio p.value
+ LL / MWF  2.87 1.487 148    1   2.038  0.0434
+
+Tissue = l, Site = GC:
+ contrast ratio    SE  df null t.ratio p.value
+ LL / MWF  2.13 1.311 148    1   1.228  0.2215
+
+Tissue = m, Site = GC:
+ contrast ratio    SE  df null t.ratio p.value
+ LL / MWF  1.92 0.917 148    1   1.367  0.1736
+
+Tissue = g, Site = BG:
+ contrast ratio    SE  df null t.ratio p.value
+ LL / MWF  3.20 1.490 148    1   2.494  0.0137
+
+Tissue = l, Site = BG:
+ contrast ratio    SE  df null t.ratio p.value
+ LL / MWF  4.18 2.488 148    1   2.406  0.0174
+
+Tissue = m, Site = BG:
+ contrast ratio    SE  df null t.ratio p.value
+ LL / MWF  0.37 0.151 148    1  -2.443  0.0158
+
+Tests are performed on the log scale 
+
+[1] "----------------------------------------------------------"
+[1] "Selenium"
+[1] "----------------------------------------------------------"
+$`simple contrasts for Tissue`
+Site = DL, Species = LL:
+ contrast   ratio      SE  df null t.ratio p.value
+ g / l      5.515   2.125 148    1   4.432  0.0001
+ g / m    106.795  41.147 148    1  12.123  <.0001
+ l / m     19.364   7.461 148    1   7.691  <.0001
+
+Site = GC, Species = LL:
+ contrast   ratio      SE  df null t.ratio p.value
+ g / l      1.290   0.762 148    1   0.432  0.9023
+ g / m    112.401  53.651 148    1   9.893  <.0001
+ l / m     87.103  52.396 148    1   7.426  <.0001
+
+Site = BG, Species = LL:
+ contrast   ratio      SE  df null t.ratio p.value
+ g / l      3.405   1.727 148    1   2.415  0.0444
+ g / m    323.311 131.494 148    1  14.208  <.0001
+ l / m     94.963  45.517 148    1   9.500  <.0001
+
+Site = DL, Species = MWF:
+ contrast   ratio      SE  df null t.ratio p.value
+ g / l      5.609   2.464 148    1   3.925  0.0004
+ g / m     68.781  29.521 148    1   9.858  <.0001
+ l / m     12.262   5.263 148    1   5.840  <.0001
+
+Site = GC, Species = MWF:
+ contrast   ratio      SE  df null t.ratio p.value
+ g / l      0.957   0.523 148    1  -0.081  0.9964
+ g / m     75.168  38.916 148    1   8.344  <.0001
+ l / m     78.552  38.886 148    1   8.815  <.0001
+
+Site = BG, Species = MWF:
+ contrast   ratio      SE  df null t.ratio p.value
+ g / l      4.454   2.494 148    1   2.667  0.0230
+ g / m     37.444  17.447 148    1   7.775  <.0001
+ l / m      8.407   4.523 148    1   3.957  0.0003
+
+P value adjustment: tukey method for comparing a family of 3 estimates 
+Tests are performed on the log scale 
+
+$`simple contrasts for Site`
+Tissue = g, Species = LL:
+ contrast ratio     SE  df null t.ratio p.value
+ DL / GC  0.716 0.3051 148    1  -0.783  0.7138
+ DL / BG  0.466 0.1926 148    1  -1.847  0.1580
+ GC / BG  0.651 0.2937 148    1  -0.952  0.6085
+
+Tissue = l, Species = LL:
+ contrast ratio     SE  df null t.ratio p.value
+ DL / GC  0.168 0.0941 148    1  -3.180  0.0051
+ DL / BG  0.288 0.1395 148    1  -2.569  0.0299
+ GC / BG  1.717 1.0887 148    1   0.853  0.6709
+
+Tissue = m, Species = LL:
+ contrast ratio     SE  df null t.ratio p.value
+ DL / GC  0.754 0.3328 148    1  -0.640  0.7983
+ DL / BG  1.411 0.5340 148    1   0.911  0.6345
+ GC / BG  1.872 0.8150 148    1   1.440  0.3230
+
+Tissue = g, Species = MWF:
+ contrast ratio     SE  df null t.ratio p.value
+ DL / GC  1.176 0.5964 148    1   0.319  0.9454
+ DL / BG  0.852 0.3969 148    1  -0.344  0.9369
+ GC / BG  0.725 0.3844 148    1  -0.607  0.8164
+
+Tissue = l, Species = MWF:
+ contrast ratio     SE  df null t.ratio p.value
+ DL / GC  0.201 0.0971 148    1  -3.319  0.0032
+ DL / BG  0.676 0.3639 148    1  -0.727  0.7481
+ GC / BG  3.372 1.9397 148    1   2.113  0.0906
+
+Tissue = m, Species = MWF:
+ contrast ratio     SE  df null t.ratio p.value
+ DL / GC  1.285 0.5673 148    1   0.568  0.8374
+ DL / BG  0.464 0.1990 148    1  -1.790  0.1764
+ GC / BG  0.361 0.1629 148    1  -2.258  0.0651
+
+P value adjustment: tukey method for comparing a family of 3 estimates 
+Tests are performed on the log scale 
+
+$`simple contrasts for Species`
+Tissue = g, Site = DL:
+ contrast ratio    SE  df null t.ratio p.value
+ LL / MWF  1.75 0.723 148    1   1.354  0.1778
+
+Tissue = l, Site = DL:
+ contrast ratio    SE  df null t.ratio p.value
+ LL / MWF  1.78 0.735 148    1   1.395  0.1651
+
+Tissue = m, Site = DL:
+ contrast ratio    SE  df null t.ratio p.value
+ LL / MWF  1.13 0.453 148    1   0.297  0.7671
+
+Tissue = g, Site = GC:
+ contrast ratio    SE  df null t.ratio p.value
+ LL / MWF  2.87 1.487 148    1   2.038  0.0434
+
+Tissue = l, Site = GC:
+ contrast ratio    SE  df null t.ratio p.value
+ LL / MWF  2.13 1.311 148    1   1.228  0.2215
+
+Tissue = m, Site = GC:
+ contrast ratio    SE  df null t.ratio p.value
+ LL / MWF  1.92 0.917 148    1   1.367  0.1736
+
+Tissue = g, Site = BG:
+ contrast ratio    SE  df null t.ratio p.value
+ LL / MWF  3.20 1.490 148    1   2.494  0.0137
+
+Tissue = l, Site = BG:
+ contrast ratio    SE  df null t.ratio p.value
+ LL / MWF  4.18 2.488 148    1   2.406  0.0174
+
+Tissue = m, Site = BG:
+ contrast ratio    SE  df null t.ratio p.value
+ LL / MWF  0.37 0.151 148    1  -2.443  0.0158
+
+Tests are performed on the log scale 
+
+[1] "----------------------------------------------------------"
+[1] "Zinc"
+[1] "----------------------------------------------------------"
+$`simple contrasts for Site`
+Tissue = g, Species = LL:
+ contrast ratio     SE  df null t.ratio p.value
+ DL / GC  0.293 0.0833 148    1  -4.318  0.0001
+ DL / BG  0.422 0.1165 148    1  -3.124  0.0060
+ GC / BG  1.442 0.4346 148    1   1.215  0.4461
+
+Tissue = l, Species = LL:
+ contrast ratio     SE  df null t.ratio p.value
+ DL / GC  0.101 0.0377 148    1  -6.124  <.0001
+ DL / BG  0.161 0.0521 148    1  -5.642  <.0001
+ GC / BG  1.600 0.6775 148    1   1.111  0.5090
+
+Tissue = m, Species = LL:
+ contrast ratio     SE  df null t.ratio p.value
+ DL / GC  0.623 0.1837 148    1  -1.604  0.2473
+ DL / BG  1.086 0.2742 148    1   0.325  0.9433
+ GC / BG  1.742 0.5062 148    1   1.909  0.1398
+
+Tissue = g, Species = MWF:
+ contrast ratio     SE  df null t.ratio p.value
+ DL / GC  0.862 0.2919 148    1  -0.439  0.8993
+ DL / BG  0.796 0.2477 148    1  -0.733  0.7443
+ GC / BG  0.924 0.3272 148    1  -0.224  0.9727
+
+Tissue = l, Species = MWF:
+ contrast ratio     SE  df null t.ratio p.value
+ DL / GC  1.007 0.3254 148    1   0.021  0.9998
+ DL / BG  0.775 0.2782 148    1  -0.711  0.7574
+ GC / BG  0.769 0.2954 148    1  -0.683  0.7739
+
+Tissue = m, Species = MWF:
+ contrast ratio     SE  df null t.ratio p.value
+ DL / GC  0.920 0.2713 148    1  -0.282  0.9572
+ DL / BG  0.926 0.2653 148    1  -0.269  0.9608
+ GC / BG  1.006 0.3031 148    1   0.019  0.9998
+
+P value adjustment: tukey method for comparing a family of 3 estimates 
+Tests are performed on the log scale 
+
+$`simple contrasts for Tissue`
+Site = DL, Species = LL:
+ contrast  ratio     SE  df null t.ratio p.value
+ g / l     2.153  0.554 148    1   2.981  0.0094
+ g / m    13.078  3.364 148    1   9.995  <.0001
+ l / m     6.075  1.563 148    1   7.014  <.0001
+
+Site = GC, Species = LL:
+ contrast  ratio     SE  df null t.ratio p.value
+ g / l     0.740  0.292 148    1  -0.765  0.7249
+ g / m    27.836  8.870 148    1  10.438  <.0001
+ l / m    37.633 15.114 148    1   9.033  <.0001
+
+Site = BG, Species = LL:
+ contrast  ratio     SE  df null t.ratio p.value
+ g / l     0.821  0.278 148    1  -0.583  0.8293
+ g / m    33.615  9.128 148    1  12.945  <.0001
+ l / m    40.956 13.106 148    1  11.601  <.0001
+
+Site = DL, Species = MWF:
+ contrast  ratio     SE  df null t.ratio p.value
+ g / l     0.719  0.211 148    1  -1.125  0.5001
+ g / m     4.771  1.367 148    1   5.453  <.0001
+ l / m     6.637  1.902 148    1   6.605  <.0001
+
+Site = GC, Species = MWF:
+ contrast  ratio     SE  df null t.ratio p.value
+ g / l     0.840  0.306 148    1  -0.478  0.8816
+ g / m     5.095  1.761 148    1   4.711  <.0001
+ l / m     6.067  2.005 148    1   5.455  <.0001
+
+Site = BG, Species = MWF:
+ contrast  ratio     SE  df null t.ratio p.value
+ g / l     0.699  0.262 148    1  -0.956  0.6058
+ g / m     5.548  1.726 148    1   5.508  <.0001
+ l / m     7.932  2.849 148    1   5.765  <.0001
+
+P value adjustment: tukey method for comparing a family of 3 estimates 
+Tests are performed on the log scale 
+
+$`simple contrasts for Species`
+Site = DL, Tissue = g:
+ contrast ratio    SE  df null t.ratio p.value
+ LL / MWF  4.35 1.201 148    1   5.333  <.0001
+
+Site = GC, Tissue = g:
+ contrast ratio    SE  df null t.ratio p.value
+ LL / MWF 12.81 4.428 148    1   7.378  <.0001
+
+Site = BG, Tissue = g:
+ contrast ratio    SE  df null t.ratio p.value
+ LL / MWF  8.21 2.553 148    1   6.766  <.0001
+
+Site = DL, Tissue = l:
+ contrast ratio    SE  df null t.ratio p.value
+ LL / MWF  1.45 0.401 148    1   1.357  0.1769
+
+Site = GC, Tissue = l:
+ contrast ratio    SE  df null t.ratio p.value
+ LL / MWF 14.55 5.980 148    1   6.513  <.0001
+
+Site = BG, Tissue = l:
+ contrast ratio    SE  df null t.ratio p.value
+ LL / MWF  6.99 2.777 148    1   4.898  <.0001
+
+Site = DL, Tissue = m:
+ contrast ratio    SE  df null t.ratio p.value
+ LL / MWF  1.59 0.427 148    1   1.722  0.0871
+
+Site = GC, Tissue = m:
+ contrast ratio    SE  df null t.ratio p.value
+ LL / MWF  2.35 0.747 148    1   2.675  0.0083
+
+Site = BG, Tissue = m:
+ contrast ratio    SE  df null t.ratio p.value
+ LL / MWF  1.35 0.368 148    1   1.117  0.2657
+
 Tests are performed on the log scale 
 

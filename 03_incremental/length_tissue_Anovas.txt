@@ -1,168 +1,163 @@
+[1] "=========================================================="
+[1] "ANOVAS for Figures 3 and 4"
+[1] "=========================================================="
+[1] "----------------------------------------------------------"
+[1] "Arsenic"
+[1] "----------------------------------------------------------"
 [1] "Trout"
+[1] "----------------------------------------------------------"
 Analysis of Deviance Table (Type II tests)
 
 Response: As
-                   LR Chisq Df Pr(>Chisq)   
-Tissue              11.4233  2   0.003307 **
-Site                 9.1824  2   0.010140 * 
-Length               0.8407  1   0.359200   
-Tissue:Site          1.5863  4   0.811243   
-Tissue:Length        2.2571  2   0.323506   
-Site:Length          3.5831  2   0.166700   
-Tissue:Site:Length   0.3627  4   0.985417   
+              LR Chisq Df Pr(>Chisq)    
+Tissue         20.5341  2 0.00003476 ***
+Length          0.4686  1     0.4936    
+Tissue:Length   0.9417  2     0.6245    
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+[1] "----------------------------------------------------------"
 [1] "Whitefish"
+[1] "----------------------------------------------------------"
 Analysis of Deviance Table (Type II tests)
 
 Response: As
-                   LR Chisq Df Pr(>Chisq)    
-Tissue              29.7338  2  3.495e-07 ***
-Site                 0.4993  2   0.779072    
-Length               5.0304  1   0.024906 *  
-Tissue:Site         15.0273  4   0.004645 ** 
-Tissue:Length        1.5631  2   0.457690    
-Site:Length          0.4321  2   0.805691    
-Tissue:Site:Length   3.7631  4   0.439019    
+              LR Chisq Df   Pr(>Chisq)    
+Tissue         29.1745  2 0.0000004622 ***
+Length          1.8175  1      0.17761    
+Tissue:Length   4.7292  2      0.09399 .  
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+[1] ""
+[1] "----------------------------------------------------------"
+[1] "Cadmium"
+[1] "----------------------------------------------------------"
 [1] "Trout"
+[1] "----------------------------------------------------------"
 Analysis of Deviance Table (Type II tests)
 
 Response: Cd
-                   LR Chisq Df Pr(>Chisq)    
-Tissue              224.664  2  < 2.2e-16 ***
-Site                 25.884  2  2.396e-06 ***
-Length                0.668  1  0.4138529    
-Tissue:Site          28.968  4  7.935e-06 ***
-Tissue:Length        15.059  2  0.0005371 ***
-Site:Length           0.730  2  0.6941983    
-Tissue:Site:Length    4.444  4  0.3492950    
+              LR Chisq Df   Pr(>Chisq)    
+Tissue         133.430  2    < 2.2e-16 ***
+Length           0.008  1       0.9286    
+Tissue:Length   28.138  2 0.0000007762 ***
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+[1] "----------------------------------------------------------"
 [1] "Whitefish"
+[1] "----------------------------------------------------------"
 Analysis of Deviance Table (Type II tests)
 
 Response: Cd
-                   LR Chisq Df Pr(>Chisq)    
-Tissue               459.07  2  < 2.2e-16 ***
-Site                   3.48  2  0.1757033    
-Length                10.88  1  0.0009706 ***
-Tissue:Site            8.35  4  0.0797099 .  
-Tissue:Length         16.13  2  0.0003146 ***
-Site:Length            4.20  2  0.1225394    
-Tissue:Site:Length     3.55  4  0.4709802    
+              LR Chisq Df Pr(>Chisq)    
+Tissue         306.032  2  < 2.2e-16 ***
+Length           4.668  1   0.030737 *  
+Tissue:Length    9.297  2   0.009576 ** 
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+[1] ""
+[1] "----------------------------------------------------------"
+[1] "Copper"
+[1] "----------------------------------------------------------"
 [1] "Trout"
+[1] "----------------------------------------------------------"
+Analysis of Deviance Table (Type II tests)
+
+Response: log10(Cu)
+              LR Chisq Df        Pr(>Chisq)    
+Tissue          827.17  2         < 2.2e-16 ***
+Length            7.68  1          0.005588 ** 
+Tissue:Length    54.40  2 0.000000000001542 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+[1] "----------------------------------------------------------"
+[1] "Whitefish"
+[1] "----------------------------------------------------------"
 Analysis of Deviance Table (Type II tests)
 
 Response: Cu
-                   LR Chisq Df Pr(>Chisq)    
-Tissue               433.60  2  < 2.2e-16 ***
-Site                  22.32  2  1.423e-05 ***
-Length                 4.25  1    0.03935 *  
-Tissue:Site           25.85  4  3.387e-05 ***
-Tissue:Length         23.46  2  8.036e-06 ***
-Site:Length            3.29  2    0.19342    
-Tissue:Site:Length    10.81  4    0.02880 *  
+              LR Chisq Df Pr(>Chisq)    
+Tissue          98.667  2  < 2.2e-16 ***
+Length           0.582  1  0.4456478    
+Tissue:Length   15.800  2  0.0003707 ***
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-[1] "Whitefish"
-Analysis of Deviance Table (Type II tests)
-
-Response: Cu
-                   LR Chisq Df Pr(>Chisq)    
-Tissue              160.553  2  < 2.2e-16 ***
-Site                  1.984  2  0.3709137    
-Length                3.036  1  0.0814548 .  
-Tissue:Site          15.932  4  0.0031121 ** 
-Tissue:Length        16.731  2  0.0002328 ***
-Site:Length           5.209  2  0.0739263 .  
-Tissue:Site:Length    9.556  4  0.0486051 *  
----
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+[1] ""
+[1] "----------------------------------------------------------"
+[1] "Lead"
+[1] "----------------------------------------------------------"
 [1] "Trout"
+[1] "----------------------------------------------------------"
 Analysis of Deviance Table (Type II tests)
 
 Response: Pb
-                   LR Chisq Df Pr(>Chisq)    
-Tissue              270.388  2  < 2.2e-16 ***
-Site                 11.194  2   0.003709 ** 
-Length                0.634  1   0.425731    
-Tissue:Site          25.317  4  4.343e-05 ***
-Tissue:Length         2.885  2   0.236346    
-Site:Length           1.013  2   0.602621    
-Tissue:Site:Length    6.504  4   0.164527    
+              LR Chisq Df Pr(>Chisq)    
+Tissue         209.771  2  < 2.2e-16 ***
+Length           0.623  1  0.4297741    
+Tissue:Length   14.929  2  0.0005732 ***
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+[1] "----------------------------------------------------------"
 [1] "Whitefish"
+[1] "----------------------------------------------------------"
 Analysis of Deviance Table (Type II tests)
 
 Response: Pb
-                   LR Chisq Df Pr(>Chisq)    
-Tissue              179.373  2  < 2.2e-16 ***
-Site                  7.235  2  0.0268498 *  
-Length                7.099  1  0.0077141 ** 
-Tissue:Site          22.814  4  0.0001379 ***
-Tissue:Length         3.947  2  0.1390032    
-Site:Length           3.608  2  0.1646057    
-Tissue:Site:Length    0.952  4  0.9170276    
+              LR Chisq Df Pr(>Chisq)    
+Tissue          58.006  2  2.536e-13 ***
+Length           0.004  1     0.9467    
+Tissue:Length    1.940  2     0.3790    
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+[1] ""
+[1] "----------------------------------------------------------"
+[1] "Selenium"
+[1] "----------------------------------------------------------"
 [1] "Trout"
 Analysis of Deviance Table (Type II tests)
 
 Response: Se
-                   LR Chisq Df Pr(>Chisq)    
-Tissue              163.118  2  < 2.2e-16 ***
-Site                 17.120  2  0.0001917 ***
-Length                0.057  1  0.8119261    
-Tissue:Site           2.884  4  0.5774158    
-Tissue:Length        12.505  2  0.0019256 ** 
-Site:Length           0.523  2  0.7697701    
-Tissue:Site:Length    5.614  4  0.2298942    
+              LR Chisq Df Pr(>Chisq)    
+Tissue          88.166  2  < 2.2e-16 ***
+Length           3.902  1  0.0482269 *  
+Tissue:Length   16.659  2  0.0002413 ***
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+[1] "----------------------------------------------------------"
 [1] "Whitefish"
+[1] "----------------------------------------------------------"
 Analysis of Deviance Table (Type II tests)
 
 Response: Se
-                   LR Chisq Df Pr(>Chisq)    
-Tissue              267.208  2  < 2.2e-16 ***
-Site                 11.891  2   0.002617 ** 
-Length                8.391  1   0.003770 ** 
-Tissue:Site           1.026  4   0.905772    
-Tissue:Length         0.588  2   0.745223    
-Site:Length           6.309  2   0.042663 *  
-Tissue:Site:Length    1.483  4   0.829595    
+              LR Chisq Df  Pr(>Chisq)    
+Tissue          342.17  2   < 2.2e-16 ***
+Length           21.43  1 0.000003669 ***
+Tissue:Length     1.36  2      0.5068    
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+[1] ""
+[1] "----------------------------------------------------------"
+[1] "Zinc"
+[1] "----------------------------------------------------------"
 [1] "Trout"
+[1] "----------------------------------------------------------"
 Analysis of Deviance Table (Type II tests)
 
 Response: Zn
-                   LR Chisq Df Pr(>Chisq)    
-Tissue               642.29  2  < 2.2e-16 ***
-Site                  17.66  2  0.0001461 ***
-Length                 2.99  1  0.0835402 .  
-Tissue:Site           21.38  4  0.0002663 ***
-Tissue:Length          7.91  2  0.0191722 *  
-Site:Length            0.67  2  0.7161322    
-Tissue:Site:Length     8.94  4  0.0625927 .  
+              LR Chisq Df Pr(>Chisq)    
+Tissue         112.408  2  < 2.2e-16 ***
+Length           4.044  1  0.0443244 *  
+Tissue:Length   16.161  2  0.0003095 ***
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+[1] "----------------------------------------------------------"
 [1] "Whitefish"
+[1] "----------------------------------------------------------"
 Analysis of Deviance Table (Type II tests)
 
 Response: Zn
-                   LR Chisq Df Pr(>Chisq)    
-Tissue              281.415  2    < 2e-16 ***
-Site                  5.080  2    0.07887 .  
-Length                0.288  1    0.59150    
-Tissue:Site           4.622  4    0.32835    
-Tissue:Length         5.446  2    0.06567 .  
-Site:Length           4.013  2    0.13446    
-Tissue:Site:Length    6.462  4    0.16719    
+              LR Chisq Df Pr(>Chisq)    
+Tissue          550.89  2    < 2e-16 ***
+Length            5.24  1    0.02213 *  
+Tissue:Length    12.69  2    0.00176 ** 
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
