@@ -19,7 +19,7 @@ par(mfrow = c(2,2)) # Makes it so diagnostic plots from base R are 2x2 grid
 theme_set(theme_bw())
 ## Loading in data####
 ### Metals: Data for summary table####
-totmet <- read.csv("./01_input/Metals_Master_03282023_V2.csv", header = TRUE) %>%
+totmet <- read.csv("./01_input/Metals_Master_20230328_V3.csv", header = TRUE) %>%
   mutate(Site = ordered(Site, levels = c("DL", "GC", "BG")), 
          Species = as.factor(Species),
          Tissue = as.factor(Tissue),
@@ -75,7 +75,7 @@ mwfll <- filter(mwfll, Tissue %in% c("g", "m", "l"))
 
 #onboard clean csv file
 #change site to an ordered factor
-sit1 <- read.csv("./01_input/SIallforR_20232803.csv", header = TRUE) %>%
+sit1 <- read.csv("./01_input/SIallforR_20230328_V2.csv", header = TRUE) %>%
   filter(is.na(Year) == FALSE) %>%
   mutate(Site = ordered(Site, levels=c("DL","GC", "BG")), 
          Species = ordered(Species, levels = c("LL", "MWF", "LNSU", "LSSU",
@@ -662,12 +662,12 @@ save_plot("./03_incremental/ll_tissue_length_new.png", ll_tissue_length_fig,
 # There are individual plots, but the money plot is a faceted one at the bottom
 
 mwf <- filter(mwfll, Species == "MWF") %>% 
-  mutate(mwf, kvalue = 10^5*(Weight/(Length^3))) %>%
+  mutate(kvalue = 10^5*(Weight/(Length^3))) %>%
   droplevels()
 
 ggplot()+
-  geom_histogram(data = mwf, aes(x = Length)) +
-  facet_grid(~Site)
+  geom_histogram(data = mwfll, aes(x = Length)) +
+  facet_grid(~Species)
 
 str(mwf)
 
@@ -1116,7 +1116,7 @@ totmet_isotopes <-  totmet_isotopes %>%
                     10^5 * Weight/(Length^3)),
          .before = "m_As")
 
-write.csv(totmet_isotopes, "./03_incremental/metals_isotopes_K.csv")
+write.csv(totmet_isotopes, "./03_incremental/metals_isotopes_K_20230328.csv")
 
 totmet_summary
 
@@ -1133,7 +1133,7 @@ write.csv(dupes, "./03_incremental/duplicates.csv")
 totmet <- arrange(totmet, 1)
 totmet_old <- arrange(totmet_old, 1)
 
-totmet_long <- pivot_longer(totmet, 10:15, names_to = "element", 
+totmet_long <- pivot_longer(totmet, 12:17, names_to = "element", 
                             values_to = "totmet_conc")
 
 totmet_old_long <- pivot_longer(totmet_old, 10:15, names_to = "element", 
