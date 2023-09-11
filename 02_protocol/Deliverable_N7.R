@@ -913,34 +913,49 @@ save_plot("./03_incremental/kvalues.png",
 tissue_types <- c("Gill", "Liver", "Muscle")
 names(tissue_types) <- c("g", "l", "m")
 
-(ll_length_condition <- ggplot(pivot_longer(ll, 10:15, 
+(ll_metals_condition <- ggplot(pivot_longer(ll, 12:17, 
                                             names_to = "element", 
                                             values_to = "concentration")) +
-    geom_point(aes(x = kvalue, y = concentration)) +
+    geom_point(aes(x = concentration, y = kvalue)) +
     facet_grid(Tissue~element, 
-               labeller = labeller(Tissue = tissue_types)) + 
+               labeller = labeller(Tissue = tissue_types), scales = "free_x") + 
     theme_bw() +
-    labs(y = expression(Concentreation~(mu*g~g^-1))) +
-    scale_y_log10())
+    labs(x = expression(Concentreation~(mu*g~g^-1))) +
+    scale_x_log10())
 
 ### Comparison in MWF tissues
 
-(mwf_length_condition <- 
-    ggplot(pivot_longer(mwf, 10:15, 
+(mwf_metals_condition <- 
+    ggplot(pivot_longer(mwf, 12:17, 
                         names_to = "element", 
                         values_to = "concentration")) +
-    geom_point(aes(x = kvalue, y = concentration)) +
-    facet_grid(Tissue~element, labeller = labeller(Tissue = tissue_types)) + 
+    geom_point(aes(x = concentration, y = kvalue)) +
+    facet_grid(Tissue~element, labeller = labeller(Tissue = tissue_types), scales = "free_x") + 
     theme_bw() +
-    labs(y = expression(Concentreation~(mu*g~g^-1))) +
-    scale_y_log10())
+    labs(x = expression(Concentreation~(mu*g~g^-1))) +
+    scale_x_log10())
 
-fish_length_condition_fig <-
+(fish_metals_condition_fig <-
   plot_grid(ll_length_condition, mwf_length_condition, 
-            labels = c("Trout", "MWF"), nrow = 2)
+            labels = c("Trout", "MWF"), nrow = 2))
 
-save_plot("./03_incremental/fish_length_condition_.png", 
-          fish_length_condition_fig, base_width = 10, base_height = 8)
+save_plot("./03_incremental/fish_metals_condition_.png", 
+          fish_metals_condition_fig, base_width = 10, base_height = 10)
+
+## Length by weight plots just to see whether there is a difference in the shape
+## of the data
+
+fish_length_condition_mwf <- 
+  ggplot(mwf) +
+  geom_point(aes(x = Length, y = Weight)) +
+  geom_smooth(aes(x = Length, y = Weight), method = "lm")
+
+fish_length_condition_ll <- 
+  ggplot(ll) +
+  geom_point(aes(x = Length, y = Weight)) +
+  geom_smooth(aes(x = Length, y = Weight), method = "lm")
+
+
 # Isotope data stats and figures####
 par(mfrow = c(2,2)) # Makes it so diagnostic plots from base R are 2x2 grid
 # Model data for 13C and 15N for each taxon between sites
