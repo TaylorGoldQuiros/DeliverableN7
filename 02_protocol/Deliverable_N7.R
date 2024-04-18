@@ -438,8 +438,8 @@ sink()
   scale_y_log10() +
   scale_x_discrete(labels=c("LL"="Brown trout", "MWF"="Mountain whitefish"))+
   theme(axis.text.x = element_text(angle = 25,hjust = 1) )+
-  labs(y= expression("As (kg/g dry weight)"),x ="") +
-  scale_fill_viridis_d( labels=c("Gill","Liver","Muscle"))+
+  labs(y = expression(As~mu*g~g^-1~dry~weight), x = "Species") +
+  scale_fill_viridis_d(labels=c("Gill","Liver","Muscle"))+
   facet_wrap(~Site))
 
 (Cd_mwfll <- ggplot(mwfll, 
@@ -486,7 +486,7 @@ sink()
   scale_y_log10() +
   scale_x_discrete(labels=c("LL"="Brown trout", "MWF"="Mountain whitefish"))+
   theme(axis.text.x = element_text(angle = 25,hjust = 1) )+
-  labs(y= expression(paste("Se ("*mu~"g/g dry weight)")),) +
+  labs(y = expression(Se~mu*g~g^-1~dry~weight), x = "Species") +
   scale_fill_viridis_d()+
   facet_wrap(~Site))
 
