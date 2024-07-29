@@ -438,7 +438,7 @@ sink()
   scale_y_log10() +
   scale_x_discrete(labels=c("LL"="Brown trout", "MWF"="Mountain whitefish"))+
   theme(axis.text.x = element_text(angle = 25,hjust = 1) )+
-  labs(y = expression(As~mu*g~g^-1~dry~weight), x = "Species") +
+  labs(y = expression(As~"("*mu*g~g^-1~dry~weight*")"), x = "Species") +
   scale_fill_viridis_d(labels=c("Gill","Liver","Muscle"))+
   facet_wrap(~Site))
 
@@ -450,7 +450,8 @@ sink()
   scale_y_log10() +
   scale_x_discrete(labels=c("LL"="Brown trout", "MWF"="Mountain whitefish"))+
   theme(axis.text.x = element_text(angle = 25,hjust = 1) )+
-  labs(y= expression(paste("Cd (kg/g dry weight)")),x ="") +
+  labs(y= expression(Cd~"("*mu*g~g^-1~dry~weight*")"), 
+       x ="") +
   scale_fill_viridis_d()+
   facet_wrap(~Site))
 
@@ -462,7 +463,8 @@ sink()
   scale_y_log10() +
   scale_x_discrete(labels=c("LL"="Brown trout", "MWF"="Mountain whitefish"))+
   theme(axis.text.x = element_text(angle = 25,hjust = 1) )+
-  labs(y= expression(paste("Cu ("*mu~"g/g dry weight)")),x ="") +
+  labs(y= expression(Cu~"("*mu*g~g^-1~dry~weight*")"), 
+       x ="") +
   scale_fill_viridis_d()+
   facet_wrap(~Site))
 
@@ -474,7 +476,8 @@ sink()
   scale_y_log10() +
   scale_x_discrete(labels=c("LL"="Brown trout", "MWF"="Mountain whitefish"))+
   theme(axis.text.x = element_text(angle = 25,hjust = 1) )+
-  labs(y= expression(paste("Pb ("*mu~"g/g dry weight)")),x ="") +
+  labs(y= expression(Pb~"("*mu*g~g^-1~dry~weight*")"),
+       x ="") +
   scale_fill_viridis_d()+
   facet_wrap(~Site))
 
@@ -486,7 +489,7 @@ sink()
   scale_y_log10() +
   scale_x_discrete(labels=c("LL"="Brown trout", "MWF"="Mountain whitefish"))+
   theme(axis.text.x = element_text(angle = 25,hjust = 1) )+
-  labs(y = expression(Se~mu*g~g^-1~dry~weight), x = "Species") +
+  labs(y = expression(Se~"("*mu*g~g^-1~dry~weight*")"), x = "Species") +
   scale_fill_viridis_d()+
   facet_wrap(~Site))
 
@@ -498,7 +501,7 @@ sink()
   scale_y_log10() +
   scale_x_discrete(labels=c("LL"="Brown trout", "MWF"="Mountain whitefish"))+
   theme(axis.text.x = element_text(angle = 25,hjust = 1) )+
-  labs(y= expression(paste("Zn ("*mu~"g/g dry weight)")), ) +
+  labs(y= expression(Zn~"("*mu*g~g^-1~dry~weight*")")) +
   scale_fill_viridis_d()+
   facet_wrap(~Site))
 
@@ -550,7 +553,7 @@ Anova(as_ll_tissue.glm)
   geom_smooth(aes(group=Tissue),method = lm, se = FALSE)+
   scale_y_continuous(expand = c(0,0))+
   coord_cartesian(clip = "off")+
-  labs(y = expression(As~(mu*g~g^-1~dry~weight)),x = "Length (mm)" )  +
+  labs(y = expression(As~"("*mu*g~g^-1~dry~weight*")"),x = "Length (mm)" )  +
   scale_color_viridis_d(labels=c("Gill","Liver","Muscle"))) 
 
 # Cd:
@@ -936,7 +939,7 @@ names(tissue_types) <- c("g", "l", "m")
     scale_x_log10())
 
 (fish_metals_condition_fig <-
-  plot_grid(ll_length_condition, mwf_length_condition, 
+  plot_grid(ll_metals_condition, mwf_metals_condition, 
             labels = c("Trout", "MWF"), nrow = 2))
 
 save_plot("./03_incremental/fish_metals_condition_.png", 
@@ -1149,14 +1152,14 @@ totmet <- arrange(totmet, 1)
 totmet_old <- arrange(totmet_old, 1)
 
 totmet_long <- pivot_longer(totmet, 12:17, names_to = "element", 
-                            values_to = "totmet_conc")
+                            values_to = "totmet_conc") 
 
 totmet_old_long <- pivot_longer(totmet_old, 10:15, names_to = "element", 
                             values_to = "totmet_old_conc")
-totmet_new_long <- pivot_longer(totmet, 10:15, names_to = "element", 
+totmet_new_long <- pivot_longer(totmet, 12:17, names_to = "element", 
                                 values_to = "totmet_new_conc")
 
-totmet_merged_long <- merge(totmet_old_long, totmet_long, all = TRUE)
+totmet_merged_long <- merge(totmet_old_long %>% select(1:8, 10:11), totmet_long[, 2:13], all = TRUE)
 totmet_merged_longer <- pivot_longer(totmet_merged_long, cols = c(11, 12),
                                      names_to = "dataset", 
                                      values_to = "concentration")
