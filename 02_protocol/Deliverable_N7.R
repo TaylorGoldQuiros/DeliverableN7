@@ -434,11 +434,11 @@ sink()
   geom_boxplot()+
   theme_classic()+
   theme(panel.grid = element_blank())+
-  theme(text=element_text(size = 8))+
+  theme(text=element_text(size = 14))+
   scale_y_log10() +
   scale_x_discrete(labels=c("LL"="Brown trout", "MWF"="Mountain whitefish"))+
   theme(axis.text.x = element_text(angle = 25,hjust = 1) )+
-  labs(y = expression(As~"("*mu*g~g^-1~dry~weight*")"), x = "Species") +
+  labs(y = expression(As~"("*mu*g~g^-1~dry~weight*")"), x = "") +
   scale_fill_viridis_d(labels=c("Gill","Liver","Muscle"))+
   facet_wrap(~Site))
 
@@ -446,7 +446,7 @@ sink()
                    mapping = aes(Species,Cd,fill=Tissue)) + 
   geom_boxplot()+
   theme_classic()+
-  theme(text=element_text(size = 8))+
+  theme(text=element_text(size = 14))+
   scale_y_log10() +
   scale_x_discrete(labels=c("LL"="Brown trout", "MWF"="Mountain whitefish"))+
   theme(axis.text.x = element_text(angle = 25,hjust = 1) )+
@@ -459,7 +459,7 @@ sink()
                    mapping = aes(Species,Cu,fill=Tissue)) + 
   geom_boxplot()+
   theme_classic()+
-  theme(text=element_text(size = 8))+
+  theme(text=element_text(size = 14))+
   scale_y_log10() +
   scale_x_discrete(labels=c("LL"="Brown trout", "MWF"="Mountain whitefish"))+
   theme(axis.text.x = element_text(angle = 25,hjust = 1) )+
@@ -472,7 +472,7 @@ sink()
                    mapping = aes(Species,Pb,fill=Tissue)) + 
   geom_boxplot()+
   theme_classic()+
-  theme(text=element_text(size = 8))+
+  theme(text=element_text(size = 14))+
   scale_y_log10() +
   scale_x_discrete(labels=c("LL"="Brown trout", "MWF"="Mountain whitefish"))+
   theme(axis.text.x = element_text(angle = 25,hjust = 1) )+
@@ -485,11 +485,11 @@ sink()
                    mapping = aes(Species,Se,fill=Tissue)) + 
   geom_boxplot()+
   theme_classic()+
-  theme(text=element_text(size = 8))+
+  theme(text=element_text(size = 14))+
   scale_y_log10() +
   scale_x_discrete(labels=c("LL"="Brown trout", "MWF"="Mountain whitefish"))+
   theme(axis.text.x = element_text(angle = 25,hjust = 1) )+
-  labs(y = expression(Se~"("*mu*g~g^-1~dry~weight*")"), x = "Species") +
+  labs(y = expression(Se~"("*mu*g~g^-1~dry~weight*")"), x = "") +
   scale_fill_viridis_d()+
   facet_wrap(~Site))
 
@@ -497,13 +497,21 @@ sink()
                    mapping = aes(Species,Zn,fill=Tissue))+ 
   geom_boxplot()+
   theme_classic()+
-  theme(text=element_text(size = 8))+
+  theme(text=element_text(size = 14))+
   scale_y_log10() +
   scale_x_discrete(labels=c("LL"="Brown trout", "MWF"="Mountain whitefish"))+
   theme(axis.text.x = element_text(angle = 25,hjust = 1) )+
-  labs(y= expression(Zn~"("*mu*g~g^-1~dry~weight*")")) +
+  labs(y= expression(Zn~"("*mu*g~g^-1~dry~weight*")"),
+       x = "") +
   scale_fill_viridis_d()+
   facet_wrap(~Site))
+
+save_plot("./03_incremental/as_mwfll.png", As_mwfll, base_width = 7, base_height = 4)
+save_plot("./03_incremental/cd_mwfll.png", Cd_mwfll, base_width = 7, base_height = 4)
+save_plot("./03_incremental/cu_mwfll.png", Cu_mwfll, base_width = 7, base_height = 4)
+save_plot("./03_incremental/pb_mwfll.png", Pb_mwfll, base_width = 7, base_height = 4)
+save_plot("./03_incremental/se_mwfll.png", Se_mwfll, base_width = 7, base_height = 4)
+save_plot("./03_incremental/zn_mwfll.png", Zn_mwfll, base_width = 7, base_height = 4)
 
 newplot<-plot_grid(As_mwfll+theme(legend.position = "none"),
                    Cd_mwfll+theme(legend.position = "none"),
@@ -511,8 +519,8 @@ newplot<-plot_grid(As_mwfll+theme(legend.position = "none"),
                    Pb_mwfll+theme(legend.position = "none"),
                    Se_mwfll+theme(legend.position = "none"),
                    Zn_mwfll+theme(legend.position = "none"),
-                   nrow = 3,
-                   ncol = 2,
+                   nrow = 2,
+                   ncol = 3,
                    hjust = -1.8,
                    labels = c('A','B','C','D','E','F', label_size=7),
                    align = "hv")
@@ -520,7 +528,7 @@ legend2<-get_legend(As_mwfll+theme(legend.box.margin = margin(0,0,0,12)))
 mwfllplot<-plot_grid(newplot,legend2,rel_widths = c(2,.4))
 mwfllplot
 save_plot("./03_incremental/MWFLLplot.jpg", mwfllplot, 
-          base_height = 8, base_width =12)
+          base_height = 8, base_width = 14)
 
 
 ###Stats and figs on tissue conc by length for Brown Trout----
@@ -646,7 +654,7 @@ Anova(zn_ll_tissue.glm)
     geom_point()+
     theme_classic()+
     geom_smooth(aes(group=Tissue),method = lm, se = FALSE)+
-    scale_y_continuous(expand = c(0,0))+
+    scale_y_log10(expand = c(0,0))+
     coord_cartesian(clip = "off")+
     labs(y = expression(Concentration~(mu*g~g^-1~dry~weight)),
          x = "Length (mm)" )  +
@@ -799,9 +807,9 @@ Anova(zn_mwf_tissue.glm)
     theme_classic()+
     geom_smooth(aes(group=Tissue), 
                 method = glm, 
-                method.args = list(family = Gamma(link = "log")),
+                method.args = list(family = gaussian()),
                 se = FALSE)+
-    scale_y_continuous(expand = c(0,0))+
+    scale_y_log10(expand = c(0,0))+
     coord_cartesian(clip = "off")+
     labs(y = expression(Concentration~(mu*g~g^-1~dry~weight)),
          x = "Length (mm)" )  +
@@ -926,6 +934,9 @@ names(tissue_types) <- c("g", "l", "m")
     labs(x = expression(Concentreation~(mu*g~g^-1))) +
     scale_x_log10())
 
+save_plot("./03_incremental/ll_metals_condition.png", 
+          ll_metals_condition, base_height = 5, base_width = 10)
+
 ### Comparison in MWF tissues
 
 (mwf_metals_condition <- 
@@ -937,6 +948,9 @@ names(tissue_types) <- c("g", "l", "m")
     theme_bw() +
     labs(x = expression(Concentreation~(mu*g~g^-1))) +
     scale_x_log10())
+
+save_plot("./03_incremental/mwf_metals_condition.png", 
+          mwf_metals_condition, base_height = 5, base_width = 10)
 
 (fish_metals_condition_fig <-
   plot_grid(ll_metals_condition, mwf_metals_condition, 
