@@ -1,0 +1,138 @@
+[1] "=========================================================="
+[1] "ANOVAS and CLD for Figures 6 and 7"
+[1] "=========================================================="
+[1] "----------------------------------------------------------"
+[1] "ANOVA d15N"
+[1] "----------------------------------------------------------"
+Analysis of Deviance Table (Type II tests)
+
+Response: d15N
+             LR Chisq Df Pr(>Chisq)    
+Site           22.084  2 0.00001602 ***
+Species        11.934  4    0.01785 *  
+Site:Species   19.898  8    0.01073 *  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+[1] "----------------------------------------------------------"
+[1] "ANOVA d13C"
+[1] "----------------------------------------------------------"
+Analysis of Deviance Table (Type II tests)
+
+Response: d13C
+             LR Chisq Df Pr(>Chisq)  
+Site           2.7473  2    0.25318  
+Species        0.8130  4    0.93669  
+Site:Species  13.6841  8    0.09038 .
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+[1] "----------------------------------------------------------"
+[1] "d15N Compact Letter Display"
+[1] "----------------------------------------------------------"
+Site = DL:
+ Species emmean    SE  df lower.CL upper.CL .group
+ LL        10.3 0.330 141     9.61     10.9  a    
+ MWF       11.3 0.273 141    10.78     11.9  ab   
+ Suckers   11.6 0.318 141    10.94     12.2   b   
+ RSSH      11.6 0.421 141    10.75     12.4  ab   
+ LNDC      11.8 0.687 141    10.41     13.1  ab   
+
+Site = GC:
+ Species emmean    SE  df lower.CL upper.CL .group
+ LNDC      11.2 0.842 141     9.49     12.8  a    
+ RSSH      11.5 1.190 141     9.18     13.9  a    
+ Suckers   11.7 0.376 141    10.93     12.4  a    
+ MWF       11.8 0.266 141    11.32     12.4  a    
+ LL        12.2 0.376 141    11.48     13.0  a    
+
+Site = BG:
+ Species emmean    SE  df lower.CL upper.CL .group
+ LNDC      10.4 1.190 141     8.02     12.7  ab   
+ LL        11.8 0.307 141    11.20     12.4  a    
+ MWF       11.8 0.254 141    11.33     12.3  a    
+ RSSH      12.4 0.532 141    11.37     13.5  ab   
+ Suckers   13.4 0.330 141    12.72     14.0   b   
+
+Confidence level used: 0.95 
+P value adjustment: tukey method for comparing a family of 5 estimates 
+significance level used: alpha = 0.05 
+NOTE: Compact letter displays can be misleading
+      because they show NON-findings rather than findings.
+      Consider using 'pairs()', 'pwpp()', or 'pwpm()' instead. 
+[1] "----------------------------------------------------------"
+[1] "d15N p-values"
+[1] "----------------------------------------------------------"
+$`simple contrasts for Site`
+Species = LL:
+ contrast estimate    SE  df t.ratio p.value
+ DL - GC   -1.9558 0.501 141  -3.906  0.0004
+ DL - BG   -1.5385 0.451 141  -3.411  0.0024
+ GC - BG    0.4173 0.486 141   0.859  0.6671
+
+Species = MWF:
+ contrast estimate    SE  df t.ratio p.value
+ DL - GC   -0.5297 0.381 141  -1.389  0.3494
+ DL - BG   -0.5141 0.373 141  -1.379  0.3547
+ GC - BG    0.0156 0.368 141   0.042  0.9990
+
+Species = Suckers:
+ contrast estimate    SE  df t.ratio p.value
+ DL - GC   -0.1109 0.493 141  -0.225  0.9725
+ DL - BG   -1.8044 0.458 141  -3.936  0.0004
+ GC - BG   -1.6935 0.501 141  -3.382  0.0027
+
+Species = LNDC:
+ contrast estimate    SE  df t.ratio p.value
+ DL - GC    0.6117 1.087 141   0.563  0.8400
+ DL - BG    1.3967 1.375 141   1.016  0.5679
+ GC - BG    0.7850 1.458 141   0.538  0.8525
+
+Species = RSSH:
+ contrast estimate    SE  df t.ratio p.value
+ DL - GC    0.0475 1.263 141   0.038  0.9992
+ DL - BG   -0.8425 0.679 141  -1.242  0.4308
+ GC - BG   -0.8900 1.304 141  -0.683  0.7741
+
+P value adjustment: tukey method for comparing a family of 3 estimates 
+
+$`simple contrasts for Species`
+Site = DL:
+ contrast       estimate    SE  df t.ratio p.value
+ LL - MWF        -1.0507 0.428 141  -2.452  0.1077
+ LL - Suckers    -1.3010 0.458 141  -2.838  0.0410
+ LL - LNDC       -1.5005 0.762 141  -1.968  0.2870
+ LL - RSSH       -1.3113 0.535 141  -2.452  0.1079
+ MWF - Suckers   -0.2503 0.419 141  -0.597  0.9753
+ MWF - LNDC      -0.4498 0.740 141  -0.608  0.9736
+ MWF - RSSH      -0.2607 0.502 141  -0.520  0.9853
+ Suckers - LNDC  -0.1995 0.757 141  -0.263  0.9989
+ Suckers - RSSH  -0.0104 0.528 141  -0.020  1.0000
+ LNDC - RSSH      0.1892 0.806 141   0.235  0.9993
+
+Site = GC:
+ contrast       estimate    SE  df t.ratio p.value
+ LL - MWF         0.3755 0.461 141   0.814  0.9258
+ LL - Suckers     0.5440 0.532 141   1.022  0.8449
+ LL - LNDC        1.0670 0.922 141   1.157  0.7756
+ LL - RSSH        0.6920 1.248 141   0.554  0.9812
+ MWF - Suckers    0.1685 0.461 141   0.365  0.9962
+ MWF - LNDC       0.6915 0.883 141   0.783  0.9351
+ MWF - RSSH       0.3165 1.220 141   0.259  0.9990
+ Suckers - LNDC   0.5230 0.922 141   0.567  0.9796
+ Suckers - RSSH   0.1480 1.248 141   0.119  1.0000
+ LNDC - RSSH     -0.3750 1.458 141  -0.257  0.9990
+
+Site = BG:
+ contrast       estimate    SE  df t.ratio p.value
+ LL - MWF        -0.0262 0.399 141  -0.066  1.0000
+ LL - Suckers    -1.5669 0.451 141  -3.474  0.0061
+ LL - LNDC        1.4347 1.229 141   1.167  0.7701
+ LL - RSSH       -0.6153 0.615 141  -1.001  0.8545
+ MWF - Suckers   -1.5406 0.416 141  -3.700  0.0028
+ MWF - LNDC       1.4609 1.217 141   1.200  0.7512
+ MWF - RSSH      -0.5891 0.590 141  -0.999  0.8555
+ Suckers - LNDC   3.0015 1.235 141   2.430  0.1134
+ Suckers - RSSH   0.9515 0.626 141   1.519  0.5519
+ LNDC - RSSH     -2.0500 1.304 141  -1.572  0.5177
+
+P value adjustment: tukey method for comparing a family of 5 estimates 
+
